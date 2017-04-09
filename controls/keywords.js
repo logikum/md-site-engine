@@ -1,6 +1,7 @@
+'use strict';
 
 function getKeywords( ctx ) {
-  return  merge( ctx.texts.keywords, ctx.definition.keywords, ', ' );
+  return  merge( ctx.t( 'keywords' ), ctx.metadata.keywords, ', ' );
 }
 
 function merge( first, second, separator ) {

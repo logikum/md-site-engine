@@ -1,6 +1,7 @@
+'use strict';
 
 function getDescription( ctx ) {
-  return  ctx.definition.description || '';
+  return  ctx.metadata.description || '';
 }
 
 module.exports = getDescription;

@@ -1,3 +1,4 @@
+'use strict';
 
 function getMenu( ctx ) {
   var menu = '';
@@ -12,13 +13,7 @@ function getMenu( ctx ) {
 
 function getMenuItems( ctx, items ) {
   var menu = '';
-  items.sort( function ( a, b ) {
-    if (a.order < b.order)
-      return -1;
-    if (a.order > b.order)
-      return 1;
-    return 0;
-  } ).forEach( function ( item ) {
+  items.forEach( function ( item ) {
     if (item.paths) {
       if (item.text === '---')
       // Separator:
@@ -48,7 +43,7 @@ function getLanguageItems( ctx ) {
   }
 
   function linkOf( item ) {
-    return '<li><a href="/set-language/' + item + '">' + nameOf( item ) + '</a></li>\n';
+    return '<li><a href="/set-language/' + item + '?id=' + ctx.baseUrl + '">' + nameOf( item ) + '</a></li>\n';
   }
 
   if (ctx.languages.length > 1) {

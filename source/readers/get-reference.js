@@ -3,7 +3,7 @@
 var fs = require( 'fs' );
 var path = require( 'path' );
 
-function referenceReader( referenceFile ) {
+function getReference( referenceFile ) {
   var text = '';
 
   // Read references file.
@@ -35,4 +35,4 @@ function referenceReader( referenceFile ) {
   return text;
 }
 
-module.exports = referenceReader;
+module.exports = getReference;

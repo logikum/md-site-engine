@@ -1,0 +1,26 @@
+body {
+    margin: 0 1em 1em 1em;
+}
+h1 {
+    color: #A52A2A;
+    margin-bottom: 0;
+}
+h3 {
+    color: #4B0082;
+}
+span.title {
+    color: #2E8B57;
+}
+b {
+    color: #4169E1;
+}
+strong {
+    color: #C71585;
+}
+data {
+    color: #800080;
+}
+li.list-item-group {
+    list-style-type: none;
+    color: #800080;
+}
