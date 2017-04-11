@@ -1,5 +1,6 @@
 'use strict';
 
+var path = require( 'path' );
 var marked = require( 'marked' );
 var FilingCabinet = require( './filing-cabinet.js' );
 var readControls = require( './readers/read-controls.js' );
