@@ -19,7 +19,8 @@ function ContentManager( config ) {
   //region Initialization
 
   function initialize() {
-    var getRenderer = require( config.getRenderer ? config.getRenderer : markedRenderer );
+    var getRenderer = require( config.getRenderer ?
+      path.join( './../../../', config.getRenderer ) : markedRenderer );
     var renderer = getRenderer( marked );
     filingCabinet = new FilingCabinet( config );
 

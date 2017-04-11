@@ -91,23 +91,19 @@ function getComponents(
           } else if (component.isLayout) {
             layoutDrawer.add( componentPath, component );
             logger.fileProcessed( 'Layout', itemPath );
-          } else if (level > 0) {
+          } else {
             segmentDrawer.add( componentPath, component );
             logger.fileProcessed( 'Segment', itemPath );
-          } else
-            logger.fileSkipped( typeName, itemPath );
+          }
           break;
 
         case '.md':
-          if (level > 0) {
-            // Read segment.
-            var segment = getSegment(
-              itemPath, language, referenceDrawer, renderer, layoutSegment, contentSegment
-            );
-            segmentDrawer.add( componentPath, segment );
-            logger.fileProcessed( 'Segment', itemPath );
-          } else
-            logger.fileSkipped( typeName, itemPath );
+          // Read segment.
+          var segment = getSegment(
+            itemPath, language, referenceDrawer, renderer, layoutSegment, contentSegment
+          );
+          segmentDrawer.add( componentPath, segment );
+          logger.fileProcessed( 'Segment', itemPath );
           break;
 
         case '.json':
