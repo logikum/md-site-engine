@@ -39,9 +39,12 @@ var MenuDrawer = function() {
 
     var list = '';
     stock.forEach( function( menuItem ) {
-      var itemText = (menuPath ? menuPath + ' ● ' : '') + menuItem.text;
+      var itemText = (menuPath ? menuPath + ' ● ' : '') +
+        '[' + menuItem.order + '] ' + menuItem.text;
       var itemUrl = itemPath + '/' + language + '/' + menuItem.id;
-      list += '<li><a href="' + itemUrl + '">' + itemText + '</a></li>\n';
+      list += '<li><a href="' + itemUrl + '"' +
+        (menuItem.hidden ? ' style="text-decoration: line-through;"' : '') +
+        '>' + itemText + '</a></li>\n';
       if (menuItem.children)
         list += listArray( menuItem.children, language, itemPath, itemText );
     });

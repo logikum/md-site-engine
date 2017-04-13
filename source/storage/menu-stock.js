@@ -30,6 +30,7 @@ MenuStock.prototype.add = function( text, order, path, umbel ) {
   // Add function to determine if menu item is active.
   menuItem.isActive = function ( baseUrl ) {
     var self = this;
+    baseUrl = baseUrl || '';
     return this.paths.some( function ( path ) {
       if (self.umbel === true)
         return path === baseUrl.substring( 0, path.length );
@@ -105,9 +106,12 @@ MenuStock.prototype.finalize = function() {
 //
 //   var list = '';
 //   stock.forEach( function( menuItem ) {
-//     var itemText = (menuPath ? menuPath + ' ● ' : '') + menuItem.text;
+//     var itemText = (menuPath ? menuPath + ' ● ' : '') +
+//       '[' + menuItem.order + '] ' + menuItem.text;
 //     var itemUrl = itemPath + '/' + language + '/' + menuItem.id;
-//     list += '<li><a href="' + itemUrl + '">' + itemText + '</a></li>\n';
+//     list += '<li><a href="' + itemUrl + '"' +
+//       (menuItem.hidden ? ' style="text-decoration: line-through;"' : '') +
+//       '>' + itemText + '</a></li>\n';
 //     if (menuItem.children)
 //       list += listStock( menuItem.children, language, itemPath, itemText );
 //   });

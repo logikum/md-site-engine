@@ -85,7 +85,7 @@ function getComponents(
         case '.html':
           // Read component.
           var component = getComponent( itemPath, layoutSegment, contentSegment );
-          if (component.isDocument){
+          if (component.isDocument) {
             documentDrawer.add( componentPath, component );
             logger.fileProcessed( 'Document', itemPath );
           } else if (component.isLayout) {
