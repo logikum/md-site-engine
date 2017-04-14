@@ -1,39 +1,39 @@
 'use strict';
 
-function getMenu( ctx ) {
-  var menu = '';
-  menu += '<ul class="nav navbar-nav">\n';
-  menu += getMenuItems( ctx, ctx.menus );
-  menu += '</ul>\n';
-  menu += '<ul class="nav navbar-nav navbar-right">\n';
-  menu += getLanguageItems( ctx );
-  menu += '</ul>\n';
-  return menu;
+function getNavbar( ctx ) {
+  var navbar = '';
+  navbar += '<ul class="nav navbar-nav">\n';
+  navbar += getNavbarItems( ctx, ctx.menus );
+  navbar += '</ul>\n';
+  navbar += '<ul class="nav navbar-nav navbar-right">\n';
+  navbar += getLanguageItems( ctx );
+  navbar += '</ul>\n';
+  return navbar;
 }
 
-function getMenuItems( ctx, items ) {
-  var menu = '';
+function getNavbarItems( ctx, items ) {
+  var navbar = '';
   items.forEach( function ( item ) {
     if (item.paths) {
       if (item.text === '---')
       // Separator:
-        menu += '<li class="divider"></li>';
+        navbar += '<li class="divider"></li>';
       else
-      // Menu line:
-        menu += '<li' + (item.isActive( ctx.baseUrl ) ? ' class="active"' : '') +
+      // Navbar line:
+        navbar += '<li' + (item.isActive( ctx.baseUrl ) ? ' class="active"' : '') +
           '><a href="' + item.paths[ 0 ] + '">' + item.text + '</a></li>\n';
     } else if (!item.hidden) {
-      // Menu node:
-      menu += '<li class="dropdown' + (item.isActive( ctx.baseUrl ) ? ' active' : '') + '">\n';
-      menu += '<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">' +
+      // Navbar node:
+      navbar += '<li class="dropdown' + (item.isActive( ctx.baseUrl ) ? ' active' : '') + '">\n';
+      navbar += '<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">' +
         item.text + ' <span class="caret"></span></a>\n';
-      menu += '<ul class="dropdown-menu" role="menu">\n';
-      menu += getMenuItems( ctx, item.children );
-      menu += '</ul>\n';
-      menu += '</li>\n';
+      navbar += '<ul class="dropdown-menu" role="menu">\n';
+      navbar += getNavbarItems( ctx, item.children );
+      navbar += '</ul>\n';
+      navbar += '</li>\n';
     }
   } );
-  return menu;
+  return navbar;
 }
 
 function getLanguageItems( ctx ) {
@@ -72,4 +72,4 @@ function getLanguageItems( ctx ) {
     return '';
 }
 
-module.exports = getMenu;
+module.exports = getNavbar;

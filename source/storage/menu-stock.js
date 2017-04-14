@@ -43,13 +43,14 @@ MenuStock.prototype.add = function( text, order, path, umbel ) {
   this.push( menuItem );
 };
 
-MenuStock.prototype.branch = function( text, order, hidden ) {
+MenuStock.prototype.branch = function( text, order, path, hidden ) {
 
   // Create sub-menu item.
   var menuItem = {
     id: ++ID,
     text: text,
     order: order,
+    path: path,
     hidden: hidden,
     children: new MenuStock()
   };

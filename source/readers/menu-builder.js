@@ -45,7 +45,7 @@ MenuBuilder.createMenuItem = function( menuStock, definition, contentPath, isDir
 
   if (isDirectory) {
     // Add sub-menu item.
-    return menuStock.branch( text, order, hidden );
+    return menuStock.branch( text, order, contentPath, hidden );
   }
   // Omit hidden item.
   else if (!hidden) {

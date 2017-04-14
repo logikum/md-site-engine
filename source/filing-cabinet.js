@@ -71,10 +71,20 @@ var FilingCabinet = function( config ) {
         else {
           // Determine the path of the segment.
           var segmentKey = definition.segments[ token.name ] || token.name;
-          // Get the segment object.
-          var segment = self.segments.get( language, segmentKey );
-          // Get the text of the segment.
-          textToInsert = insertSegments( segment );
+          // Check if segment is replaced by a control.
+          if (segmentKey[ 0 ] === '#'){
+            // Determine the path of the control.
+            var proxyKey = segmentKey.substr( 1 );
+            // Get the control.
+            var proxyControl = self.controls.get( proxyKey );
+            // Call the control to get its text.
+            textToInsert = proxyControl( context );
+          } else {
+            // Get the segment object.
+            var segment = self.segments.get( language, segmentKey );
+            // Get the text of the segment.
+            textToInsert = insertSegments( segment );
+          }
         }
 
         // Insert the result of the token into the component.
