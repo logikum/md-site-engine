@@ -3,7 +3,6 @@
 var insertStaticSegments = require( './insert-static-segments.js' );
 var PATH = require( './../utilities/rd-path.js' );
 var Metadata = require( './../models/metadata.js' );
-var sanitize = require( './../utilities/sanitize-html.js' );
 var showComponent = require( './../utilities/show-component.js' );
 var showMetadata = require( './../utilities/show-metadata.js' );
 
@@ -140,6 +139,5 @@ var ContentStock = function() {
 
   //endregion
 };
-
 
 module.exports = ContentStock;

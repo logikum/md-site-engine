@@ -22,5 +22,6 @@ data {
 }
 li.list-item-group {
     list-style-type: none;
-    color: #800080;
+    margin-left: -20px;
+    color: #FFA500;
 }

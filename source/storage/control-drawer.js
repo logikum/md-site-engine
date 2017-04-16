@@ -2,6 +2,7 @@
 
 var logger = require( '../utilities/logger.js' );
 var PATH = require( './../utilities/rd-path.js' );
+var sanitize = require( './../utilities/sanitize-html.js' );
 
 var ControlDrawer = function() {
 
@@ -52,7 +53,9 @@ var ControlDrawer = function() {
   };
 
   this.show = function ( key ) {
-    return '<pre>' + controls[ key ] + '</pre>\n';
+    return '<pre><code class="lang-javascript">' +
+      sanitize( controls[ key ].toString() ) +
+      '</code></pre>\n';
   };
 
   //endregion

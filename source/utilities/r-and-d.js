@@ -8,16 +8,19 @@ var pkgInfo = require( './../../package.json' );
 var cssPath = path.join( process.cwd(), 'node_modules/md-site-engine/source/utilities/r-and-d.css' );
 var css = fs.readFileSync( cssPath, { encoding: 'utf-8' } );
 
-var bootstrap = '<link rel="stylesheet" ' +
-  'href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" ' +
-  'integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" ' +
-  'crossorigin="anonymous">';
+var head = '\n' +
+  '  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />\n' +
+  '  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/ir-black.min.css">\n';
+var foot = '\n' +
+    //'  <script src="/js/bootstrap-3.3.6.min.js"></script>\n' +
+  '  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>\n' +
+  '  <script>hljs.initHighlightingOnLoad();</script>\n';
 
 function wrap( title, body ) {
-  return '<html>\n<head>' + bootstrap + '</head>\n<style>\n' + css + '\n</style>\n\n' +
+  return '<html>\n<head>' + head + '</head>\n<style>\n' + css + '\n</style>\n\n' +
     '<h1>' + title + '</h1>\n' +
     '<p><i>' + pkgInfo.name + ' v' + pkgInfo.version + '</i></p>\n' +
-    body + '\n</body>\n</html>\n';
+    body + foot + '\n</body>\n</html>\n';
 }
 
 function backToRoot() {

@@ -1,7 +1,5 @@
 'use strict';
 
-var sanitize = require( './sanitize-html.js' );
-
 var showMetadata = function( metadata ) {
 
   var list = '<h3>Metadata</h3>\n';
@@ -14,6 +12,8 @@ var showMetadata = function( metadata ) {
       list += '<li class="list-item-group">Menu properties:</li>\n';
     if (i === 7)
       list += '<li class="list-item-group">Page properties:</li>\n';
+    if (i === 12)
+      list += '<li class="list-item-group">Custom properties:</li>\n';
 
     if (item === 'segments') {
       list += '<li><b>' + item + '</b>:</li>\n';

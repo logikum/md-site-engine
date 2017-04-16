@@ -37,7 +37,7 @@ var ReferenceDrawer = function( referenceFile ) {
   };
 
   this.show = function ( key ) {
-    return '<pre>' + references[ key ] + '</pre>\n';
+    return '<pre><code class="no-highlight">' + references[ key ] + '</code></pre>\n';
   };
 
   //endregion

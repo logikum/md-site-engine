@@ -7,7 +7,9 @@ var showComponent = function( component ) {
   var list = '<ul>\n';
   for (var item in component) {
     if (item === 'text')
-      list += '<li><b>' + item + '</b>:<pre>' + sanitize( component[ item ] ) + '</pre></li>\n';
+      list += '<li><b>' + item + '</b>:<pre><code class="lang-html">' +
+        sanitize( component[ item ] ) +
+        '</code></pre></li>\n';
 
     else if (item === 'tokens') {
       list += '<li><b>' + item + '</b>:</li>\n';
