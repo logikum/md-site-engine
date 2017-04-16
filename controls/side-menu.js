@@ -5,21 +5,23 @@ var chevron = '<span class="glyphicon glyphicon-chevron-right pull-right" style=
 function getSideMenu( ctx ) {
   var menu = '';
 
+  // Get side-menu attributes.
   var root = ctx.metadata[ 'side-menu-root' ];
   var header = ctx.metadata[ 'side-menu-header' ];
   var top = ctx.metadata[ 'side-menu-top' ];
   var depth = ctx.metadata[ 'side-menu-depth' ] || 1;
 
   if (root) {
-    var rootItem = findMenuRoot( root, ctx.menus );
+    var rootItem = ctx.menus.findNode( root );
     if (rootItem) {
-
+      // Add required header.
       if (header)
         menu += '<h4 class="side-menu">' + header + '</h4>';
 
       menu += '<ul class="side-menu">\n';
       if (top) {
-        var topItem = findMenuTop( root, ctx.menus );
+        // Add required parent item.
+        var topItem = ctx.menus.findItem( root );
         if (topItem) {
           // Separator?
           if (topItem.text === '---')
@@ -33,41 +35,12 @@ function getSideMenu( ctx ) {
             menu += '  <li><a href="' + topItem.paths[ 0 ] + '">' + top + '</a></li>\n';
         }
       }
+      // Add menu items and sub-menus.
       menu += getMenuItems( ctx, rootItem.children, depth, 0 );
       menu += '</ul>\n';
     }
   }
   return menu;
-}
-
-function findMenuRoot( root, items ) {
-  var result;
-  items.forEach( function ( item ) {
-    if (!result && item.path === root)
-      result = item;
-    if (!result && item.children) {
-      var child = findMenuRoot( root, item.children );
-      if (child)
-        result = child;
-    }
-  } );
-  return result;
-}
-
-function findMenuTop( root, items ) {
-  var result;
-  items.forEach( function ( item ) {
-    if (!result && item.paths && item.paths.filter( function( path ) {
-        return path === root;
-      } ).length > 0)
-      result = item;
-    if (!result && item.children) {
-      var child = findMenuTop( root, item.children );
-      if (child)
-        result = child;
-    }
-  } );
-  return result;
 }
 
 function getMenuItems( ctx, items, depth, level ) {
@@ -88,13 +61,11 @@ function getMenuItems( ctx, items, depth, level ) {
       // Menu line.
       else
         menu += indent + '<li><a href="' + item.paths[ 0 ] + '">' + item.text + '</a></li>\n';
-    } else if (level < depth && !item.hidden) {
+    } else if (level < depth - 1 && item.children) {
       // Sub-menu.
-      menu += indent + '<li>\n';
       menu += indent + '  <ul>\n';
       menu += getMenuItems( ctx, item.children, depth, level + 1 );
       menu += indent + '  </ul>\n';
-      menu += indent + '</li>\n';
     }
   } );
   return menu;

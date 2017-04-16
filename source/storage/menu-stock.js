@@ -92,12 +92,52 @@ MenuStock.prototype.finalize = function() {
     menu.push( item );
   });
 
+  // Helper method to find a menu item with the required path.
+  menu.findItem = function( path ) {
+    return findItem( path, this );
+  };
+
+  // Helper method to find a menu node with the required path.
+  menu.findNode = function( path ) {
+    return findNode( path, this );
+  };
+
   // Immutable object.
   Object.freeze( menu );
 
   // Return the sorted and frozen menu array.
   return menu;
 };
+
+function findItem( path, items ) {
+  var result = null;
+  items.forEach( function ( item ) {
+    if (!result && item.paths && item.paths.filter( function( value ) {
+        return value === path;
+      } ).length > 0)
+      result = item;
+    if (!result && item.children) {
+      var child = findItem( path, item.children );
+      if (child)
+        result = child;
+    }
+  } );
+  return result;
+}
+
+function findNode( path, items ) {
+  var result = null;
+  items.forEach( function ( item ) {
+    if (!result && item.path === path)
+      result = item;
+    if (!result && item.children) {
+      var child = findNode( path, item.children );
+      if (child)
+        result = child;
+    }
+  } );
+  return result;
+}
 
 //endregion
 
