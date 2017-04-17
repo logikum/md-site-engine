@@ -15,20 +15,21 @@ function getReference( referenceFile ) {
 
     // Find common root definitions (tilde references).
     var tildes = { };
-    var re = /^\s*\[(~\d?)]\s*:/g;
-    var lines = text.split( '\n' );
-    for (var i = 0; i < lines.length; i++) {
-      var line = lines[ i ].trim();
+    var re = /^\s*\[(~\d*)]\s*:/g;
+    var source = text.split( '\n' );
+    var target = [ ];
+    for (var i = 0; i < source.length; i++) {
+      var line = source[ i ].trim();
       // Search common root pattern.
       var result = re.exec( line );
-      if (result) {
-        // Save common root value.
+      if (result)
+      // Save common root value.
         tildes[ result[ 1 ] ] = line.substring( line.indexOf( ':' ) + 1 ).trim();
-        // Remove this line from references.
-        lines.splice( i, 1 );
-      }
+      else if (line[ 0 ] === '[')
+      // Store reference link.
+        target.push( line );
     }
-    text = lines.join( '\n' );
+    text = target.join( '\n' );
 
     // Replace tilde+number pairs with common roots.
     var noIndex = false;
@@ -46,8 +47,6 @@ function getReference( referenceFile ) {
     // Finally replace tildes with its common root.
     if (noIndex)
       text = text.replace( / ~/g, ' ' + tildes[ '~' ] );
-
-    text = '\n\n' + text;
   }
   return text;
 }

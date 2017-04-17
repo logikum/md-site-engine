@@ -71,7 +71,7 @@ function processContents(
           // Generate HTML from markdown text.
           if (ext === '.md')
             content.text = marked(
-              content.text + references.get( language ),
+              content.text + '\n' + references.get( language ),
               { renderer: renderer }
             );
 

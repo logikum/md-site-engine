@@ -18,7 +18,7 @@ function getSegment(
   var text = fs.readFileSync( segmentPath, { encoding: 'utf-8' } );
 
   // Convert the markdown content.
-  text = marked( text + references.get( language ), { renderer: renderer } );
+  text = marked( text + '\n' + references.get( language ), { renderer: renderer } );
 
   // Find tokens.
   var re = /(\{\{\s*[=#]?[\w-\/]+\s*}})/g;
