@@ -26,6 +26,7 @@ var FilingCabinet = function( config ) {
   this.contents = new ContentDrawer( config.defaultLocale );
   this.menus = new MenuDrawer();
   this.languages = [ ];
+  this.text2search = '';
 
   var contextFactory = new ContextFactory( config, this );
 

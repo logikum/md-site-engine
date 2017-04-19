@@ -8,32 +8,48 @@ function getNavbar( ctx ) {
   navbar += '<ul class="nav navbar-nav navbar-right">\n';
   navbar += getLanguageItems( ctx );
   navbar += '</ul>\n';
+  navbar += getSearchField( ctx );
   return navbar;
 }
 
 function getNavbarItems( ctx, items ) {
-  var navbar = '';
+  var menu = '';
   items.forEach( function ( item ) {
     if (item.paths) {
       if (item.text === '---')
       // Separator:
-        navbar += '<li class="divider"></li>';
+        menu += '<li class="divider"></li>';
       else
       // Navbar line:
-        navbar += '<li' + (item.isActive( ctx.baseUrl ) ? ' class="active"' : '') +
+        menu += '<li' + (item.isActive( ctx.baseUrl ) ? ' class="active"' : '') +
           '><a href="' + item.paths[ 0 ] + '">' + item.text + '</a></li>\n';
     } else if (!item.hidden) {
       // Navbar node:
-      navbar += '<li class="dropdown' + (item.isActive( ctx.baseUrl ) ? ' active' : '') + '">\n';
-      navbar += '<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">' +
+      menu += '<li class="dropdown' + (item.isActive( ctx.baseUrl ) ? ' active' : '') + '">\n';
+      menu += '<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">' +
         item.text + ' <span class="caret"></span></a>\n';
-      navbar += '<ul class="dropdown-menu" role="menu">\n';
-      navbar += getNavbarItems( ctx, item.children );
-      navbar += '</ul>\n';
-      navbar += '</li>\n';
+      menu += '<ul class="dropdown-menu" role="menu">\n';
+      menu += getNavbarItems( ctx, item.children );
+      menu += '</ul>\n';
+      menu += '</li>\n';
     }
   } );
-  return navbar;
+  return menu;
+}
+
+function getSearchField( ctx ) {
+  return ctx.searchEnabled
+    ?
+    '<form class="navbar-form navbar-right navbar-input-group" action="/search" method="post">\n' +
+    '  <div class="form-group">\n' +
+    '    <input type="text" class="form-control" name="text2search" placeholder="' + ctx.t('search') + '">\n' +
+    '  </div>\n' +
+    '  <button type="submit" class="btn btn-default">\n' +
+    '    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>\n' +
+    '  </button>\n' +
+    '</form>\n'
+    :
+    '';
 }
 
 function getLanguageItems( ctx ) {

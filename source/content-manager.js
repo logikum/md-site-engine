@@ -125,6 +125,12 @@ function ContentManager( config ) {
       res.status( 200 ).send( self.get( req.session.language, '/' ) );
     } );
 
+    // Get the text to search.
+    app.post( '/search', function ( req, res, next ) {
+      filingCabinet.text2search = req.body.text2search;
+      next();
+    } );
+
     // Developer methods.
     if (isDevelopment)
       RandD.setRoutes( app, filingCabinet );
@@ -132,6 +138,7 @@ function ContentManager( config ) {
     // Serve contents.
     app.use( '*', function ( req, res ) {
       res.status( 200 ).send( self.get( req.session.language, req.baseUrl ) );
+      filingCabinet.text2search = '';
     } );
   };
 

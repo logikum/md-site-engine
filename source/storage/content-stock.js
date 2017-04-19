@@ -2,22 +2,25 @@
 
 var insertStaticSegments = require( './insert-static-segments.js' );
 var PATH = require( './../utilities/rd-path.js' );
+var Content = require( './../models/content.js' );
 var Metadata = require( './../models/metadata.js' );
 var showComponent = require( './../utilities/show-component.js' );
 var showMetadata = require( './../utilities/show-metadata.js' );
 
 var ContentStock = function() {
 
+  var self = this;
   var contents = [ ];
   var definitions = [ ];
   var map = { };
   var index404;
+  var hasSearch = false;
 
-  this.add = function ( content, definition ) {
+  this.add = function( content, definition ) {
     if (arguments.length > 1) {
       // Delete path - saved on metadata.
       var path = content.path;
-      delete content.path;
+      //delete content.path;
 
       // Store content.
       contents.push( content );
@@ -46,34 +49,92 @@ var ContentStock = function() {
     // Find custom error content.
     if (path === '/404')
       index404 = index;
+
+    // Find search result page.
+    if (path === '/search')
+      hasSearch = true;
   }
 
-  this.getContent = function ( path ) {
+  this.getContent = function( path ) {
 
     if (map[ path ] !== undefined)
-      // The requested content is found.
+    // The requested content is found.
       return contents[ map[ path ] ];
 
     else if (index404 !== undefined)
-      // The requested content is not found - custom error.
+    // The requested content is not found - custom error.
       return contents[ index404 ];
 
     else
-      // The requested content is not found - no content.
+    // The requested content is not found - no content.
       return '<p><b>404</b> - That\'s an error.</p><p>The requested URL ' +
         path + ' was not found on this server.</br>That’s all we know.</p>';
   };
 
-  this.getDefinition = function ( path ) {
+  this.getDefinition = function( path ) {
 
     if (map[ path ] !== undefined)
-      // The requested definition is found.
+    // The requested definition is found.
       return definitions[ map[ path ] ];
 
     else
-      // The requested definition is not found - empty definition.
+    // The requested definition is not found - empty definition.
       return new Metadata( { }, '' );
   };
+
+  //region Search
+
+  this.hasSearch = function() {
+
+    // Does search result page exist?
+    return hasSearch;
+  };
+
+  this.search = function( text2search ) {
+    var results = [ ];
+
+    definitions.forEach( function( definition ) {
+      var priority = 0;
+      if (definition.title && definition.title.indexOf( text2search ) >= 0)
+        priority = 4;
+      else if (definition.keywords && definition.keywords.indexOf( text2search ) >= 0)
+        priority = 3;
+      else if (definition.description && definition.description.indexOf( text2search ) >= 0)
+        priority = 2;
+      else {
+        var content = self.getContent( definition.path );
+        if (content instanceof Content &&content.searchable &&
+          content.searchable.indexOf( text2search ) >= 0)
+          priority = 1;
+      }
+
+      if (priority > 0) {
+        results.push( {
+          title: definition.title,
+          description: definition.description,
+          path: definition.path,
+          priority: priority
+        } );
+      }
+    } );
+
+    // Get search results ordered by priority DESC, title ASC.
+    return results.sort( function ( a, b ) {
+      if (a.priority < b.priority)
+        return 1;
+      if (a.priority > b.priority)
+        return -1;
+      // priorities are equal
+      if (a.title < b.title)
+        return -1;
+      if (a.title > b.title)
+        return 1;
+      // a must be equal to b
+      return 0;
+    });
+  };
+
+  //endregion
 
   //region Validation
 
@@ -84,11 +145,11 @@ var ContentStock = function() {
     });
 
     if (targets.length > 0)
-      // The requested definition is found.
+    // The requested definition is found.
       return targets[ 0 ];
 
     else
-      // The requested definition is not found - empty definition.
+    // The requested definition is not found - empty definition.
       return new Metadata( { }, '' );
   };
 
@@ -115,6 +176,16 @@ var ContentStock = function() {
 
     // Insert static segments into language specific contents.
     insertStaticSegments( contents, segments, language );
+
+    // Create searchable texts.
+    for(var path in contents) {
+      var content = contents[ path ];
+
+      content.searchable = content.text
+        .replace( /<(?:.|\n)*?>/gm, " " )   // remove HTML tags
+        .replace( /\W/g, ' ' )   // remove non alphanumeric characters
+        .toLowerCase();
+    }
   };
 
   //endregion

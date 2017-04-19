@@ -16,6 +16,9 @@ var ContextFactory = function( config, filingCabinet ) {
     },
     translate: function ( key ) {
       return xlate( this.language, key );
+    },
+    getSearchResults: function() {
+      return filingCabinet.contents.search( this.language, this.text2search );
     }
   };
 
@@ -26,7 +29,9 @@ var ContextFactory = function( config, filingCabinet ) {
       language:language,
       baseUrl: baseUrl,
       metadata: definition,
-      menus: filingCabinet.menus.get( language )
+      menus: filingCabinet.menus.get( language ),
+      text2search: filingCabinet.text2search,
+      searchEnabled: filingCabinet.contents.hasSearch( language )
     }, proto );
 
     // Immutable object.

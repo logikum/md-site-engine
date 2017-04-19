@@ -6,7 +6,7 @@ var ContentDrawer = function( defaultLanguage ) {
 
   var contents = { };
 
-  this.create = function ( language ) {
+  this.create = function( language ) {
 
     // Create a content stock for the language.
     contents[ language ] = new ContentStock();
@@ -15,7 +15,7 @@ var ContentDrawer = function( defaultLanguage ) {
     return contents[ language ];
   };
 
-  this.getContent = function ( language, path ) {
+  this.getContent = function( language, path ) {
 
     // Try the requested language.
     if (contents[ language ] !== undefined)
@@ -26,7 +26,7 @@ var ContentDrawer = function( defaultLanguage ) {
       return contents[ defaultLanguage ].getContent( path );
   };
 
-  this.getDefinition = function ( language, path ) {
+  this.getDefinition = function( language, path ) {
 
     // Try the requested language.
     if (contents[ language ] !== undefined)
@@ -37,7 +37,7 @@ var ContentDrawer = function( defaultLanguage ) {
       return contents[ defaultLanguage ].getDefinition( path );
   };
 
-  this.getLocalizedPath = function ( curLanguage, baseUrl, newLanguage ) {
+  this.getLocalizedPath = function( curLanguage, baseUrl, newLanguage ) {
     var localizedPath = '/';
 
     // Find the definition of the current content.
@@ -50,6 +50,18 @@ var ContentDrawer = function( defaultLanguage ) {
     }
 
     return localizedPath;
+  };
+
+  this.hasSearch = function( language ) {
+
+    // Does search result page exist?
+    return contents[ language ].hasSearch();
+  };
+
+  this.search = function( language, text2search ) {
+
+    // Get search results
+    return contents[ language ].search( text2search );
   };
 
   //region Validation
