@@ -41,6 +41,7 @@ var Metadata = function( definitions, path ) {
   this.document = '';
   this.layout = '';
   this.segments = { };
+  this.searchable = true;
 
   Object.assign( this, getMainProperties( definitions ) );
   Object.assign( this.segments, getSegmentProperties( definitions ) );

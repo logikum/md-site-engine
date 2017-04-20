@@ -12,7 +12,7 @@ var showMetadata = function( metadata ) {
       list += '<li class="list-item-group">Menu properties:</li>\n';
     if (i === 7)
       list += '<li class="list-item-group">Page properties:</li>\n';
-    if (i === 12)
+    if (i === 13)
       list += '<li class="list-item-group">Custom properties:</li>\n';
 
     if (item === 'segments') {
