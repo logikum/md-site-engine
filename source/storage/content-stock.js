@@ -187,6 +187,7 @@ var ContentStock = function() {
           content.searchable = content.text
             .replace( /<(?:.|\n)*?>/gm, " " )   // remove HTML tags
             .replace( /\W/g, ' ' )   // remove non alphanumeric characters
+            .replace( /\s+/g, ' ' )   // remove multiple spaces
             .toLowerCase();
       } );
   };

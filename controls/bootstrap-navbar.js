@@ -42,9 +42,10 @@ function getSearchField( ctx ) {
     ?
     '<form class="navbar-form navbar-right navbar-input-group" action="/search" method="post">\n' +
     '  <div class="form-group">\n' +
-    '    <input type="text" class="form-control" name="text2search" placeholder="' + ctx.t('search') + '">\n' +
+    '    <input type="text" class="form-control" name="text2search" id="text2search"\n' +
+    '           maxlength="13" placeholder="' + ctx.t('search') + '">\n' +
     '  </div>\n' +
-    '  <button type="submit" class="btn btn-default">\n' +
+    '  <button type="submit" class="btn btn-default" id="btnSearch" disabled="disabled">\n' +
     '    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>\n' +
     '  </button>\n' +
     '</form>\n'
