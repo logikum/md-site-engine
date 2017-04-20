@@ -38,9 +38,9 @@ function getNavbarItems( ctx, items ) {
 }
 
 function getSearchField( ctx ) {
-  return ctx.searchEnabled
+  return ctx.searchPath
     ?
-    '<form class="navbar-form navbar-right navbar-input-group" action="/search" method="post">\n' +
+    '<form class="navbar-form navbar-right navbar-input-group" action="' + ctx.searchPath + '" method="post">\n' +
     '  <div class="form-group">\n' +
     '    <input type="text" class="form-control" name="text2search" id="text2search"\n' +
     '           maxlength="13" placeholder="' + ctx.t('search') + '">\n' +

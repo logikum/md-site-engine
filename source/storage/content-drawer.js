@@ -6,6 +6,8 @@ var ContentDrawer = function( defaultLanguage ) {
 
   var contents = { };
 
+  //region Methods
+
   this.create = function( language ) {
 
     // Create a content stock for the language.
@@ -52,10 +54,14 @@ var ContentDrawer = function( defaultLanguage ) {
     return localizedPath;
   };
 
-  this.hasSearch = function( language ) {
+  //endregion
+
+  //region Search
+
+  this.searchPath = function( language ) {
 
     // Does search result page exist?
-    return contents[ language ].hasSearch();
+    return contents[ language ].searchPath();
   };
 
   this.search = function( language, text2search ) {
@@ -63,6 +69,8 @@ var ContentDrawer = function( defaultLanguage ) {
     // Get search results
     return contents[ language ].search( text2search );
   };
+
+  //endregion
 
   //region Validation
 

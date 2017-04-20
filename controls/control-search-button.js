@@ -1,7 +1,8 @@
 'use strict';
 
 function controlSearchButton( ctx ) {
-  return '\n' +
+  return ctx.searchPath ?
+    '\n' +
     '<script>\n' +
     '  (function() {\n' +
     '    $("#text2search").keyup(function() {\n' +
@@ -15,7 +16,9 @@ function controlSearchButton( ctx ) {
     '    });\n' +
     '  })()\n' +
     '</script>\n' +
-    '\n';
+    '\n'
+    :
+    '';
 }
 
 module.exports = controlSearchButton;

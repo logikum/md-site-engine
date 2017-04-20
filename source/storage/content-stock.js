@@ -15,13 +15,15 @@ var ContentStock = function() {
   var definitions = [ ];
   var map = { };
   var index404;
-  var hasSearch = false;
+  var searchPath = '';
+
+  //region Methods
 
   this.add = function( content, definition ) {
     if (arguments.length > 1) {
       // Delete path - saved on metadata.
       var path = content.path;
-      //delete content.path;
+      delete content.path;
 
       // Store content.
       contents.push( content );
@@ -31,29 +33,29 @@ var ContentStock = function() {
 
       // Create default map.
       var index = contents.length - 1;
-      addMap( path, index );
+      addMap( path, definition.id, index );
 
       // Add optional alternate maps.
       var length = path.length;
       if (length >= 6 && path.substr( -6 ) === '/index') {
-        addMap( path.substr( 0, length - 5 ), index );
-        addMap( path.substr( 0, length - 6 ), index );
+        addMap( path.substr( 0, length - 5 ), definition.id, index );
+        addMap( path.substr( 0, length - 6 ), definition.id, index );
       }
     }
   };
 
-  function addMap( path, index ) {
+  function addMap( path, id, index ) {
 
     // Store the index.
     map[ path ] = index;
 
     // Find custom error content.
-    if (path === '/404')
+    if (id === '/404')
       index404 = index;
 
     // Find search result page.
-    if (path === '/search')
-      hasSearch = true;
+    if (id === '/search')
+      searchPath = path;
   }
 
   this.getContent = function( path ) {
@@ -83,17 +85,24 @@ var ContentStock = function() {
       return new Metadata( { }, '' );
   };
 
+  //endregion
+
   //region Search
 
-  this.hasSearch = function() {
+  this.searchPath = function() {
 
     // Does search result page exist?
-    return hasSearch;
+    return searchPath;
   };
 
   this.search = function( text2search ) {
     var results = [ ];
 
+    // Is anything to search there?
+    if (!text2search)
+      return null;
+
+    // Check all searchable contents.
     definitions
       .filter( function( definition ) {
         return definition.searchable;
@@ -112,7 +121,7 @@ var ContentStock = function() {
             content.searchable.indexOf( text2search ) >= 0)
             priority = 1;
         }
-
+        // Does the search phrase appear in this content?
         if (priority > 0)
           results.push( new SearchResult( definition, priority ) );
       } );

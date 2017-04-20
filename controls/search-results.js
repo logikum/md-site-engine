@@ -4,7 +4,12 @@ function searchResults( ctx ) {
   var results = ctx.getSearchResults();
   var html = '';
 
-  if (results.length > 0) {
+  if (results === null) {
+    html += '<div class="search-result">\n';
+    html += '  <em>' + ctx.t( 'noSearchPhrase' ) + '</em>\n';
+    html += '</div>\n';
+  }
+  else if (results.length > 0) {
     results.forEach( function ( item ) {
 
       html += '<div class="search-result">\n';

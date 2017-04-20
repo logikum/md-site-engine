@@ -126,9 +126,14 @@ function ContentManager( config ) {
     } );
 
     // Get the text to search.
-    app.post( '/search', function ( req, res, next ) {
-      filingCabinet.text2search = req.body.text2search;
-      next();
+    var searchPaths = [ ];
+    filingCabinet.languages.forEach( function( language ) {
+      var searchPath = filingCabinet.contents.searchPath( language );
+      if (searchPath && searchPaths.indexOf( searchPath ) < 0)
+        searchPaths.push( searchPath );
+    } );
+    searchPaths.forEach( function( searchPath ) {
+      app.post( searchPath, readSearchPhrase );
     } );
 
     // Developer methods.
@@ -141,6 +146,16 @@ function ContentManager( config ) {
       filingCabinet.text2search = '';
     } );
   };
+
+  function readSearchPhrase( req, res, next ) {
+    if (req.body)
+      filingCabinet.text2search = req.body.text2search;
+    else {
+      filingCabinet.text2search = '';
+      logger.showError( 'Middleware "body-parser" is not applied.' );
+    }
+    next();
+  }
 
   //endregion
 }

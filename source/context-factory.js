@@ -31,7 +31,7 @@ var ContextFactory = function( config, filingCabinet ) {
       metadata: definition,
       menus: filingCabinet.menus.get( language ),
       text2search: filingCabinet.text2search,
-      searchEnabled: filingCabinet.contents.hasSearch( language )
+      searchPath: filingCabinet.contents.searchPath( language )
     }, proto );
 
     // Immutable object.
