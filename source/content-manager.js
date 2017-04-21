@@ -60,25 +60,9 @@ function ContentManager( config ) {
 
   //region Public properties
 
-  Object.defineProperty( this, 'locale', {
+  Object.defineProperty( this, 'supportedLocales', {
     get: function () {
-      return config.locale;
-    },
-    enumerable: true,
-    configurable: false
-  } );
-
-  Object.defineProperty( this, 'session', {
-    get: function () {
-      return config.session;
-    },
-    enumerable: true,
-    configurable: false
-  } );
-
-  Object.defineProperty( this, 'site', {
-    get: function () {
-      return config.site;
+      return filingCabinet.languages;
     },
     enumerable: true,
     configurable: false
@@ -96,11 +80,10 @@ function ContentManager( config ) {
 
     // Set up language.
     app.use( function ( req, res, next ) {
-      if (!req.session) {
-        req.session = { language: config.defaultLocale };
-      } else if (!req.session.language) {
-        req.session.language = config.defaultLocale;
-      }
+      if (!req.session)
+        req.session = { language: req.locale || config.defaultLocale };
+      else if (!req.session.language)
+        req.session.language = req.locale || config.defaultLocale;
       next();
     } );
 
