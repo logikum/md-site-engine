@@ -33,6 +33,21 @@ function setDefaults( config ) {
   if (!config.redis.port) config.redis.port = 6379;
   if (!config.redis.db) config.redis.db = 0;
   if (!config.redis.pass) config.redis.pass = undefined;
+
+  // Default route paths.
+  if (!config.paths) config.paths = {};
+  if (!config.paths.notFound) config.paths.notFound = '/404';
+  if (!config.paths.setLanguage) config.paths.setLanguage = '/set-language';
+  if (!config.paths.reboot) config.paths.reboot = '/reboot';
+  if (!config.paths.search) config.paths.search = '/search';
+  if (!config.paths.RandD) config.paths.RandD = '/r&d';
+  // Default R&D paths.
+  if (!config.paths.cssBootstrap) config.paths.cssBootstrap =
+    '//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css';
+  if (!config.paths.cssHighlight) config.paths.cssHighlight =
+    '//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/ir-black.min.css';
+  if (!config.paths.jsHighlight) config.paths.jsHighlight =
+    '//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js';
 }
 
 /**

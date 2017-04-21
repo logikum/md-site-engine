@@ -1,13 +1,11 @@
 'use strict';
 
-var ROOT = '/r&d';
+var ROOT = null;
 var LIST = '-list-';
 var SHOW = '-show-';
 
-var RDPath = {
-
-  root: ROOT,
-  list: {
+function getListPaths() {
+  return {
     languages: ROOT + LIST + 'languages',
     documents: ROOT + LIST + 'documents',
     layouts: ROOT + LIST + 'layouts',
@@ -17,8 +15,11 @@ var RDPath = {
     locales: ROOT + LIST + 'locales',
     references: ROOT + LIST + 'references',
     controls: ROOT + LIST + 'controls'
-  },
-  show: {
+  };
+}
+
+function getShowPaths() {
+  return {
     //language: ROOT + SHOW + 'language',
     document: ROOT + SHOW + 'document',
     layout: ROOT + SHOW + 'layout',
@@ -28,8 +29,21 @@ var RDPath = {
     //locale: ROOT + SHOW + 'locale',
     reference: ROOT + SHOW + 'reference',
     control: ROOT + SHOW + 'control'
-  },
+  };
+}
 
+var PATH = {
+
+  root: ROOT,
+  list: getListPaths(),
+  show: getShowPaths(),
+
+  init: function ( root ) {
+    ROOT = root;
+    this.root = root;
+    this.list = getListPaths();
+    this.show = getShowPaths();
+  },
   safe: function( path ) {
     return path.replace( /\//g, '~' );
   },
@@ -38,4 +52,4 @@ var RDPath = {
   }
 };
 
-module.exports = RDPath;
+module.exports = PATH;

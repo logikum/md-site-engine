@@ -93,7 +93,7 @@ function ContentManager( config ) {
     } );
 
     // Change language.
-    app.use( '/set-language', function ( req, res ) {
+    app.use( config.paths.setLanguage, function ( req, res ) {
 
       var len = req.baseUrl.length;
       var url = req.originalUrl.split( '?' )[ 0 ].substr( len );
@@ -108,7 +108,7 @@ function ContentManager( config ) {
     } );
 
     // Reread the contents.
-    app.use( '/reboot', function ( req, res ) {
+    app.use( config.paths.reboot, function ( req, res ) {
       initialize();
       res.status( 200 ).send( self.get( req.session.language, '/' ) );
     } );
@@ -126,7 +126,7 @@ function ContentManager( config ) {
 
     // Developer methods.
     if (isDevelopment)
-      RandD.setRoutes( app, filingCabinet );
+      RandD.setRoutes( app, filingCabinet, config.paths.RandD );
 
     // Serve contents.
     app.use( '*', function ( req, res ) {

@@ -23,7 +23,9 @@ var FilingCabinet = function( config ) {
   this.segments = new SegmentDrawer();
   this.locales = new LocaleDrawer( config.defaultLocale );
 
-  this.contents = new ContentDrawer( config.defaultLocale );
+  this.contents = new ContentDrawer(
+    config.defaultLocale, config.paths.notFound, config.paths.search
+  );
   this.menus = new MenuDrawer();
   this.languages = [ ];
   this.text2search = '';

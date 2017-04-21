@@ -2,7 +2,7 @@
 
 var ContentStock = require( './content-stock.js' );
 
-var ContentDrawer = function( defaultLanguage ) {
+var ContentDrawer = function( defaultLanguage, path404, pathSearch ) {
 
   var contents = { };
 
@@ -11,7 +11,7 @@ var ContentDrawer = function( defaultLanguage ) {
   this.create = function( language ) {
 
     // Create a content stock for the language.
-    contents[ language ] = new ContentStock();
+    contents[ language ] = new ContentStock( path404, pathSearch );
 
     // Return the content stock created.
     return contents[ language ];

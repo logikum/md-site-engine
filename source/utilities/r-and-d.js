@@ -12,7 +12,6 @@ var head = '\n' +
   '  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />\n' +
   '  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/ir-black.min.css">\n';
 var foot = '\n' +
-    //'  <script src="/js/bootstrap-3.3.6.min.js"></script>\n' +
   '  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>\n' +
   '  <script>hljs.initHighlightingOnLoad();</script>\n';
 
@@ -37,7 +36,10 @@ function show( item ) {
 
 var RandD = {
 
-  setRoutes: function ( app, filingCabinet ) {
+  setRoutes: function ( app, filingCabinet, rootPath ) {
+
+    // Set up developer paths.
+    PATH.init( rootPath );
 
     // Developer home page.
     app.get( PATH.root, function ( req, res ) {

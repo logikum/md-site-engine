@@ -8,7 +8,7 @@ var SearchResult = require( './../models/search-result.js' );
 var showComponent = require( './../utilities/show-component.js' );
 var showMetadata = require( './../utilities/show-metadata.js' );
 
-var ContentStock = function() {
+var ContentStock = function( path404, pathSearch ) {
 
   var self = this;
   var contents = [ ];
@@ -50,11 +50,11 @@ var ContentStock = function() {
     map[ path ] = index;
 
     // Find custom error content.
-    if (id === '/404')
+    if (id === path404)
       index404 = index;
 
     // Find search result page.
-    if (id === '/search')
+    if (id === pathSearch)
       searchPath = path;
   }
 
