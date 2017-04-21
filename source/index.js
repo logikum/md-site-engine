@@ -4,6 +4,9 @@ var path = require( 'path' );
 var Configuration = require( './models/configuration.js' );
 var ContentManager = require( './content-manager.js' );
 
+// Apply polyfills.
+require( './polyfills/object-assign.js' )();
+
 module.exports = {
 
   getConfiguration: function ( configPath ) {
