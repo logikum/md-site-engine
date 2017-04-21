@@ -1,6 +1,6 @@
 {
   "name": "md-site-engine",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "runs a web site built from markdown pages",
   "keywords": [
     "markdown",

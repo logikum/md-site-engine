@@ -9,7 +9,7 @@ var readComponents = require( './readers/read-components.js' );
 var readContents = require( './readers/read-contents.js' );
 var logger = require( './utilities/logger.js' );
 var negotiateLanguage = require( './utilities/negotiate-language.js' );
-var RandD = require( './utilities/r-and-d.js' );
+var setDeveloperRoutes = require( './utilities/r-and-d.js' );
 
 var markedRenderer = './utilities/marked-renderer.js';
 
@@ -126,7 +126,10 @@ function ContentManager( config ) {
 
     // Developer methods.
     if (isDevelopment)
-      RandD.setRoutes( app, filingCabinet, config.paths.RandD );
+      setDeveloperRoutes(
+        app, filingCabinet, config.paths.RandD,
+        config.paths.cssBootstrap, config.paths.cssHighlight, config.paths.jsHighlight
+      );
 
     // Serve contents.
     app.use( '*', function ( req, res ) {
