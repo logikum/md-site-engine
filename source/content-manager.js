@@ -8,6 +8,7 @@ var readReferences = require( './readers/read-references.js' );
 var readComponents = require( './readers/read-components.js' );
 var readContents = require( './readers/read-contents.js' );
 var logger = require( './utilities/logger.js' );
+var negotiateLanguage = require( './utilities/negotiate-language.js' );
 var RandD = require( './utilities/r-and-d.js' );
 
 var markedRenderer = './utilities/marked-renderer.js';
@@ -81,9 +82,13 @@ function ContentManager( config ) {
     // Set up language.
     app.use( function ( req, res, next ) {
       if (!req.session)
-        req.session = { language: req.locale || config.defaultLocale };
+        req.session = { language: negotiateLanguage(
+          req.headers["accept-language"], filingCabinet.languages, config.defaultLocale
+        ) };
       else if (!req.session.language)
-        req.session.language = req.locale || config.defaultLocale;
+        req.session.language = negotiateLanguage(
+          req.headers["accept-language"], filingCabinet.languages, config.defaultLocale
+        );
       next();
     } );
 

@@ -90,7 +90,7 @@ MenuStock.prototype.finalize = function() {
     return 0;
   } ).forEach( function( item ) {
     menu.push( item );
-  });
+  } );
 
   // Helper method to find a menu item with the required path.
   menu.findItem = function( path ) {
