@@ -2,7 +2,7 @@
 
 var path = require( 'path' );
 
-var ContextFactory = require( './context-factory.js' );
+var ContextFactory = require( './models/context-factory.js' );
 var ControlDrawer = require( './storage/control-drawer.js' );
 var ReferenceDrawer = require( './storage/reference-drawer.js' );
 var DocumentDrawer = require( './storage/document-drawer.js' );

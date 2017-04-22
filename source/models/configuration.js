@@ -51,8 +51,8 @@ function setDefaults( config ) {
 }
 
 /**
- *
- * @param data
+ * Represents the configuration of the markdown site engine.
+ * @param {object} data - A JSON object that holds the user configuration.
  * @constructor
  */
 var Configuration = function( data ) {
