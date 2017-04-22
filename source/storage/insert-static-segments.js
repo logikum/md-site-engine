@@ -29,7 +29,7 @@ function insertStaticSegments( components, segments, languages ) {
 
             // Insert the static segment into the component.
             var re = new RegExp( token.expression, 'g' );
-            component.text = component.text.replace( re, segment.text );
+            component.html = component.html.replace( re, segment.html );
             appliedTokens.push( token.name );
           } );
 

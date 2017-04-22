@@ -117,8 +117,8 @@ var ContentStock = function( path404, pathSearch ) {
           priority = 2;
         else {
           var content = self.getContent( definition.path );
-          if (content instanceof Content && content.searchable &&
-            content.searchable.indexOf( text2search ) >= 0)
+          if (content instanceof Content && content.text &&
+            content.text.indexOf( text2search ) >= 0)
             priority = 1;
         }
         // Does the search phrase appear in this content?
@@ -193,7 +193,7 @@ var ContentStock = function( path404, pathSearch ) {
       .forEach( function( definition ) {
         var content = self.getContent( definition.path );
         if (content instanceof Content)
-          content.searchable = content.text
+          content.text = content.html
             .replace( /<(?:.|\n)*?>/gm, " " )   // remove HTML tags
             .replace( /\W/g, ' ' )   // remove non alphanumeric characters
             .replace( /\s+/g, ' ' )   // remove multiple spaces

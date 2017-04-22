@@ -9,6 +9,8 @@ var LayoutDrawer = function() {
 
   var layouts = { };
 
+  //region Methods
+
   this.add = function ( key, layout ) {
 
     // Store the layout.
@@ -31,6 +33,8 @@ var LayoutDrawer = function() {
     // The request cannot be fulfilled.
     throw new Error( 'Layout ' + key + ' is not found.' );
   };
+
+  //endregion
 
   //region Validation
 

@@ -18,13 +18,13 @@ function getSegment(
   var text = fs.readFileSync( segmentPath, { encoding: 'utf-8' } );
 
   // Convert the markdown content.
-  text = marked( text + '\n' + references.get( language ), { renderer: renderer } );
+  var html = marked( text + '\n' + references.get( language ), { renderer: renderer } );
 
   // Find tokens.
   var re = /(\{\{\s*[=#]?[\w-\/]+\s*}})/g;
   var tokens = [ ];
   var j = 0;
-  for (var matches = re.exec( text ); matches !== null; matches = re.exec( text )) {
+  for (var matches = re.exec( html ); matches !== null; matches = re.exec( html )) {
     var token = new Token( matches[ 1 ] );
 
     // Check invalid components.
@@ -35,7 +35,7 @@ function getSegment(
   }
 
   // Create and return the segment.
-  return new Component( text, tokens, false, false, false );
+  return new Component( html, tokens, false, false, 'markdown' );
 }
 
 module.exports = getSegment;

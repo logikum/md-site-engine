@@ -75,6 +75,7 @@ var ContentDrawer = function( defaultLanguage, path404, pathSearch ) {
   //region Validation
 
   this.findDefinition = function ( language, path ) {
+
     return contents[ language ].findDefinition( path );
   };
 

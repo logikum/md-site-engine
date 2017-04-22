@@ -12,7 +12,7 @@ function getComponent( componentFile, layoutSegment, contentSegment ) {
   var segmentPath = path.join( process.cwd(), componentFile );
 
   // Get the file content.
-  var text = fs.readFileSync( segmentPath, { encoding: 'utf-8' } );
+  var html = fs.readFileSync( segmentPath, { encoding: 'utf-8' } );
 
   // Find tokens.
   var re = /(\{\{\s*[=#]?[\w-\/]+\s*}})/g;
@@ -20,7 +20,7 @@ function getComponent( componentFile, layoutSegment, contentSegment ) {
   var j = 0;
   var isDocument = false;
   var isLayout = false;
-  for (var matches = re.exec( text ); matches !== null; matches = re.exec( text )) {
+  for (var matches = re.exec( html ); matches !== null; matches = re.exec( html )) {
     var token = new Token( matches[ 1 ] );
     tokens[ j++ ] = token;
     isDocument = isDocument || token.name === layoutSegment;
@@ -32,7 +32,7 @@ function getComponent( componentFile, layoutSegment, contentSegment ) {
     logger.showError( '"' + componentFile + '" cannot be both a document and a layout.' );
 
   // Create and return the component.
-  return new Component( text, tokens, isDocument, isLayout, true );
+  return new Component( html, tokens, isDocument, isLayout, 'html' );
 }
 
 module.exports = getComponent;

@@ -6,7 +6,7 @@ var showComponent = function( component ) {
 
   var list = '<ul>\n';
   for (var item in component) {
-    if (item === 'text')
+    if (item === 'html')
       list += '<li><b>' + item + '</b>:<pre><code class="lang-html">' +
         sanitize( component[ item ] ) +
         '</code></pre></li>\n';

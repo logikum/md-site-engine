@@ -50,12 +50,14 @@ function processContents(
 
       var ext = path.extname( item );
       var basename = path.basename( item, ext );
+      var isMarkdown = true;
 
       switch (ext) {
         case '.html':
+          isMarkdown = false;
         case '.md':
           // Read the content file.
-          var content = getContent( itemPath );
+          var content = getContent( itemPath, isMarkdown ? "markdown" : 'html' );
 
           // Set content path.
           content.path = contentRoot + '/' + basename;
@@ -69,9 +71,9 @@ function processContents(
             MenuBuilder.createMenuItem( menuStock, definition, content.path, false );
 
           // Generate HTML from markdown text.
-          if (ext === '.md')
-            content.text = marked(
-              content.text + '\n' + references.get( language ),
+          if (isMarkdown)
+            content.html = marked(
+              content.html + '\n' + references.get( language ),
               { renderer: renderer }
             );
 

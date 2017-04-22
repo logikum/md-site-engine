@@ -2,26 +2,27 @@
 
 var fs = require( 'fs' );
 var path = require( 'path' );
-var logger = require( './../utilities/logger.js' );
 var getDefinition = require( './get-definition.js' );
+var logger = require( './../utilities/logger.js' );
 
 var MenuBuilder = function () { };
 
 MenuBuilder.buildSubMenu = function( menuStock, itemPath, contentPath ) {
-  // Get sub-menu info.
+
+  // Try to get sub-menu info.
   try {
     // Get item info.
     var filePath = path.join( process.cwd(), itemPath );
     var stats = fs.statSync( filePath );
 
     if (stats && stats.isFile()) {
-      var context = { };
+      var content = { };
 
       // Read sub-menu info.
-      context.text = fs.readFileSync( filePath, { encoding: 'utf8' } );
+      content.html = fs.readFileSync( filePath, { encoding: 'utf8' } );
 
       // Read definition.
-      var definition = getDefinition( context );
+      var definition = getDefinition( content );
 
       // Create sub-menu item.
       return this.createMenuItem( menuStock, definition, contentPath, true );

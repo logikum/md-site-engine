@@ -13,6 +13,11 @@ var setDeveloperRoutes = require( './utilities/r-and-d.js' );
 
 var markedRenderer = './utilities/marked-renderer.js';
 
+/**
+ * Manages the contents of the site.
+ * @param {Configuration} config - The configuration object.
+ * @constructor
+ */
 function ContentManager( config ) {
 
   var self = this;
@@ -22,7 +27,9 @@ function ContentManager( config ) {
 
   function initialize() {
     var getRenderer = require( config.getRenderer ?
-      path.join( './../../../', config.getRenderer ) : markedRenderer );
+      path.join( './../../../', config.getRenderer ) :
+      markedRenderer
+    );
     var renderer = getRenderer( marked );
     filingCabinet = new FilingCabinet( config );
 
@@ -61,6 +68,11 @@ function ContentManager( config ) {
 
   //region Public properties
 
+  /**
+   * Gets the list of the supported loclaes.
+   * @member {Array.<string>}
+   * @readonly
+   */
   Object.defineProperty( this, 'supportedLocales', {
     get: function () {
       return filingCabinet.languages;
@@ -73,10 +85,22 @@ function ContentManager( config ) {
 
   //region Public methods
 
+  /**
+   * Gets the content of the path in the specified language.
+   * @param {string} language - The language of the requested content.
+   * @param {string} path - The path of the requested content.
+   * @returns {string} The html text of the content.
+   */
   this.get = function ( language, path ) {
+
     return filingCabinet.get( language, path );
   };
 
+  /**
+   * Sets up the routes of the markdown site engine.
+   * @param {express.Application} app - Teh express.js application.
+   * @param {Boolean} isDevelopment - True when the application runs in environment environment.
+   */
   this.setRoutes = function ( app, isDevelopment ) {
 
     // Set up language.

@@ -8,6 +8,8 @@ var MenuStock = function () { };
 
 util.inherits( MenuStock, Array );
 
+//region Prototype methods
+
 MenuStock.prototype.add = function( text, order, path, umbel ) {
 
   // Create menu item.
@@ -68,6 +70,8 @@ MenuStock.prototype.branch = function( text, order, path, hidden ) {
   // Pass back the sub-menu item.
   return menuItem;
 };
+
+//endregion
 
 //region Validation
 

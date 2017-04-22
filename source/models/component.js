@@ -3,9 +3,9 @@
 var util = require('util');
 var Element = require( './element.js' );
 
-var Component = function( text, tokens, isDocument, isLayout, isHtml ) {
+var Component = function( html, tokens, isDocument, isLayout, source ) {
 
-  Element.call( this, text, tokens );
+  Element.call( this, html, tokens, source );
 
   Object.defineProperty( this, 'isDocument', {
     get: function () {
@@ -26,14 +26,6 @@ var Component = function( text, tokens, isDocument, isLayout, isHtml ) {
   Object.defineProperty( this, 'isSegment', {
     get: function () {
       return !isDocument && !isLayout;
-    },
-    enumerable: true,
-    configurable: false
-  } );
-
-  Object.defineProperty( this, 'isHtml', {
-    get: function () {
-      return isHtml;
     },
     enumerable: true,
     configurable: false

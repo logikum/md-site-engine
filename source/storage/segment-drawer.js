@@ -11,6 +11,8 @@ var SegmentDrawer = function() {
   var self = this;
   var segments = { };
 
+  //region Methods
+
   this.add = function ( key, segment) {
 
     // Check existing segment - md + html.
@@ -40,6 +42,8 @@ var SegmentDrawer = function() {
     // Return a proxy segment.
     return new Component( '', [ ], false, false, false );
   };
+
+  //endregion
 
   //region Validation
 

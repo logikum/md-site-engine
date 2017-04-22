@@ -2,10 +2,10 @@
 
 var Metadata = require( './../models/metadata.js' );
 
-function getDefinition( context ) {
+function getDefinition( content ) {
 
   var definition = { };
-  var lines = context.text.split( '\n' );
+  var lines = content.html.split( '\n' );
 
   // Starts with menu info?
   if (lines.length && lines[ 0 ].substring( 0, 4 ) === '<!--') {
@@ -38,11 +38,11 @@ function getDefinition( context ) {
       }
     } while (canDo);
 
-    context.text = lines.join( '\n' );
+    content.html = lines.join( '\n' );
   }
 
   // Return the metadata.
-  return new Metadata( definition, context.path );
+  return new Metadata( definition, content.path );
 }
 
 module.exports = getDefinition;

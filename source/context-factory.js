@@ -1,5 +1,11 @@
 'use strict';
 
+/**
+ * Utility to create context objects for controls.
+ * @param {Configuration} config - The configuration object.
+ * @param {FilingCabinet} filingCabinet - The file manager object.
+ * @constructor
+ */
 var ContextFactory = function( config, filingCabinet ) {
 
   function xlate( language, key ) {
@@ -22,6 +28,12 @@ var ContextFactory = function( config, filingCabinet ) {
     }
   };
 
+  /**
+   * Creates a context object for controls.
+   * @param {string} language - The current language.
+   * @param {string} baseUrl - The URL path on which a router instance was mounted.
+   * @param {Metadata} definition - The metadata of the current path.
+   */
   this.create = function ( language, baseUrl, definition ) {
 
     // Create the context.

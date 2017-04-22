@@ -6,6 +6,8 @@ var MenuDrawer = function() {
 
   var menus = { };
 
+  //region Methods
+
   this.create = function ( language ) {
 
     // Create a menu stock for the language.
@@ -20,6 +22,7 @@ var MenuDrawer = function() {
     return menus[ language ];
   };
 
+  //endregion
 
   //region Validation
 

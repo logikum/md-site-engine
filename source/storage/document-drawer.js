@@ -8,6 +8,8 @@ var DocumentDrawer = function() {
 
   var documents = { };
 
+  //region Methods
+
   this.add = function ( key, document) {
 
     // Store the document.
@@ -31,11 +33,7 @@ var DocumentDrawer = function() {
     throw new Error( 'Document ' + key + ' is not found.' );
   };
 
-  this.finalize = function ( segments, languages ) {
-
-    // Insert static segments into language specific documents.
-    insertStaticSegments( documents, segments, languages );
-  };
+  //endregion
 
   //region Validation
 
