@@ -28,7 +28,7 @@ var Context = function( proto, filingCabinet, language, baseUrl, definition ) {
   this.baseUrl = baseUrl;
 
   /**
-   * Gets the metadata of the current path.
+   * Gets the metadata of the current content.
    * @type {Metadata}
    * @readonly
    */
