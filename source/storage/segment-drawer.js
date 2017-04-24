@@ -13,7 +13,12 @@ var SegmentDrawer = function() {
 
   //region Methods
 
-  this.add = function ( key, segment) {
+  /**
+   * Stores a segment.
+   * @param {string} key - The identifier of the segment.
+   * @param {Component} segment - The segment object.
+   */
+  this.add = function( key, segment) {
 
     // Check existing segment - md + html.
     if (segments[ key ] !== undefined)
@@ -23,7 +28,13 @@ var SegmentDrawer = function() {
     segments[ key ] = segment;
   };
 
-  this.get = function ( language, key ) {
+  /**
+   * Returns a segment.
+   * @param {string} language - The language of the segment.
+   * @param {string} key - The path of the segment.
+   * @returns {Component} The requested segment object.
+   */
+  this.get = function( language, key ) {
 
     // Try language specific segment.
     var langKey = [ language, key ].join( '/' );
@@ -47,7 +58,13 @@ var SegmentDrawer = function() {
 
   //region Validation
 
-  this.has = function ( language, key ) {
+  /**
+   * Determines whether the specified segment exists.
+   * @param {string} language - The language of the segment.
+   * @param {string} key - The path of the segment.
+   * @returns {boolean} True when the segment exists; otherwise false.
+   */
+  this.has = function( language, key ) {
 
     // Try language specific segment.
     var langKey = [ language, key ].join( '/' );
@@ -64,7 +81,15 @@ var SegmentDrawer = function() {
     return false;
   };
 
-  this.finalize = function ( controls, languages ) {
+  /**
+   * Makes final steps on the segments:
+   *    * Check reference circles.
+   *    * Validate tokens.
+   *    * Insert static segments into segments.
+   * @param {ControlDrawer} controls - The control storage.
+   * @param {Array.<string>} languages - The list of languages.
+   */
+  this.finalize = function( controls, languages ) {
 
     // Check reference circles.
     for (var path in segments) {
@@ -79,7 +104,7 @@ var SegmentDrawer = function() {
       var chain = [ key ];
       checkReferenceCircle( language, key, segment, chain );
 
-      // Validate control tokens.
+      // Validate segment tokens.
       segment.tokens.filter( function( token ) {
         return token.isControl;
       }).forEach( function( token ) {
@@ -122,7 +147,13 @@ var SegmentDrawer = function() {
 
   //region Developer methods
 
-  this.list = function ( itemPath ) {
+  /**
+   * Returns the list of the segments.
+   * @param {string} itemPath - The base URL of the details page.
+   * @returns {string} The list of the segments in HTML format.
+   */
+  this.list = function( itemPath ) {
+
     var list = '<ul>\n';
     for (var key in segments) {
       list += '<li><a href="' + itemPath + '/' + PATH.safe( key ) + '">' + key + '</a></li>\n';
@@ -130,7 +161,13 @@ var SegmentDrawer = function() {
     return list + '</ul>\n';
   };
 
-  this.show = function ( key ) {
+  /**
+   * Returns the details of a segment.
+   * @param {string} key - The identifier of the segment.
+   * @returns {string} The details of the segment in HTML format.
+   */
+  this.show = function( key ) {
+
     return showComponent( segments[ key ] );
   };
 

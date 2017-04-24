@@ -11,13 +11,24 @@ var DocumentDrawer = function() {
 
   //region Methods
 
-  this.add = function ( key, document) {
+  /**
+   * Stores a document.
+   * @param {string} key - The identifier of the document.
+   * @param {Component} document - The document object.
+   */
+  this.add = function( key, document) {
 
     // Store the document.
     documents[ key ] = document;
   };
 
-  this.get = function ( language, key ) {
+  /**
+   * Returns a document.
+   * @param {string} language - The language of the document.
+   * @param {string} key - The path of the document.
+   * @returns {Component} The requested document object.
+   */
+  this.get = function( language, key ) {
 
     // Try language specific document.
     var langKey = [ language, key ].join( '/' );
@@ -38,7 +49,16 @@ var DocumentDrawer = function() {
 
   //region Validation
 
-  this.finalize = function ( segments, controls, languages, layoutSegment ) {
+  /**
+   * Makes final steps on the documents:
+   *    * Validate tokens.
+   *    * Insert static segments into contents.
+   * @param {SegmentDrawer} segments - The segment storage.
+   * @param {ControlDrawer} controls - The control storage.
+   * @param {Array.<string>} languages - The list of languages.
+   * @param {string} layoutSegment - The name of the layout segment.
+   */
+  this.finalize = function( segments, controls, languages, layoutSegment ) {
 
     // Validate tokens.
     for(var path in documents) {
@@ -85,7 +105,13 @@ var DocumentDrawer = function() {
 
   //region Developer methods
 
-  this.list = function ( itemPath ) {
+  /**
+   * Returns the list of the documents.
+   * @param {string} itemPath - The base URL of the details page.
+   * @returns {string} The list of the documents in HTML format.
+   */
+  this.list = function( itemPath ) {
+
     var list = '<ul>\n';
     for (var key in documents) {
       list += '<li><a href="' + itemPath + '/' + PATH.safe( key ) + '">' + key + '</a></li>\n';
@@ -93,7 +119,13 @@ var DocumentDrawer = function() {
     return list + '</ul>\n';
   };
 
-  this.show = function ( key ) {
+  /**
+   * Returns the details of a document.
+   * @param {string} key - The identifier of the document.
+   * @returns {string} The details of the document in HTML format.
+   */
+  this.show = function( key ) {
+
     return showComponent( documents[ key ] );
   };
 

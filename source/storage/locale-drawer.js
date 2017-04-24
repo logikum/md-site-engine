@@ -6,7 +6,14 @@ var LocaleDrawer = function( defaultLanguage ) {
 
   var locales = { };
 
-  this.add = function ( prefix, items ) {
+  //region Methods
+
+  /**
+   * Stores a locale collection.
+   * @param {string} prefix - The identifier of the locale collection.
+   * @param {object} items - The object of the locale collection.
+   */
+  this.add = function( prefix, items ) {
 
     // Store the locale items.
     var localePath = prefix.replace( '/', ':' ).replace( /\//g, '.' );
@@ -18,7 +25,13 @@ var LocaleDrawer = function( defaultLanguage ) {
     }
   };
 
-  this.get = function ( language, key ) {
+  /**
+   * Returns a locale.
+   * @param {string} language - The language of the locale.
+   * @param {string} key - The identifier of the locale.
+   * @returns {string} The requested locale.
+   */
+  this.get = function( language, key ) {
 
     // Try language specific locale.
     var langKey = language + ':' + key;
@@ -40,10 +53,18 @@ var LocaleDrawer = function( defaultLanguage ) {
     return '';
   };
 
+  //endregion
+
   //region Developer methods
 
-  this.list = function ( languages ) {
+  /**
+   * Returns the list of the locales.
+   * @param {Array.<string>} languages - The list of languages.
+   * @returns {string} The list of the locales in HTML format.
+   */
+  this.list = function( languages ) {
     var list = '';
+
     languages.forEach( function( language ) {
       var len = language.length + 1;
 

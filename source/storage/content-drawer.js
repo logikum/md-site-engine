@@ -2,12 +2,24 @@
 
 var ContentStock = require( './content-stock.js' );
 
+/**
+ * Represents a storage for contents.
+ * @param {string} defaultLanguage - The default language.
+ * @param {string} path404 - The path of the content not found page.
+ * @param {string} pathSearch - The path of the search page.
+ * @constructor
+ */
 var ContentDrawer = function( defaultLanguage, path404, pathSearch ) {
 
   var contents = { };
 
   //region Methods
 
+  /**
+   * Creates and returns a new content store a language.
+   * @param {string} language - The language of the store.
+   * @returns {ContentStock} The content store of the language.
+   */
   this.create = function( language ) {
 
     // Create a content stock for the language.
@@ -17,6 +29,12 @@ var ContentDrawer = function( defaultLanguage, path404, pathSearch ) {
     return contents[ language ];
   };
 
+  /**
+   * Returns the content of the requested path and language.
+   * @param {string} language - The language of the content.
+   * @param {string} path - The path of the content.
+   * @returns {Content} The requested content object.
+   */
   this.getContent = function( language, path ) {
 
     // Try the requested language.
@@ -28,6 +46,12 @@ var ContentDrawer = function( defaultLanguage, path404, pathSearch ) {
       return contents[ defaultLanguage ].getContent( path );
   };
 
+  /**
+   * Returns the metadata of the content of the requested path and language.
+   * @param {string} language - The language of the content.
+   * @param {string} path - The path of the content.
+   * @returns {Metadata} The requested metadata object.
+   */
   this.getDefinition = function( language, path ) {
 
     // Try the requested language.
@@ -39,6 +63,14 @@ var ContentDrawer = function( defaultLanguage, path404, pathSearch ) {
       return contents[ defaultLanguage ].getDefinition( path );
   };
 
+  /**
+   * Determines and returns the path of a content of a given language in another
+   * language.
+   * @param {string} curLanguage - The current language of the content.
+   * @param {string} baseUrl - The current path of the content.
+   * @param {string} newLanguage - The requested language of the content.
+   * @returns {string} The path of the content in the requested language.
+   */
   this.getLocalizedPath = function( curLanguage, baseUrl, newLanguage ) {
     var localizedPath = '/';
 
@@ -58,12 +90,23 @@ var ContentDrawer = function( defaultLanguage, path404, pathSearch ) {
 
   //region Search
 
+  /**
+   * Returns the path of the search page in the requested language.
+   * @param {string} language - The requested language of the search page.
+   * @returns {string} The requested path.
+   */
   this.searchPath = function( language ) {
 
     // Does search result page exist?
     return contents[ language ].searchPath();
   };
 
+  /**
+   * Return the list of the contents matching the search phrase.
+   * @param {string} language - The language of the contents to search.
+   * @param {string} text2search - The text to search.
+   * @returns {Array.<SearchResult>} The list of matching contents.
+   */
   this.search = function( language, text2search ) {
 
     // Get search results
@@ -74,12 +117,26 @@ var ContentDrawer = function( defaultLanguage, path404, pathSearch ) {
 
   //region Validation
 
-  this.findDefinition = function ( language, path ) {
+  /**
+   * Returns the metadata of a content.
+   * @param {string} language - The language of the content.
+   * @param {string} id - The identifier of the content.
+   * @returns {Metadata} The requested metadata.
+   */
+  this.findDefinition = function( language, id ) {
 
-    return contents[ language ].findDefinition( path );
+    return contents[ language ].findDefinition( id );
   };
 
-  this.finalize = function ( segments, controls ) {
+  /**
+   * Makes final steps on the contents:
+   *    * Validate tokens.
+   *    * Insert static segments into contents.
+   *    * Create searchable texts.
+   * @param {SegmentDrawer} segments - The segment storage.
+   * @param {ControlDrawer} controls - The control storage.
+   */
+  this.finalize = function( segments, controls ) {
 
     // Insert static segments into contents.
     for (var language in contents) {
@@ -91,7 +148,13 @@ var ContentDrawer = function( defaultLanguage, path404, pathSearch ) {
 
   //region Developer methods
 
-  this.list = function ( itemPath ) {
+  /**
+   * Returns the list of the contents.
+   * @param {string} itemPath - The base URL of the details page.
+   * @returns {string} The list of the contents in HTML format.
+   */
+  this.list = function( itemPath ) {
+
     var list = '';
     for (var language in contents) {
       list += '<h3>' + language + '</h3>\n';
@@ -100,7 +163,14 @@ var ContentDrawer = function( defaultLanguage, path404, pathSearch ) {
     return list;
   };
 
-  this.show = function ( language, key ) {
+  /**
+   * Returns the details of a content.
+   * @param {string} language - The language of the content.
+   * @param {string} key - The path of the content.
+   * @returns {string} The details of the content in HTML format.
+   */
+  this.show = function( language, key ) {
+
     return contents[ language ].show( key );
   };
 

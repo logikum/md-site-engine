@@ -11,13 +11,24 @@ var LayoutDrawer = function() {
 
   //region Methods
 
-  this.add = function ( key, layout ) {
+  /**
+   * Stores a layout.
+   * @param {string} key - The identifier of the layout.
+   * @param {Component} layout - The layout object.
+   */
+  this.add = function( key, layout ) {
 
     // Store the layout.
     layouts[ key ] = layout;
   };
 
-  this.get = function ( language, key ) {
+  /**
+   * Returns a layout.
+   * @param {string} language - The language of the layout.
+   * @param {string} key - The path of the layout.
+   * @returns {Component} The requested layout object.
+   */
+  this.get = function( language, key ) {
 
     // Try language specific layout.
     var langKey = [ language, key ].join( '/' );
@@ -38,7 +49,16 @@ var LayoutDrawer = function() {
 
   //region Validation
 
-  this.finalize = function ( segments, controls, languages, contentSegment ) {
+  /**
+   * Makes final steps on the layouts:
+   *    * Validate tokens.
+   *    * Insert static segments into layouts.
+   * @param {SegmentDrawer} segments - The segment storage.
+   * @param {ControlDrawer} controls - The control storage.
+   * @param {Array.<string>} languages - The list of languages.
+   * @param {string} contentSegment - The name of the content segment.
+   */
+  this.finalize = function( segments, controls, languages, contentSegment ) {
 
     // Validate tokens.
     for(var path in layouts) {
@@ -85,7 +105,13 @@ var LayoutDrawer = function() {
 
   //region Developer methods
 
-  this.list = function ( itemPath ) {
+  /**
+   * Returns the list of the layouts.
+   * @param {string} itemPath - The base URL of the details page.
+   * @returns {string} The list of the layouts in HTML format.
+   */
+  this.list = function( itemPath ) {
+
     var list = '<ul>\n';
     for (var key in layouts) {
       list += '<li><a href="' + itemPath + '/' + PATH.safe( key ) + '">' + key + '</a></li>\n';
@@ -93,7 +119,13 @@ var LayoutDrawer = function() {
     return list + '</ul>\n';
   };
 
-  this.show = function ( key ) {
+  /**
+   * Returns the details of a layout.
+   * @param {string} key - The identifier of the layout.
+   * @returns {string} The details of the layout in HTML format.
+   */
+  this.show = function( key ) {
+
     return showComponent( layouts[ key ] );
   };
 

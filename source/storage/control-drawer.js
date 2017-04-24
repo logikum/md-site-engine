@@ -8,7 +8,14 @@ var ControlDrawer = function() {
 
   var controls = { };
 
-  this.add = function ( key, control ) {
+  //region Methods
+
+  /**
+   * Stores a control.
+   * @param {string} key - The path of the control.
+   * @param {string} control - The control script.
+   */
+  this.add = function( key, control ) {
 
     key = key.replace( /\\/g, '/' );
 
@@ -20,7 +27,12 @@ var ControlDrawer = function() {
     controls[ key ] = control;
   };
 
-  this.get = function ( key ) {
+  /**
+   * Returns a control.
+   * @param {string} key - The path of the control.
+   * @returns {string} The requested control script.
+   */
+  this.get = function( key ) {
 
     if (controls[ key ] !== undefined)
       // The requested control is found.
@@ -31,20 +43,37 @@ var ControlDrawer = function() {
       logger.showError( 'Control "' + key + '" is not found.' );
 
       // Return a proxy control.
-      return function (ctx) {
+      return function( ctx ) {
         return '';
       };
     }
   };
 
-  this.has = function ( key ) {
+  //endregion
+
+  //region Validation
+
+  /**
+   * Determines whether the specified control exists.
+   * @param {string} key - The path of the control.
+   * @returns {boolean} True when the control exists; otherwise false.
+   */
+  this.has = function( key ) {
     // Is the control available?
     return controls[ key ] !== undefined;
   };
 
+  //endregion
+
   //region Developer methods
 
-  this.list = function ( itemPath ) {
+  /**
+   * Returns the list of the controls.
+   * @param {string} itemPath - The base URL of the details page.
+   * @returns {string} The list of the controls in HTML format.
+   */
+  this.list = function( itemPath ) {
+
     var list = '<ul>\n';
     for (var key in controls) {
       list += '<li><a href="' + itemPath + '/' + PATH.safe( key ) + '">' + key + '</a></li>\n';
@@ -52,7 +81,13 @@ var ControlDrawer = function() {
     return list + '</ul>\n';
   };
 
-  this.show = function ( key ) {
+  /**
+   * Returns the details of a control.
+   * @param {string} key - The identifier of the control.
+   * @returns {string} The details of the control in HTML format.
+   */
+  this.show = function( key ) {
+
     return '<pre><code class="lang-javascript">' +
       sanitize( controls[ key ].toString() ) +
       '</code></pre>\n';

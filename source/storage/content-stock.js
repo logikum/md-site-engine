@@ -20,6 +20,11 @@ var ContentStock = function( path404, pathSearch ) {
 
   //region Methods
 
+  /**
+   * Stores a content with its metadata.
+   * @param {Content} content - The content object.
+   * @param {Metadata} definition - The metadata object.
+   */
   this.add = function( content, definition ) {
     if (arguments.length > 1) {
       // Delete path - saved on metadata.
@@ -59,6 +64,11 @@ var ContentStock = function( path404, pathSearch ) {
       searchPath = path;
   }
 
+  /**
+   * Returns the content of the requested path.
+   * @param {string} path - The path of the content.
+   * @returns {Content} The requested content object.
+   */
   this.getContent = function( path ) {
 
     if (map[ path ] !== undefined)
@@ -75,6 +85,11 @@ var ContentStock = function( path404, pathSearch ) {
         path + ' was not found on this server.</br>That’s all we know.</p>';
   };
 
+  /**
+   * Returns the metadata of the content of the requested path.
+   * @param {string} path - The path of the content.
+   * @returns {Metadata} The requested metadata object.
+   */
   this.getDefinition = function( path ) {
 
     if (map[ path ] !== undefined)
@@ -90,12 +105,21 @@ var ContentStock = function( path404, pathSearch ) {
 
   //region Search
 
+  /**
+   * Returns the path of the search page.
+   * @returns {string} The path of the search page.
+   */
   this.searchPath = function() {
 
     // Does search result page exist?
     return searchPath;
   };
 
+  /**
+   * Return the list of the contents matching the search phrase.
+   * @param {string} text2search - The text to search.
+   * @returns {Array.<SearchResult>} The list of matching contents.
+   */
   this.search = function( text2search ) {
     var results = [ ];
 
@@ -147,22 +171,36 @@ var ContentStock = function( path404, pathSearch ) {
 
   //region Validation
 
-  this.findDefinition = function ( id ) {
+  /**
+   * Returns the metadata of a content.
+   * @param {string} id - The identifier of the content.
+   * @returns {Metadata} The requested metadata.
+   */
+  this.findDefinition = function( id ) {
 
     var targets = definitions.filter( function( definition ) {
       return definition.id === id;
     });
 
     if (targets.length > 0)
-    // The requested definition is found.
+      // The requested definition is found.
       return targets[ 0 ];
 
     else
-    // The requested definition is not found - empty definition.
+      // The requested definition is not found - empty definition.
       return new Metadata( { }, '' );
   };
 
-  this.finalize = function ( language, segments, controls ) {
+  /**
+   * Makes final steps on the contents:
+   *    * Validate tokens.
+   *    * Insert static segments into contents.
+   *    * Create searchable texts.
+   * @param {string} language - The language of the contents.
+   * @param {SegmentDrawer} segments - The segment storage.
+   * @param {ControlDrawer} controls - The control storage.
+   */
+  this.finalize = function( language, segments, controls ) {
 
     // Validate tokens.
     for(var path in contents) {
@@ -206,7 +244,14 @@ var ContentStock = function( path404, pathSearch ) {
 
   //region Developer methods
 
-  this.list = function ( language, itemPath ) {
+  /**
+   * Returns the list of the contents.
+   * @param {string} language - The language of the contents.
+   * @param {string} itemPath - The base URL of the details page.
+   * @returns {string} The list of the contents in HTML format.
+   */
+  this.list = function( language, itemPath ) {
+
     var list = '<ul>\n';
     for (var key in map) {
       var itemUrl = itemPath + '/' + language + '/' + PATH.safe( key );
@@ -215,7 +260,12 @@ var ContentStock = function( path404, pathSearch ) {
     return list + '</ul>\n';
   };
 
-  this.show = function ( itemPath ) {
+  /**
+   * Returns the details of a content.
+   * @param {string} itemPath - The path of the content.
+   * @returns {string} The details of the content in HTML format.
+   */
+  this.show = function( itemPath ) {
 
     var list = showComponent( contents[ map[ itemPath ] ] );
     list += showMetadata( definitions[ map[ itemPath ] ] );
