@@ -2,6 +2,11 @@
 
 var Metadata = require( './../models/metadata.js' );
 
+/**
+ * Reads the metadata of a content text.
+ * @param {string} content - The full text of a content file.
+ * @returns {Metadata} - The metadata object.
+ */
 function getDefinition( content ) {
 
   var definition = { };
@@ -21,10 +26,10 @@ function getDefinition( content ) {
       if (!line || /-->/.test( line ) )
         canDo = false;
       // Comment?
-      else if (line.substring( 0, 3 ) === '---')
-        ;
-      // Continue previous item?
-      else if (line.substring( 0, 3 ) === '   ') {
+      else if (line.substring( 0, 3 ) === '---') {
+        // Skip this line.
+      } else if (line.substring( 0, 3 ) === '   ') {
+        // Continue previous item?
         if (key)
           definition[ key ] = definition[ key ].trim() + ' ' + line.substring( 3 ).trim();
       }
@@ -38,6 +43,7 @@ function getDefinition( content ) {
       }
     } while (canDo);
 
+    // Remove the definition part from the content text.
     content.html = lines.join( '\n' );
   }
 

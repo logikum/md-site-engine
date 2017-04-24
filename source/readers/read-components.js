@@ -9,6 +9,15 @@ var getSegment = require( './get-segment.js' );
 
 var languages = [ ];
 
+/**
+ * Reads all components.
+ * @param {string} componentPath - The path of the components directory.
+ * @param {string} referenceFile - The name of the reference files.
+ * @param {string} layoutSegment - The name of the layout segment.
+ * @param {string} contentSegment - The name of the layout segment.
+ * @param {FilingCabinet} filingCabinet - The file manager object.
+ * @param {marked.Renderer} renderer - The custom markdown renderer.
+ */
 function readComponents(
   componentPath,
   referenceFile,
@@ -31,6 +40,22 @@ function readComponents(
   );
 }
 
+/**
+ * Reads all components in a component sub-directory.
+ * @param {string} componentDir - The path of the component sub-directory.
+ * @param {number} level - The level depth compared to the components directory.
+ * @param {string} levelPath - The base URL of the component sub-directory.
+ * @param {string} referenceFile - The name of the reference files.
+ * @param {string} layoutSegment - The name of the layout segment.
+ * @param {string} contentSegment - The name of the layout segment.
+ * @param {ReferenceDrawer} referenceDrawer - The reference storage.
+ * @param {DocumentDrawer} documentDrawer - The document storage.
+ * @param {LayoutDrawer} layoutDrawer - The layout storage.
+ * @param {SegmentDrawer} segmentDrawer - The segment storage.
+ * @param {LocaleDrawer} localeDrawer - The locale storage.
+ * @param {marked.Renderer} renderer - The custom markdown renderer.
+ * @param {string} language - The language of the sub-directory.
+ */
 function getComponents(
   componentDir, level, levelPath, referenceFile, layoutSegment, contentSegment,
   referenceDrawer, documentDrawer, layoutDrawer, segmentDrawer, localeDrawer,
@@ -79,6 +104,7 @@ function getComponents(
           if (level < 2 && path.basename( item ) === referenceFile) {
             // References are already processed.
           } else
+            // Unused file.
             logger.fileSkipped( typeName, itemPath );
           break;
 
@@ -100,7 +126,7 @@ function getComponents(
         case '.md':
           // Read segment.
           var segment = getSegment(
-            itemPath, language, referenceDrawer, renderer, layoutSegment, contentSegment
+            itemPath, layoutSegment, contentSegment, referenceDrawer, language, renderer
           );
           segmentDrawer.add( componentPath, segment );
           logger.fileProcessed( 'Segment', itemPath );
@@ -114,14 +140,17 @@ function getComponents(
             localeDrawer.add( localePrefix, locales );
             logger.fileProcessed( 'Locale', itemPath );
           } else
+            // Unused file.
             logger.fileSkipped( typeName, itemPath );
           break;
 
         default:
+          // Unused file.
           logger.fileSkipped( typeName, itemPath );
           break;
       }
     } else
+      // Unused file.
       logger.fileSkipped( typeName, itemPath );
   } )
 }

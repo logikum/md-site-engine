@@ -1,9 +1,16 @@
 'use strict';
 
+/**
+ * Tries to determine the default language based on the acceptable languages of
+ * the browser and the supported languages of the site.
+ * @param {string} acceptable - The acceptable languages of the browser.
+ * @param {Array.<string>} supported - The supported languages of the site.
+ * @param {string} engineDefault - The default language when no common one found.
+ * @returns {string} The language to use.
+ */
 function negotiateLanguage( acceptable, supported, engineDefault ) {
   var candidates = [];
   var enumeration = acceptable || '';
-  var start = 0;
 
   if (enumeration) {
     // Create list of candidate locales.

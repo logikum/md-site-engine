@@ -6,6 +6,12 @@ var logger = require( './../utilities/logger.js' );
 
 var getReference = require( './get-reference.js' );
 
+/**
+ * Read all references.
+ * @param {string} componentPath - The path of the components directory.
+ * @param {string} referenceFile - The name of the reference files.
+ * @param {FilingCabinet} filingCabinet - The file manager object.
+ */
 function readReferences( componentPath, referenceFile, filingCabinet
 ) {
   logger.showInfo( '*** Reading references...' );
@@ -15,6 +21,14 @@ function readReferences( componentPath, referenceFile, filingCabinet
   );
 }
 
+/**
+ * Reads all references in a component sub-directory.
+ * @param {string} componentDir - The path of the component sub-directory.
+ * @param {number} level - The level depth compared to the components directory.
+ * @param {string} levelPath - The base URL of the component sub-directory.
+ * @param {string} referenceFile - The name of the reference files.
+ * @param {ReferenceDrawer} referenceDrawer - The reference storage.
+ */
 function getReferences( componentDir, level, levelPath, referenceFile, referenceDrawer ) {
 
   // Read directory items.

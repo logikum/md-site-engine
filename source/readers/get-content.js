@@ -5,6 +5,12 @@ var path = require( 'path' );
 var Token = require( './../models/token.js' );
 var Content = require( './../models/content.js' );
 
+/**
+ * Reads the content of a content file.
+ * @param {string} contentFile - The path of the content file.
+ * @param {string} source - The type of the content file (html|markdown).
+ * @returns {Content} The content object.
+ */
 function getContent( contentFile, source ) {
 
   // Determine the path.
@@ -21,6 +27,7 @@ function getContent( contentFile, source ) {
     tokens[ j++ ] = new Token( matches[ 1 ] );
   }
 
+  // Create and return the content.
   return new Content( html, tokens, source );
 }
 

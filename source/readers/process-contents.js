@@ -8,10 +8,21 @@ var getContent = require( './get-content.js' );
 var getDefinition = require( './get-definition.js' );
 var MenuBuilder = require( './menu-builder.js' );
 
+/**
+ * Processes the items of a content sub-directory.
+ * @param {string} contentDir - The path of the content sub-directory.
+ * @param {string} contentRoot - The base URL of the content sub-directory.
+ * @param {string} submenuFile - The path of the menu level file (__submenu.txt).
+ * @param {ContentStock} contentStock - The content storage of the language.
+ * @param {MenuStock} menuStock - The current menu node (a menu level storage).
+ * @param {ReferenceDrawer} references - The reference storage.
+ * @param {string} language - The language of the content sub-directory.
+ * @param {marked.Renderer} renderer - The custom markdown renderer.
+ */
 function processContents(
-  language, contentDir, contentRoot,
-  submenuFile, contentStock, menuStock, references,
-  renderer
+  contentDir, contentRoot,
+  submenuFile, contentStock, menuStock,
+  references, language, renderer
 ) {
 
   var typeName = 'Content';
@@ -37,13 +48,14 @@ function processContents(
 
       // Read subdirectory.
       processContents(
-        language,
         itemPath,
         directoryPath,
         submenuFile,
         contentStock,
         directoryNode ? directoryNode.children : menuStock,
-        references
+        references,
+        language,
+        renderer
       );
     }
     else if (stats.isFile()) {

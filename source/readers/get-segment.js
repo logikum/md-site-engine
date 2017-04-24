@@ -7,8 +7,18 @@ var Component = require( './../models/component.js' );
 var Token = require( './../models/token.js' );
 var logger = require( './../utilities/logger.js' );
 
+/**
+ * Reads the content of a component file (markdown).
+ * @param {string} segmentFile - The path of the segment file.
+ * @param {string} layoutSegment - The name of the layout segment.
+ * @param {string} contentSegment - The name of the layout segment.
+ * @param {ReferenceDrawer} references - The reference storage.
+ * @param {string} language - The language of the segment file.
+ * @param {marked.Renderer} renderer - The custom markdown renderer.
+ * @returns {Component} The segment object.
+ */
 function getSegment(
-  segmentFile, language, references, renderer, layoutSegment, contentSegment
+  segmentFile, layoutSegment, contentSegment, references, language, renderer
 ) {
 
   // Determine the path.

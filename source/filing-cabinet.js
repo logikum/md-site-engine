@@ -13,7 +13,7 @@ var ContentDrawer = require( './storage/content-drawer.js' );
 var MenuDrawer = require( './storage/menu-drawer.js' );
 
 /**
- * manages and processes the files of the site.
+ * Manages and processes the files of the site.
  * @param {Configuration} config - The configuration object.
  * @constructor
  */
@@ -207,7 +207,7 @@ var FilingCabinet = function( config ) {
   //region Developer methods
 
   /**
-   * Lists the processd languages.
+   * Lists the processed languages.
    * @returns {string} The HTML output to render.
    */
   this.listLanguages = function() {

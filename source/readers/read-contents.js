@@ -5,6 +5,13 @@ var path = require( 'path' );
 var logger = require( './../utilities/logger.js' );
 var processContents = require( './process-contents.js' );
 
+/**
+ * Read all contents.
+ * @param {string} contentPath - The path of the contents directory.
+ * @param {string} submenuFile - The path of the menu level file (__submenu.txt).
+ * @param {FilingCabinet} filingCabinet - The file manager object.
+ * @param {marked.Renderer} renderer - The custom markdown renderer.
+ */
 function readContents( contentPath, submenuFile, filingCabinet, renderer ) {
 
   var typeName = 'Content';
@@ -32,13 +39,13 @@ function readContents( contentPath, submenuFile, filingCabinet, renderer ) {
 
       // Find and add contents for the language.
       processContents(
-        item,                       // language
         itemPath,                   // content directory
         '',                         // content root
         submenuFile,                // submenu filename
         contentStock,               // content stock
         menuStock,                  // menu stock
         filingCabinet.references,   // reference drawer
+        item,                       // language
         renderer                    // markdown renderer
       );
     } else

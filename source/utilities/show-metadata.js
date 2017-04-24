@@ -1,5 +1,10 @@
 'use strict';
 
+/**
+ * Returns the list of the properties of a metadata to display.
+ * @param {Metadata} metadata - The metadata object to display.
+ * @returns {string} The list of metadata properties in HTML format.
+ */
 var showMetadata = function( metadata ) {
 
   var list = '<h3>Metadata</h3>\n';

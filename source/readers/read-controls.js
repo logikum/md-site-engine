@@ -4,6 +4,11 @@ var fs = require( 'fs' );
 var path = require( 'path' );
 var logger = require( './../utilities/logger.js' );
 
+/**
+ * Reads all controls, including engine's predefined controls.
+ * @param {string} controlPath - The path of the controls directory.
+ * @param {FilingCabinet} filingCabinet - The file manager object.
+ */
 function readControls( controlPath, filingCabinet ) {
 
   logger.showInfo( '*** Reading controls...' );
@@ -25,17 +30,23 @@ function readControls( controlPath, filingCabinet ) {
   );
 }
 
-function getControls( folderPath, levelPath, controlDrawer ) {
+/**
+ * Reads all controls from a sub-directory.
+ * @param {string} controlPath - The path of the control sub-directory.
+ * @param {string} levelPath - The base URL of the sub-directory.
+ * @param {ControlDrawer} controlDrawer - The control storage.
+ */
+function getControls( controlPath, levelPath, controlDrawer ) {
 
   var typeName = 'Control';
 
   // Read directory items.
-  var directoryPath = path.join( process.cwd(), folderPath );
+  var directoryPath = path.join( process.cwd(), controlPath );
   var items = fs.readdirSync( directoryPath );
 
   items.forEach( function ( item ) {
 
-    var itemPath = path.join( folderPath, item );
+    var itemPath = path.join( controlPath, item );
     var filePath = path.join( process.cwd(), itemPath );
 
     // Get item info.

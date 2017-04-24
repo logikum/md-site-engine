@@ -6,6 +6,13 @@ var logger = require( './../utilities/logger.js' );
 var Token = require( './../models/token.js' );
 var Component = require( './../models/component.js' );
 
+/**
+ * Reads the content of a component file (html).
+ * @param {string} componentFile - The path of the component file.
+ * @param {string} layoutSegment - The name of the layout segment.
+ * @param {string} contentSegment - The name of the layout segment.
+ * @returns {Component} The component object.
+ */
 function getComponent( componentFile, layoutSegment, contentSegment ) {
 
   // Determine the path.

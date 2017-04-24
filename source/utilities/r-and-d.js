@@ -20,6 +20,15 @@ function show( item ) {
   return '<span class="title">' + item + '</span>';
 }
 
+/**
+ * Sets the helper routes to support development.
+ * @param {express.Application} app - The express.js application object.
+ * @param {FilingCabinet} filingCabinet - The file manager object.
+ * @param {string} rootPath - The base URL of the resource routes.
+ * @param {string} cssBootstrap - The path of the Bootstrap style (design).
+ * @param {string} cssHighlight - The path of the code highlighter style (design).
+ * @param {string} jsHighlight - The path of the code highlighter script (design).
+ */
 function setDeveloperRoutes(
   app, filingCabinet, rootPath, cssBootstrap, cssHighlight, jsHighlight
 ) {

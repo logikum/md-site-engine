@@ -69,7 +69,7 @@ function ContentManager( config ) {
   //region Public properties
 
   /**
-   * Gets the list of the supported loclaes.
+   * Gets the list of the supported locales.
    * @member {Array.<string>}
    * @readonly
    */
@@ -98,7 +98,7 @@ function ContentManager( config ) {
 
   /**
    * Sets up the routes of the markdown site engine.
-   * @param {express.Application} app - Teh express.js application.
+   * @param {express.Application} app - The express.js application.
    * @param {Boolean} isDevelopment - True when the application runs in environment environment.
    */
   this.setRoutes = function ( app, isDevelopment ) {

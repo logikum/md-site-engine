@@ -5,8 +5,18 @@ var path = require( 'path' );
 var getDefinition = require( './get-definition.js' );
 var logger = require( './../utilities/logger.js' );
 
+/**
+ * Helper object to build menu tree.
+ * @constructor
+ */
 var MenuBuilder = function () { };
 
+/**
+ * Creates a menu node in the menu tree.
+ * @param {MenuStock} menuStock - The menu level storage.
+ * @param {string} itemPath - The path of the menu level file (__submenu.txt).
+ * @param {string} contentPath The base URL of the current level.
+ */
 MenuBuilder.buildSubMenu = function( menuStock, itemPath, contentPath ) {
 
   // Try to get sub-menu info.
@@ -32,6 +42,13 @@ MenuBuilder.buildSubMenu = function( menuStock, itemPath, contentPath ) {
   }
 };
 
+/**
+ * Creates a menu leaf on the current menu node.
+ * @param {MenuStock} menuStock - The current menu node (a menu level storage).
+ * @param {Metadata} definition - The metadata object of the current content.
+ * @param {string} contentPath - The path of the current content.
+ * @param {Boolean} isDirectory - Does the current content a subdirectory?
+ */
 MenuBuilder.createMenuItem = function( menuStock, definition, contentPath, isDirectory ) {
 
   // Default values for item properties,
@@ -45,11 +62,13 @@ MenuBuilder.createMenuItem = function( menuStock, definition, contentPath, isDir
   var hidden = definition.hidden && definition.hidden.toLowerCase() === 'true';
 
   if (isDirectory) {
+
     // Add sub-menu item.
     return menuStock.branch( text, order, contentPath, hidden );
   }
   // Omit hidden item.
   else if (!hidden) {
+
     // Add menu item.
     var path = contentPath;
     var length = path.length;
@@ -59,6 +78,7 @@ MenuBuilder.createMenuItem = function( menuStock, definition, contentPath, isDir
       var end = length > 6 ? 6 : 5;
       path = path.substr( 0, length - end );
     }
+
     // Store menu item.
     menuStock.add( text, order, path, umbel );
     logger.menuAdded( path );

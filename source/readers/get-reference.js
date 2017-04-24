@@ -3,6 +3,11 @@
 var fs = require( 'fs' );
 var path = require( 'path' );
 
+/**
+ * Reads the content of a reference file.
+ * @param {string} referenceFile - The path of the reference file.
+ * @returns {string} The list of reference links.
+ */
 function getReference( referenceFile ) {
   var text = '';
 

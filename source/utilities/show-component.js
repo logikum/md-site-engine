@@ -2,6 +2,11 @@
 
 var sanitize = require( './sanitize-html.js' );
 
+/**
+ * Returns the list of the properties of a component to display.
+ * @param {Component} component - The component object to display.
+ * @returns {string} The list of component properties in HTML format.
+ */
 var showComponent = function( component ) {
 
   var list = '<ul>\n';

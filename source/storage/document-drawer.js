@@ -1,6 +1,7 @@
 'use strict';
 
 var insertStaticSegments = require( './insert-static-segments.js' );
+var logger = require( '../utilities/logger.js' );
 var PATH = require( './../utilities/rd-path.js' );
 var showComponent = require( './../utilities/show-component.js' );
 
