@@ -13,6 +13,7 @@ var languages = [ ];
  * Reads all components.
  * @param {string} componentPath - The path of the components directory.
  * @param {string} referenceFile - The name of the reference files.
+ * @param {string} localeFile - The name of the default locale file.
  * @param {string} layoutSegment - The name of the layout segment.
  * @param {string} contentSegment - The name of the layout segment.
  * @param {FilingCabinet} filingCabinet - The file manager object.
@@ -20,17 +21,15 @@ var languages = [ ];
  */
 function readComponents(
   componentPath,
-  referenceFile,
-  layoutSegment,
-  contentSegment,
-  filingCabinet,
-  renderer
+  referenceFile, localeFile, layoutSegment, contentSegment,
+  filingCabinet, renderer
 ) {
   logger.showInfo( '*** Reading components...' );
 
   // Initialize the store.
   getComponents(
-    componentPath, 0, '', referenceFile, layoutSegment, contentSegment,
+    componentPath, 0, '',
+    referenceFile, localeFile, layoutSegment, contentSegment,
     filingCabinet.references,
     filingCabinet.documents,
     filingCabinet.layouts,
@@ -46,6 +45,7 @@ function readComponents(
  * @param {number} level - The level depth compared to the components directory.
  * @param {string} levelPath - The base URL of the component sub-directory.
  * @param {string} referenceFile - The name of the reference files.
+ * @param {string} localeFile - The name of the default locale file.
  * @param {string} layoutSegment - The name of the layout segment.
  * @param {string} contentSegment - The name of the layout segment.
  * @param {ReferenceDrawer} referenceDrawer - The reference storage.
@@ -57,7 +57,8 @@ function readComponents(
  * @param {string} language - The language of the sub-directory.
  */
 function getComponents(
-  componentDir, level, levelPath, referenceFile, layoutSegment, contentSegment,
+  componentDir, level, levelPath,
+  referenceFile, localeFile, layoutSegment, contentSegment,
   referenceDrawer, documentDrawer, layoutDrawer, segmentDrawer, localeDrawer,
   renderer, language
 ) {
@@ -87,7 +88,8 @@ function getComponents(
 
       // Get sub level components.
       getComponents(
-        itemPath, level + 1, prefix + item, referenceFile, layoutSegment, contentSegment,
+        itemPath, level + 1, prefix + item,
+        referenceFile, localeFile, layoutSegment, contentSegment,
         referenceDrawer, documentDrawer, layoutDrawer, segmentDrawer, localeDrawer,
         renderer, level === 0 ? item : language
       );
@@ -136,7 +138,7 @@ function getComponents(
           if (level > 0) {
             // Read locales.
             var locales = require( path.join( process.cwd(), itemPath ) );
-            var localePrefix = item === 'default.json' ? prefix : componentPath + '/';
+            var localePrefix = item === localeFile ? prefix : componentPath + '/';
             localeDrawer.add( localePrefix, locales );
             logger.fileProcessed( 'Locale', itemPath );
           } else

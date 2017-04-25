@@ -45,6 +45,7 @@ function ContentManager( config ) {
     readComponents(
       config.components,
       config.referenceFile,
+      config.localeFile,
       config.layoutSegment,
       config.contentSegment,
       filingCabinet,

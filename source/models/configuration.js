@@ -16,6 +16,7 @@ function setDefaults( config ) {
   if (!config.documentFile) config.documentFile = 'document.html';
   if (!config.layoutFile) config.layoutFile = 'layout.html';
   if (!config.referenceFile) config.referenceFile = 'references.txt';
+  if (!config.localeFile) config.localeFile = 'default.json';
   if (!config.submenuFile) config.submenuFile = '__submenu.txt';
   if (!config.layoutSegment) config.layoutSegment = 'layout';
   if (!config.contentSegment) config.contentSegment = 'content';
