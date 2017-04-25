@@ -9,6 +9,12 @@ var SearchResult = require( './../models/search-result.js' );
 var showComponent = require( './../utilities/show-component.js' );
 var showMetadata = require( './../utilities/show-metadata.js' );
 
+/**
+ * Represents a content store of one language.
+ * @param {string} path404 - The path of the content not found page.
+ * @param {string} pathSearch - The path of the search page.
+ * @constructor
+ */
 var ContentStock = function( path404, pathSearch ) {
 
   var self = this;
@@ -251,8 +257,8 @@ var ContentStock = function( path404, pathSearch ) {
    * @returns {string} The list of the contents in HTML format.
    */
   this.list = function( language, itemPath ) {
-
     var list = '<ul>\n';
+
     for (var key in map) {
       var itemUrl = itemPath + '/' + language + '/' + PATH.safe( key );
       list += '<li><a href="' + itemUrl + '">' + key + '</a></li>\n';

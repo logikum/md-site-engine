@@ -16,7 +16,7 @@ var ContentDrawer = function( defaultLanguage, path404, pathSearch ) {
   //region Methods
 
   /**
-   * Creates and returns a new content store a language.
+   * Creates and returns a new content store for a language.
    * @param {string} language - The language of the store.
    * @returns {ContentStock} The content store of the language.
    */
@@ -154,8 +154,8 @@ var ContentDrawer = function( defaultLanguage, path404, pathSearch ) {
    * @returns {string} The list of the contents in HTML format.
    */
   this.list = function( itemPath ) {
-
     var list = '';
+
     for (var language in contents) {
       list += '<h3>' + language + '</h3>\n';
       list += contents[ language ].list( language, itemPath );

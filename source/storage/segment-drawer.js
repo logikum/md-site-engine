@@ -153,8 +153,8 @@ var SegmentDrawer = function() {
    * @returns {string} The list of the segments in HTML format.
    */
   this.list = function( itemPath ) {
-
     var list = '<ul>\n';
+
     for (var key in segments) {
       list += '<li><a href="' + itemPath + '/' + PATH.safe( key ) + '">' + key + '</a></li>\n';
     }

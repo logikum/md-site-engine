@@ -49,6 +49,7 @@ var ReferenceDrawer = function( referenceFile ) {
    */
   this.list = function( itemPath ) {
     var list = '<ul>\n';
+
     for (var key in references) {
       list += '<li><a href="' + itemPath + '/' + PATH.safe( key ) + '">' + key + '</a></li>\n';
     }
@@ -61,6 +62,7 @@ var ReferenceDrawer = function( referenceFile ) {
    * @returns {string} The details of the reference in HTML format.
    */
   this.show = function( key ) {
+
     return '<pre><code class="no-highlight">' + references[ key ] + '</code></pre>\n';
   };
 

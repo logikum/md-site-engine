@@ -1,5 +1,11 @@
 'use strict';
 
+/**
+ * Inserts static segments into all components.
+ * @param {object} components - The components to process.
+ * @param {SegmentDrawer} segments - The segment storage.
+ * @param {Array.<string>} languages - The list of languages.
+ */
 function insertStaticSegments( components, segments, languages ) {
 
   for (var componentName in components) {

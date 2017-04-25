@@ -111,8 +111,8 @@ var LayoutDrawer = function() {
    * @returns {string} The list of the layouts in HTML format.
    */
   this.list = function( itemPath ) {
-
     var list = '<ul>\n';
+
     for (var key in layouts) {
       list += '<li><a href="' + itemPath + '/' + PATH.safe( key ) + '">' + key + '</a></li>\n';
     }

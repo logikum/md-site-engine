@@ -4,12 +4,23 @@ var util = require( 'util' );
 
 var ID = 0;
 
+/**
+ * Represents a menu store of one language.
+ * @constructor
+ */
 var MenuStock = function () { };
 
 util.inherits( MenuStock, Array );
 
 //region Prototype methods
 
+/**
+ * Stores a menu item.
+ * @param {string} text - The text of the menu item.
+ * @param {number} order - The order of the menu item.
+ * @param {string} path - The path of the menu item.
+ * @param {Boolean} umbel - Indicates whether the menu item is umbrella for more items.
+ */
 MenuStock.prototype.add = function( text, order, path, umbel ) {
 
   // Create menu item.
@@ -45,6 +56,14 @@ MenuStock.prototype.add = function( text, order, path, umbel ) {
   this.push( menuItem );
 };
 
+/**
+ * Creates and returns a new menu node.
+ * @param {string} text - The text of the menu node.
+ * @param {number} order - The order of the menu node.
+ * @param {string} path - The path of the menu node.
+ * @param {Boolean} hidden - Indicates whether the menu node is shown.
+ * @returns {{id: number, text: *, order: *, path: *, hidden: *, children: MenuStock}}
+ */
 MenuStock.prototype.branch = function( text, order, path, hidden ) {
 
   // Create sub-menu item.
@@ -75,6 +94,11 @@ MenuStock.prototype.branch = function( text, order, path, hidden ) {
 
 //region Validation
 
+/**
+ * Makes final steps on the menus:
+ *    * Sort and freeze menus.
+ * @returns {Array} The sorted and frozen menus.
+ */
 MenuStock.prototype.finalize = function() {
 
   var menu = [ ];
@@ -142,70 +166,6 @@ function findNode( path, items ) {
   } );
   return result;
 }
-
-//endregion
-
-//region Developer methods
-
-// function listStock( stock, language, itemPath, menuPath ) {
-//
-//   var list = '';
-//   stock.forEach( function( menuItem ) {
-//     var itemText = (menuPath ? menuPath + ' ● ' : '') +
-//       '[' + menuItem.order + '] ' + menuItem.text;
-//     var itemUrl = itemPath + '/' + language + '/' + menuItem.id;
-//     list += '<li><a href="' + itemUrl + '"' +
-//       (menuItem.hidden ? ' style="text-decoration: line-through;"' : '') +
-//       '>' + itemText + '</a></li>\n';
-//     if (menuItem.children)
-//       list += listStock( menuItem.children, language, itemPath, itemText );
-//   });
-//   return list;
-// }
-//
-// MenuStock.prototype.list = function ( language, itemPath ) {
-//   var list = '<ul>\n';
-//   list += listStock( this, language, itemPath, '' );
-//   return list + '</ul>\n';
-// };
-//
-// function findItem( stock, id ) {
-//   return stock.reduce( function( item, menuItem ) {
-//     return item ||
-//       (menuItem.id === id ? menuItem : null) ||
-//       (menuItem.children ? findItem( menuItem.children, id ) : null);
-//   }, null );
-// }
-//
-// MenuStock.prototype.show = function ( key ) {
-//   var menuItem = findItem( this, key );
-//
-//   var list = '<ul>\n';
-//   for (var attr in menuItem) {
-//     if (attr === 'isActive')
-//       list += '<li><b>' + attr + '</b>: ' + menuItem[ attr ]() + '</li>\n';
-//     else if (attr === 'children') {
-//       var texts = menuItem[ attr ].map( function ( menuItem ) {
-//         return menuItem.text;
-//       }, [] );
-//       //list += '<li><b>' + attr + '</b>: ' + texts.join(' ● ') + '</li>\n';
-//       list += '<li><b>' + attr + '</b>:</li>\n';
-//       list += '<ul>\n';
-//       texts.forEach( function( text ) {
-//         list += '<li>' + text + '</li>\n';
-//       } );
-//       list += '</ul>\n';
-//     }
-//     else
-//       list += '<li><b>' + attr + '</b>: ' + menuItem[ attr ] + '</li>\n';
-//   }
-//   list += '</ul>\n';
-//
-//   return {
-//     list: list,
-//     title: menuItem.text
-//   };
-// };
 
 //endregion
 

@@ -73,8 +73,8 @@ var ControlDrawer = function() {
    * @returns {string} The list of the controls in HTML format.
    */
   this.list = function( itemPath ) {
-
     var list = '<ul>\n';
+
     for (var key in controls) {
       list += '<li><a href="' + itemPath + '/' + PATH.safe( key ) + '">' + key + '</a></li>\n';
     }

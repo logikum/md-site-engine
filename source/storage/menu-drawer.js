@@ -2,12 +2,21 @@
 
 var MenuStock = require( './menu-stock.js' );
 
+/**
+ * Represents a storage for menus.
+ * @constructor
+ */
 var MenuDrawer = function() {
 
   var menus = { };
 
   //region Methods
 
+  /**
+   * Creates and returns a new menu store for a language.
+   * @param {string} language - The language of the store.
+   * @returns {MenuStock} The content store of the language.
+   */
   this.create = function ( language ) {
 
     // Create a menu stock for the language.
@@ -17,6 +26,11 @@ var MenuDrawer = function() {
     return menus[ language ];
   };
 
+  /**
+   * Returns the menu store of the requested language.
+   * @param {string} language - The language of the menus.
+   * @returns {MenuStock} The requested menu object.
+   */
   this.get = function ( language ) {
 
     return menus[ language ];
@@ -26,6 +40,10 @@ var MenuDrawer = function() {
 
   //region Validation
 
+  /**
+   * Makes final steps on the menus:
+   *    * Sort and freeze menus.
+   */
   this.finalize = function() {
 
     // Replace menu stocks with sorted and frozen menu arrays.
@@ -39,8 +57,8 @@ var MenuDrawer = function() {
   //region Developer methods
 
   function listArray( stock, language, itemPath, menuPath ) {
-
     var list = '';
+
     stock.forEach( function( menuItem ) {
       var itemText = (menuPath ? menuPath + ' ● ' : '') +
         '[' + menuItem.order + '] ' + menuItem.text;
@@ -54,8 +72,14 @@ var MenuDrawer = function() {
     return list;
   }
 
+  /**
+   * Returns the list of the menus.
+   * @param {string} itemPath - The base URL of the details page.
+   * @returns {string} The list of the menus in HTML format.
+   */
   this.list = function ( itemPath ) {
     var list = '';
+
     for (var key in menus) {
       list += '<h3>' + key + '</h3>\n';
       //list += menus[ key ].list( key, itemPath );
@@ -66,10 +90,6 @@ var MenuDrawer = function() {
     return list;
   };
 
-  // this.show = function ( language, key ) {
-  //   return menus[ language ].show( key );
-  // };
-
   function findItem( stock, id ) {
     return stock.reduce( function( item, menuItem ) {
       return item ||
@@ -78,10 +98,17 @@ var MenuDrawer = function() {
     }, null );
   }
 
+  /**
+   * Returns the details of a menu.
+   * @param {string} language - The language of the menu.
+   * @param {string} key - The path of the menu.
+   * @returns {{list: string, title}} The details of the menu in HTML format.
+   */
   this.show = function ( language, key ) {
-    var menuItem = findItem( menus[ language ], key );
 
     var list = '<ul>\n';
+    var menuItem = findItem( menus[ language ], key );
+
     for (var attr in menuItem) {
       if (attr === 'isActive')
         list += '<li><b>' + attr + '</b>: ' + menuItem[ attr ]() + '</li>\n';
