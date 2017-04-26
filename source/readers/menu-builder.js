@@ -67,7 +67,7 @@ MenuBuilder.createMenuItem = function( menuStock, definition, contentPath, isDir
     return menuStock.branch( text, order, contentPath, hidden );
   }
   // Omit hidden item.
-  else if (!hidden) {
+  else {
 
     // Add menu item.
     var path = contentPath;
@@ -80,7 +80,7 @@ MenuBuilder.createMenuItem = function( menuStock, definition, contentPath, isDir
     }
 
     // Store menu item.
-    menuStock.add( text, order, path, umbel );
+    menuStock.add( text, order, path, hidden, umbel );
     logger.menuAdded( path );
   }
 };

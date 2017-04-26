@@ -15,23 +15,25 @@ function getNavbar( ctx ) {
 function getNavbarItems( ctx, items ) {
   var menu = '';
   items.forEach( function ( item ) {
-    if (item.paths) {
-      if (item.text === '---')
-      // Separator:
-        menu += '<li class="divider"></li>';
-      else
-      // Navbar line:
-        menu += '<li' + (item.isActive( ctx.baseUrl ) ? ' class="active"' : '') +
-          '><a href="' + item.paths[ 0 ] + '">' + item.text + '</a></li>\n';
-    } else if (!item.hidden) {
-      // Navbar node:
-      menu += '<li class="dropdown' + (item.isActive( ctx.baseUrl ) ? ' active' : '') + '">\n';
-      menu += '<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">' +
-        item.text + ' <span class="caret"></span></a>\n';
-      menu += '<ul class="dropdown-menu" role="menu">\n';
-      menu += getNavbarItems( ctx, item.children );
-      menu += '</ul>\n';
-      menu += '</li>\n';
+    if (!item.hidden) {
+      if (ctx.menus.isItem( item ) /*item.paths*/) {
+        if (item.text === '---')
+        // Separator:
+          menu += '<li class="divider"></li>';
+        else
+        // Navbar line:
+          menu += '<li' + (item.isActive( ctx.baseUrl ) ? ' class="active"' : '') +
+            '><a href="' + item.paths[ 0 ] + '">' + item.text + '</a></li>\n';
+      } else {
+        // Navbar node:
+        menu += '<li class="dropdown' + (item.isActive( ctx.baseUrl ) ? ' active' : '') + '">\n';
+        menu += '<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">' +
+          item.text + ' <span class="caret"></span></a>\n';
+        menu += '<ul class="dropdown-menu" role="menu">\n';
+        menu += getNavbarItems( ctx, item.children );
+        menu += '</ul>\n';
+        menu += '</li>\n';
+      }
     }
   } );
   return menu;

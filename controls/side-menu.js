@@ -22,7 +22,7 @@ function getSideMenu( ctx ) {
       if (top) {
         // Add required parent item.
         var topItem = ctx.menus.findItem( root );
-        if (topItem) {
+        if (topItem && !topItem.hidden) {
           // Separator?
           if (topItem.text === '---')
             menu += '  <li class="divider"></li>';
@@ -50,7 +50,7 @@ function getMenuItems( ctx, items, depth, level ) {
   }
   var menu = '';
   items.forEach( function ( item ) {
-    if (item.paths) {
+    if (item.paths && !item.hidden) {
       // Separator?
       if (item.text === '---')
         menu += indent + '<li class="divider"></li>';
