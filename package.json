@@ -1,0 +1,24 @@
+{
+  "name": "md-site-engine",
+  "version": "0.1.0",
+  "description": "runs a web site built from markdown pages",
+  "keywords": [
+    "markdown",
+    "website"
+  ],
+  "license": "MIT",
+  "author": "Mármarosi József <marmarosi@logikum.hu>",
+  "main": "source/index.js",
+  "dependencies": {
+    "colors": "^1.1.2",
+    "marked": "^0.3.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/logikum/md-site-engine.git"
+  },
+  "bugs": "https://github.com/logikum/md-site-engine/issues",
+  "engines": {
+    "node": ">=0.10.0"
+  }
+}
