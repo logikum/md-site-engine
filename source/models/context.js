@@ -5,11 +5,11 @@
  * @param {ContextProto} proto - The prototype of the context.
  * @param {FilingCabinet} filingCabinet - The file manager object.
  * @param {string} language - The current language.
- * @param {string} baseUrl - The URL path on which a router instance was mounted.
+ * @param {string} url - The request URL string.
  * @param {Metadata} definition - The metadata of the current path.
  * @constructor
  */
-var Context = function( proto, filingCabinet, language, baseUrl, definition ) {
+var Context = function( proto, filingCabinet, language, url, definition ) {
 
   Object.assign( this, proto );
 
@@ -21,11 +21,11 @@ var Context = function( proto, filingCabinet, language, baseUrl, definition ) {
   this.language = language;
 
   /**
-   * Gets the URL path on which a router instance was mounted.
+   * Gets the request URL string.
    * @type {string}
    * @readonly
    */
-  this.baseUrl = baseUrl;
+  this.url = url;
 
   /**
    * Gets the metadata of the current content.

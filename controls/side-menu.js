@@ -27,7 +27,7 @@ function getSideMenu( ctx ) {
           if (topItem.text === '---')
             menu += '  <li class="divider"></li>';
           // Active menu line?
-          else if (topItem.paths[ 0 ] === ctx.baseUrl)
+          else if (topItem.paths[ 0 ] === ctx.url)
             menu += '  <li class="active"><a href="' + topItem.paths[ 0 ] + '">' +
               chevron + top + '</a></li>\n';
           // Menu line.
@@ -55,7 +55,7 @@ function getMenuItems( ctx, items, depth, level ) {
       if (item.text === '---')
         menu += indent + '<li class="divider"></li>';
       // Active menu line?
-      else if (item.isActive( ctx.baseUrl ))
+      else if (item.isActive( ctx.url ))
         menu += indent + '<li class="active"><a href="' + item.paths[ 0 ] + '">' +
           chevron + item.text + '</a></li>\n';
       // Menu line.

@@ -7,6 +7,7 @@ var readControls = require( './readers/read-controls.js' );
 var readReferences = require( './readers/read-references.js' );
 var readComponents = require( './readers/read-components.js' );
 var readContents = require( './readers/read-contents.js' );
+var ContextFactory = require( './models/context-factory.js' );
 var logger = require( './utilities/logger.js' );
 var negotiateLanguage = require( './utilities/negotiate-language.js' );
 var setDeveloperRoutes = require( './utilities/r-and-d.js' );
@@ -22,6 +23,7 @@ function ContentManager( config ) {
 
   var self = this;
   var filingCabinet;
+  var contextFactory;
 
   //region Initialization
 
@@ -61,6 +63,8 @@ function ContentManager( config ) {
     logger.showInfo( '*** Validating elements...' );
     filingCabinet.finalize();
     logger.showInfo( '*** Content manager is initialized.' );
+
+    contextFactory = new ContextFactory( config, filingCabinet );
   }
 
   //endregion
@@ -87,25 +91,14 @@ function ContentManager( config ) {
   //region Public methods
 
   /**
-   * Gets the content of the path in the specified language.
-   * @param {string} language - The language of the requested content.
-   * @param {string} path - The path of the requested content.
-   * @returns {string} The html text of the content.
-   */
-  this.get = function ( language, path ) {
-
-    return filingCabinet.get( language, path );
-  };
-
-  /**
-   * Sets up the routes of the markdown site engine.
+   * Sets up the middlewares of the markdown site engine.
    * @param {express.Application} app - The express.js application.
-   * @param {Boolean} isDevelopment - True when the application runs in environment environment.
    */
-  this.setRoutes = function ( app, isDevelopment ) {
+  this.setMiddlewares = function( app ) {
 
     // Set up language.
-    app.use( function ( req, res, next ) {
+    app.use( function( req, res, next ) {
+
       if (!req.session)
         req.session = { language: negotiateLanguage(
           req.headers["accept-language"], filingCabinet.languages, config.defaultLocale
@@ -117,8 +110,26 @@ function ContentManager( config ) {
       next();
     } );
 
+    // Set up request context.
+    app.use( function( req, res, next ) {
+
+      var language = req.session.language;
+      var url = req.url;
+      var definition = filingCabinet.contents.getDefinition( language, url );
+      req.ctx = contextFactory.create( language, url, definition );
+      next();
+    } );
+  };
+
+  /**
+   * Sets up the routes of the markdown site engine.
+   * @param {express.Application} app - The express.js application.
+   * @param {Boolean} isDevelopment - True when the application runs in environment environment.
+   */
+  this.setRoutes = function( app, isDevelopment ) {
+
     // Change language.
-    app.use( config.paths.setLanguage, function ( req, res ) {
+    app.use( config.paths.setLanguage, function( req, res ) {
 
       var len = req.baseUrl.length;
       var url = req.originalUrl.split( '?' )[ 0 ].substr( len );
@@ -133,13 +144,15 @@ function ContentManager( config ) {
     } );
 
     // Reread the contents.
-    app.use( config.paths.reboot, function ( req, res ) {
+    app.use( config.paths.reboot, function( req, res ) {
+
       initialize();
       res.status( 200 ).send( self.get( req.session.language, '/' ) );
     } );
 
     // Get the text to search.
     var searchPaths = [ ];
+
     filingCabinet.languages.forEach( function( language ) {
       var searchPath = filingCabinet.contents.searchPath( language );
       if (searchPath && searchPaths.indexOf( searchPath ) < 0)
@@ -151,19 +164,28 @@ function ContentManager( config ) {
 
     // Developer methods.
     if (isDevelopment)
-      setDeveloperRoutes(
-        app, filingCabinet, config.paths.RandD,
-        config.paths.cssBootstrap, config.paths.cssHighlight, config.paths.jsHighlight
-      );
+      setDeveloperRoutes( app, filingCabinet, config.paths );
 
     // Serve contents.
-    app.use( '*', function ( req, res ) {
-      res.status( 200 ).send( self.get( req.session.language, req.baseUrl ) );
+    app.use( '*', function( req, res ) {
+
+      var language = req.session.language;
+      var url = req.baseUrl;
+      var context = req.ctx;
+      if (req.originalUrl !== req.url) {
+
+        // Recreate the context for the rewritten path.
+        var definition = filingCabinet.contents.getDefinition( language, url );
+        context = contextFactory.create( language, url, definition );
+      }
+
+      res.status( 200 ).send( filingCabinet.get( language, url, context ) );
       filingCabinet.text2search = '';
     } );
   };
 
   function readSearchPhrase( req, res, next ) {
+
     if (req.body)
       filingCabinet.text2search = req.body.text2search;
     else {

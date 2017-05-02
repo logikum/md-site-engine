@@ -24,20 +24,16 @@ function show( item ) {
  * Sets the helper routes to support development.
  * @param {express.Application} app - The express.js application object.
  * @param {FilingCabinet} filingCabinet - The file manager object.
- * @param {string} rootPath - The base URL of the resource routes.
- * @param {string} cssBootstrap - The path of the Bootstrap style (design).
- * @param {string} cssHighlight - The path of the code highlighter style (design).
- * @param {string} jsHighlight - The path of the code highlighter script (design).
+ * @param {object} paths - The configuration paths.
  */
-function setDeveloperRoutes(
-  app, filingCabinet, rootPath, cssBootstrap, cssHighlight, jsHighlight
-) {
+function setDeveloperRoutes( app, filingCabinet, paths ) {
+
   // Create document template for resources.
   var head = '\n' +
-    '  <link rel="stylesheet" href="' + cssBootstrap + '" />\n' +
-    '  <link rel="stylesheet" href="' + cssHighlight + '">\n';
+    '  <link rel="stylesheet" href="' + paths.cssBootstrap + '" />\n' +
+    '  <link rel="stylesheet" href="' + paths.cssHighlight + '">\n';
   var foot = '\n' +
-    '  <script src="' + jsHighlight + '"></script>\n' +
+    '  <script src="' + paths.jsHighlight + '"></script>\n' +
     '  <script>hljs.initHighlightingOnLoad();</script>\n';
 
   function wrap( title, body ) {
@@ -48,7 +44,7 @@ function setDeveloperRoutes(
   }
 
   // Set up developer paths.
-  PATH.init( rootPath );
+  PATH.init( paths.RandD );
 
   // Developer home page.
   app.get( PATH.root, function ( req, res ) {

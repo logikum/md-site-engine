@@ -22,11 +22,11 @@ function getNavbarItems( ctx, items ) {
           menu += '<li class="divider"></li>';
         else
         // Navbar line:
-          menu += '<li' + (item.isActive( ctx.baseUrl ) ? ' class="active"' : '') +
+          menu += '<li' + (item.isActive( ctx.url ) ? ' class="active"' : '') +
             '><a href="' + item.paths[ 0 ] + '">' + item.text + '</a></li>\n';
       } else {
         // Navbar node:
-        menu += '<li class="dropdown' + (item.isActive( ctx.baseUrl ) ? ' active' : '') + '">\n';
+        menu += '<li class="dropdown' + (item.isActive( ctx.url ) ? ' active' : '') + '">\n';
         menu += '<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">' +
           item.text + ' <span class="caret"></span></a>\n';
         menu += '<ul class="dropdown-menu" role="menu">\n';
@@ -62,7 +62,7 @@ function getLanguageItems( ctx ) {
   }
 
   function linkOf( item ) {
-    return '<li><a href="/set-language/' + item + '?id=' + ctx.baseUrl + '">' + nameOf( item ) + '</a></li>\n';
+    return '<li><a href="/set-language/' + item + '?id=' + ctx.url + '">' + nameOf( item ) + '</a></li>\n';
   }
 
   if (ctx.languages.length > 1) {
