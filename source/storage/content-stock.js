@@ -223,7 +223,7 @@ var ContentStock = function( path404, pathSearch ) {
           if (!controls.has( token.name ))
             logger.showWarning( 'Token "' + token.name + '" in content "' + path +
               '" has no matching control - must be specified in metadata.' );
-        } else {
+        } else if (!token.isData) {
           // Check the segment.
           if (!segments.has( language, token.name ))
             logger.showWarning( 'Token "' + token.name + '" in content "' + path +

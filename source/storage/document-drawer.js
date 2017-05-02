@@ -86,7 +86,7 @@ var DocumentDrawer = function() {
               if (!allHave)
                 logger.showWarning( 'Token "' + token.name + '" in document "' + path +
                   '" has no matching default segment - must be specified in metadata.' );
-            } else {
+            } else if (!token.isData) {
               // Check the segment.
               if (!segments.has( language, token.name ))
                 logger.showWarning( 'Token "' + token.name + '" in document "' + path +
