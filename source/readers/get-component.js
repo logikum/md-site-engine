@@ -22,7 +22,7 @@ function getComponent( componentFile, layoutSegment, contentSegment ) {
   var html = fs.readFileSync( segmentPath, { encoding: 'utf-8' } );
 
   // Find tokens.
-  var re = /(\{\{\s*[=#]?[\w-\/]+\s*}})/g;
+  var re = /(\{\{\s*[=#.]?[\w-\/]+\s*}})/g;
   var tokens = [ ];
   var j = 0;
   var isDocument = false;

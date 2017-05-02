@@ -104,6 +104,14 @@ var FilingCabinet = function( config ) {
           // Call the control to get its text.
           textToInsert = control( context );
         }
+        else if (token.isData) {
+          textToInsert = '';
+          // Get the required data property.
+          var dataProperty = context.data[ token.name ];
+          if (dataProperty)
+            // Convert the value of the data property to text.
+            textToInsert = dataProperty.toString();
+        }
         else if (token.name === config.layoutSegment) {
           // Determine the path of the layout.
           var layoutKey = context.metadata[ token.name ] || token.name;

@@ -6,6 +6,7 @@ var PATH = require( './../utilities/rd-path.js' );
 var Content = require( './../models/content.js' );
 var Metadata = require( './../models/metadata.js' );
 var SearchResult = require( './../models/search-result.js' );
+var SearchResultList = require( './../models/search-result-list.js' );
 var showComponent = require( './../utilities/show-component.js' );
 var showMetadata = require( './../utilities/show-metadata.js' );
 
@@ -124,32 +125,36 @@ var ContentStock = function( path404, pathSearch ) {
   /**
    * Return the list of the contents matching the search phrase.
    * @param {string} text2search - The text to search.
+   * @param {function} translate - The text localizer function.
    * @returns {Array.<SearchResult>} The list of matching contents.
    */
-  this.search = function( text2search ) {
-    var results = [ ];
+  this.search = function( text2search, translate ) {
+    var results = new SearchResultList( translate );
 
     // Is anything to search there?
     if (!text2search)
-      return null;
+      return results;
 
     // Check all searchable contents.
+    results.text2search = text2search;
     definitions
       .filter( function( definition ) {
         return definition.searchable;
       })
       .forEach( function( definition ) {
         var priority = 0;
-        if (definition.title && definition.title.indexOf( text2search ) >= 0)
+        var re = new RegExp( text2search, 'i' );
+
+        // Try to find the search phrase somewhere...
+        if (definition.title && re.test( definition.title ))
           priority = 4;
-        else if (definition.keywords && definition.keywords.indexOf( text2search ) >= 0)
+        else if (definition.keywords && re.test( definition.keywords ))
           priority = 3;
-        else if (definition.description && definition.description.indexOf( text2search ) >= 0)
+        else if (definition.description && re.test( definition.description ))
           priority = 2;
         else {
           var content = self.getContent( definition.path );
-          if (content instanceof Content && content.text &&
-            content.text.indexOf( text2search ) >= 0)
+          if (content instanceof Content && content.text && re.test( content.text ))
             priority = 1;
         }
         // Does the search phrase appear in this content?

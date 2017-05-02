@@ -28,7 +28,7 @@ var Token = function( expression ) {
   Object.defineProperty( this, 'name', {
     get: function () {
       var id = expression.substring( 2, expression.length - 2 ).trim();
-      return this.isStatic || this.isControl ? id.substring( 1 ) : id;
+      return this.isStatic || this.isControl || this.isData ? id.substring( 1 ) : id;
     },
     enumerable: true,
     configurable: false
@@ -55,6 +55,19 @@ var Token = function( expression ) {
   Object.defineProperty( this, 'isControl', {
     get: function () {
       return expression.indexOf( '#' ) > 0;
+    },
+    enumerable: true,
+    configurable: false
+  } );
+
+  /**
+   * Returns true when the token represents a context data property; otherwise false.
+   * @type {Boolean}
+   * @readonly
+   */
+  Object.defineProperty( this, 'isData', {
+    get: function () {
+      return expression.indexOf( '.' ) > 0;
     },
     enumerable: true,
     configurable: false

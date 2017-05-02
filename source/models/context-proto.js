@@ -31,7 +31,7 @@ var ContextProto = function( config, filingCabinet ) {
    * Gets the localized text of the key in the current language.
    * It is the same as ContextProto.translate().
    * @param {string} key - The key of the requested locale.
-   * @returns {string}
+   * @returns {string} The localized text.
    */
   this.t = function( key ) {
 
@@ -42,7 +42,7 @@ var ContextProto = function( config, filingCabinet ) {
    * Gets the localized text of the key in the current language.
    * It is the same as ContextProto.t().
    * @param {string} key - The key of the requested locale.
-   * @returns {string}
+   * @returns {string} The localized text.
    */
   this.translate = function( key ) {
 

@@ -188,13 +188,10 @@ function ContentManager( config ) {
     req.ctx.data.text2search = '';
     req.ctx.data.results = [ ];
 
-    if (req.body) {
-      var text2search = req.body.text2search;
-      if (text2search) {
-        // Search the required text in the contents.
-        req.ctx.data.text2search = text2search;
-        req.ctx.data.results = filingCabinet.contents.search( req.ctx.language, text2search );
-      }
+    if (req.body && req.body.text2search) {
+      // Search the required text in the contents.
+      req.ctx.data.text2search = req.body.text2search;
+      req.ctx.data.results = filingCabinet.contents.search( req.ctx );
     }
     else
       logger.showError( 'Middleware "body-parser" is not applied.' );
