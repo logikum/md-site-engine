@@ -103,14 +103,15 @@ var ContentDrawer = function( defaultLanguage, path404, pathSearch ) {
 
   /**
    * Return the list of the contents matching the search phrase.
-   * @param {string} language - The language of the contents to search.
-   * @param {string} text2search - The text to search.
+   * @param {Context} context - The context of the request.
    * @returns {Array.<SearchResult>} The list of matching contents.
    */
-  this.search = function( language, text2search ) {
+  this.search = function( context ) {
 
     // Get search results
-    return contents[ language ].search( text2search );
+    return contents[ context.language ].search(
+      context.data.text2search, context.translate
+    );
   };
 
   //endregion

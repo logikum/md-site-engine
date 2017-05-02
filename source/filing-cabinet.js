@@ -2,7 +2,6 @@
 
 var path = require( 'path' );
 
-var ContextFactory = require( './models/context-factory.js' );
 var ControlDrawer = require( './storage/control-drawer.js' );
 var ReferenceDrawer = require( './storage/reference-drawer.js' );
 var DocumentDrawer = require( './storage/document-drawer.js' );
@@ -80,23 +79,15 @@ var FilingCabinet = function( config ) {
 
   //endregion
 
-  var contextFactory = new ContextFactory( config, this );
-
   //region Public methods
 
   /**
    * Gets the content of the path in the specified language.
    * @param {string} language - The language of the requested content.
-   * @param {string} baseUrl - The URL path on which a router instance was mounted.
+   * @param {string} url - The request URL string.
    * @returns {string} The html text of the content.
    */
-  this.get = function ( language, baseUrl ) {
-
-    // Get the meta data of the content.
-    var definition = self.contents.getDefinition( language, baseUrl );
-
-    // Create context for the controls.
-    var context = contextFactory.create( language, baseUrl, definition );
+  this.get = function ( language, url, context ) {
 
     function insertSegments( component ) {
       var response = component.html;
@@ -107,15 +98,23 @@ var FilingCabinet = function( config ) {
 
         if (token.isControl) {
           // Determine the path of the control.
-          var controlKey = definition.segments[ token.name ] || token.name;
+          var controlKey = context.metadata.segments[ token.name ] || token.name;
           // Get the control.
           var control = self.controls.get( controlKey );
           // Call the control to get its text.
           textToInsert = control( context );
         }
+        else if (token.isData) {
+          textToInsert = '';
+          // Get the required data property.
+          var dataProperty = context.data[ token.name ];
+          if (dataProperty)
+            // Convert the value of the data property to text.
+            textToInsert = dataProperty.toString();
+        }
         else if (token.name === config.layoutSegment) {
           // Determine the path of the layout.
-          var layoutKey = definition[ token.name ] || token.name;
+          var layoutKey = context.metadata[ token.name ] || token.name;
           // Get the layout object.
           var layout = self.layouts.get( language, layoutKey );
           // Get the text of the layout.
@@ -123,13 +122,13 @@ var FilingCabinet = function( config ) {
         }
         else if (token.name === config.contentSegment) {
           // Get the content object.
-          var content = self.contents.getContent( language, baseUrl );
+          var content = self.contents.getContent( language, url );
           // Get the text of the content.
           textToInsert = insertSegments( content );
         }
         else {
           // Determine the path of the segment.
-          var segmentKey = definition.segments[ token.name ] || token.name;
+          var segmentKey = context.metadata.segments[ token.name ] || token.name;
           // Check if segment is replaced by a control.
           if (segmentKey[ 0 ] === '#'){
             // Determine the path of the control.
@@ -156,7 +155,7 @@ var FilingCabinet = function( config ) {
     }
 
     // Determine the path of the document.
-    var documentKey = definition[ 'document' ] ||
+    var documentKey = context.metadata[ 'document' ] ||
       path.basename( config.documentFile, path.extname( config.documentFile ) );
     // Get the document object.
     var document = self.documents.get( language, documentKey );

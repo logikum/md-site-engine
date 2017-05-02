@@ -17,15 +17,15 @@ var ContextFactory = function( config, filingCabinet ) {
     /**
    * Creates a context object for controls.
    * @param {string} language - The current language.
-   * @param {string} baseUrl - The URL path on which a router instance was mounted.
+   * @param {string} url - The request URL string.
    * @param {Metadata} definition - The metadata of the current path.
    */
-  this.create = function ( language, baseUrl, definition ) {
+  this.create = function ( language, url, definition ) {
 
     // Create the context.
-    var context = new Context( proto, filingCabinet, language, baseUrl, definition );
+    var context = new Context( proto, filingCabinet, language, url, definition );
 
-      // Immutable object.
+    // Immutable object.
     Object.freeze( context );
 
     return context;
