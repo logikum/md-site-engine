@@ -42,11 +42,10 @@ var Context = function( proto, filingCabinet, language, url, definition ) {
   this.menus = filingCabinet.menus.get( language );
 
   /**
-   * Gets the text to search.
-   * @type {string}
-   * @readonly
+   * Gets or sets the data that are the results of an action.
+   * @type {object}
    */
-  this.text2search = filingCabinet.text2search;
+  this.data = { };
 
   /**
    * Gets the path of the search command.

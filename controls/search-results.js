@@ -1,7 +1,7 @@
 'use strict';
 
 function searchResults( ctx ) {
-  var results = ctx.getSearchResults();
+  var results = ctx.data.results;
   var html = '';
 
   if (results === null) {

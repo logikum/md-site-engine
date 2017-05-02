@@ -25,7 +25,7 @@ var ContextFactory = function( config, filingCabinet ) {
     // Create the context.
     var context = new Context( proto, filingCabinet, language, url, definition );
 
-      // Immutable object.
+    // Immutable object.
     Object.freeze( context );
 
     return context;

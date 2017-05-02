@@ -150,7 +150,7 @@ function ContentManager( config ) {
       res.status( 200 ).send( self.get( req.session.language, '/' ) );
     } );
 
-    // Get the text to search.
+    // Search the contents.
     var searchPaths = [ ];
 
     filingCabinet.languages.forEach( function( language ) {
@@ -159,7 +159,7 @@ function ContentManager( config ) {
         searchPaths.push( searchPath );
     } );
     searchPaths.forEach( function( searchPath ) {
-      app.post( searchPath, readSearchPhrase );
+      app.post( searchPath, searchTheContents );
     } );
 
     // Developer methods.
@@ -172,26 +172,33 @@ function ContentManager( config ) {
       var language = req.session.language;
       var url = req.baseUrl;
       var context = req.ctx;
-      if (req.originalUrl !== req.url) {
+      if (req.originalUrl !== req.baseUrl) {
 
         // Recreate the context for the rewritten path.
         var definition = filingCabinet.contents.getDefinition( language, url );
         context = contextFactory.create( language, url, definition );
       }
-
       res.status( 200 ).send( filingCabinet.get( language, url, context ) );
-      filingCabinet.text2search = '';
     } );
   };
 
-  function readSearchPhrase( req, res, next ) {
+  function searchTheContents( req, res, next ) {
 
-    if (req.body)
-      filingCabinet.text2search = req.body.text2search;
-    else {
-      filingCabinet.text2search = '';
-      logger.showError( 'Middleware "body-parser" is not applied.' );
+    // Initialize data.
+    req.ctx.data.text2search = '';
+    req.ctx.data.results = [ ];
+
+    if (req.body) {
+      var text2search = req.body.text2search;
+      if (text2search) {
+        // Search the required text in the contents.
+        req.ctx.data.text2search = text2search;
+        req.ctx.data.results = filingCabinet.contents.search( req.ctx.language, text2search );
+      }
     }
+    else
+      logger.showError( 'Middleware "body-parser" is not applied.' );
+
     next();
   }
 

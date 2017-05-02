@@ -8,6 +8,11 @@
  */
 var ContextProto = function( config, filingCabinet ) {
 
+  function xlate( language, key ) {
+
+    return filingCabinet.locales.get( language, key );
+  }
+
   /**
    * Gets the configuration object.
    * @type {Configuration}
@@ -22,17 +27,14 @@ var ContextProto = function( config, filingCabinet ) {
    */
   this.languages = filingCabinet.languages;
 
-  function xlate( language, key ) {
-    return filingCabinet.locales.get( language, key );
-  }
-
   /**
    * Gets the localized text of the key in the current language.
    * It is the same as ContextProto.translate().
    * @param {string} key - The key of the requested locale.
    * @returns {string}
    */
-  this.t = function ( key ) {
+  this.t = function( key ) {
+
     return xlate( this.language, key );
   };
 
@@ -42,16 +44,9 @@ var ContextProto = function( config, filingCabinet ) {
    * @param {string} key - The key of the requested locale.
    * @returns {string}
    */
-  this.translate = function ( key ) {
-    return xlate( this.language, key );
+  this.translate = function( key ) {
 
-  };
-  /**
-   * Gets the list of search results matching to the search phrase.
-   * @returns {Array.<SearchResult>}
-   */
-  this.getSearchResults = function() {
-    return filingCabinet.contents.search( this.language, this.text2search );
+    return xlate( this.language, key );
   };
 };
 
