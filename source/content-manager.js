@@ -117,6 +117,11 @@ function ContentManager( config ) {
       var url = req.url;
       var definition = filingCabinet.contents.getDefinition( language, url );
       req.ctx = contextFactory.create( language, url, definition );
+
+      // Apply eventual redirection.
+      if (definition.redirect)
+        req.url = definition.redirect;
+
       next();
     } );
   };
