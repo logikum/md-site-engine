@@ -119,8 +119,8 @@ function ContentManager( config ) {
       req.ctx = contextFactory.create( language, url, definition );
 
       // Apply eventual redirection.
-      if (definition.redirect)
-        req.url = definition.redirect;
+      if (definition.rewrite)
+        req.url = definition.rewrite;
 
       next();
     } );
