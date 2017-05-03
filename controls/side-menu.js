@@ -16,13 +16,14 @@ function getSideMenu( ctx ) {
     if (rootItem) {
       // Add required header.
       if (header)
-        menu += '<h4 class="side-menu">' + header + '</h4>';
+        menu += '<h4 class="side-menu">' + ctx.t( header, header ) + '</h4>';
 
       menu += '<ul class="side-menu">\n';
       if (top) {
         // Add required parent item.
         var topItem = ctx.menus.findItem( root );
         if (topItem && !topItem.hidden) {
+          top = ctx.t( top, top );
           // Separator?
           if (topItem.text === '---')
             menu += '  <li class="divider"></li>';
