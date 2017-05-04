@@ -44,7 +44,7 @@ function getSearchField( ctx ) {
     ?
     '<form class="navbar-form navbar-right navbar-input-group" action="' + ctx.searchPath + '" method="post">\n' +
     '  <div class="form-group">\n' +
-    '    <input type="text" class="form-control" name="text2search" id="text2search"\n' +
+    '    <input type="text" class="form-control" name="text2search"\n' +
     '           maxlength="13" placeholder="' + ctx.t('searchHint') + '">\n' +
     '  </div>\n' +
     '  <button type="submit" class="btn btn-default" id="btnSearch" disabled="disabled">\n' +

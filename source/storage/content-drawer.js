@@ -1,6 +1,7 @@
 'use strict';
 
 var ContentStock = require( './content-stock.js' );
+var SearchResultList = require( './../models/search-result-list.js' );
 
 /**
  * Represents a storage for contents.
@@ -108,10 +109,17 @@ var ContentDrawer = function( defaultLanguage, path404, pathSearch ) {
    */
   this.search = function( context ) {
 
-    // Get search results
-    return contents[ context.language ].search(
-      context.data.text2search, context.translate
+    var results = new SearchResultList(
+      context.data.text2search,
+      context.t( 'noSearchPhrase' ),
+      context.t( 'noSearchResult' )
     );
+
+    // Get search results
+    if (results.text2search)
+      return contents[ context.language ].search( results );
+    else
+      return results;
   };
 
   //endregion

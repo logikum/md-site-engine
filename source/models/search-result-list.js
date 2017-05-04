@@ -4,26 +4,32 @@ var util = require('util');
 
 /**
  * Represents a search result collection.
- * @param {function} translate - The text localizer function.
+ * @param {string} text2search - The text to search.
+ * @param {string} noSearchPhrase - The message when search phrase is missing.
+ * @param {string} noSearchResult - The message when search has no result.
  * @constructor
  */
-var SearchResultList = function( translate ) {
+var SearchResultList = function( text2search, noSearchPhrase, noSearchResult ) {
 
   Array.call( this );
-
-  /**
-   * Gets the localized text of the key in the current language.
-   * It is the same as ContextProto.translate().
-   * @param {string} key - The key of the requested locale.
-   * @returns {string} The localized text.
-   */
-  this.t = translate;
 
   /**
    * Gets the text to search.
    * @type {string|null}
    */
-  this.text2search = null;
+  this.text2search = text2search || null;
+
+  /**
+   * Gets a message to display when search phrase is missing.
+   * @type {string}
+   */
+  this.noSearchPhrase = noSearchPhrase;
+
+  /**
+   * Gets a message to display when search did not found the text in the contents.
+   * @type {string}
+   */
+  this.noSearchResult = noSearchResult;
 };
 
 util.inherits(SearchResultList, Array);
@@ -37,20 +43,22 @@ SearchResultList.prototype.toString = function() {
 
   if (this.text2search === null) {
     html += '<div class="search-result">\n';
-    html += '  <em>' + this.t( 'noSearchPhrase' ) + '</em>\n';
+    html += '  <em>' + this.noSearchPhrase + '</em>\n';
     html += '</div>\n';
   }
   else if (this.length > 0) {
+    var hlText = this.text2search;
+
     this.forEach( function ( item ) {
 
       html += '<div class="search-result">\n';
-      html += '  <h4><a href="' + item.path + '">' + item.title + '</a></h4>\n';
+      html += '  <h4><a href="' + item.path + '?hl=' + hlText + '">' + item.title + '</a></h4>\n';
       html += '  <div>' + item.description + '</div>\n';
       html += '</div>\n';
     } );
   } else {
     html += '<div class="search-result">\n';
-    html += '  <em>' + this.t( 'noSearchResult' ) + '</em>\n';
+    html += '  <em>' + this.noSearchResult + '</em>\n';
     html += '</div>\n';
   }
 

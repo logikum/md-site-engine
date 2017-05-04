@@ -117,6 +117,11 @@ function ContentManager( config ) {
       var url = req.url;
       var definition = filingCabinet.contents.getDefinition( language, url );
       req.ctx = contextFactory.create( language, url, definition );
+
+      // Apply eventual redirection.
+      if (definition.rewrite)
+        req.url = definition.rewrite;
+
       next();
     } );
   };
@@ -178,6 +183,10 @@ function ContentManager( config ) {
         var definition = filingCabinet.contents.getDefinition( language, url );
         context = contextFactory.create( language, url, definition );
       }
+      // Add eventual highlight text to context data.
+      if (req.query.hl)
+        context.data.highlight = req.query.hl;
+
       res.status( 200 ).send( filingCabinet.get( language, url, context ) );
     } );
   };
@@ -188,7 +197,7 @@ function ContentManager( config ) {
     req.ctx.data.text2search = '';
     req.ctx.data.results = [ ];
 
-    if (req.body && req.body.text2search) {
+    if (req.body) {
       // Search the required text in the contents.
       req.ctx.data.text2search = req.body.text2search;
       req.ctx.data.results = filingCabinet.contents.search( req.ctx );

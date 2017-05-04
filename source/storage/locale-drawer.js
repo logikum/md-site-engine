@@ -29,9 +29,10 @@ var LocaleDrawer = function( defaultLanguage ) {
    * Returns a locale.
    * @param {string} language - The language of the locale.
    * @param {string} key - The identifier of the locale.
+   * @param {string} defaultValue - The default value if the locale does not exist.
    * @returns {string} The requested locale.
    */
-  this.get = function( language, key ) {
+  this.get = function( language, key, defaultValue ) {
 
     // Try language specific locale.
     var langKey = language + ':' + key;
@@ -46,6 +47,10 @@ var LocaleDrawer = function( defaultLanguage ) {
         // The default locale is found.
         return locales[ dfltKey ];
     }
+    // Is a default value supplied?
+    if (defaultValue)
+      return defaultValue;
+
     // The requested locale is not found.
     logger.showError( 'Locale "' + key + '" is not found.' );
 

@@ -8,11 +8,6 @@
  */
 var ContextProto = function( config, filingCabinet ) {
 
-  function xlate( language, key ) {
-
-    return filingCabinet.locales.get( language, key );
-  }
-
   /**
    * Gets the configuration object.
    * @type {Configuration}
@@ -31,22 +26,24 @@ var ContextProto = function( config, filingCabinet ) {
    * Gets the localized text of the key in the current language.
    * It is the same as ContextProto.translate().
    * @param {string} key - The key of the requested locale.
+   * @param {string} defaultValue - The default value if the locale does not exist.
    * @returns {string} The localized text.
    */
-  this.t = function( key ) {
+  this.t = function( key, defaultValue ) {
 
-    return xlate( this.language, key );
+    return filingCabinet.locales.get( this.language, key, defaultValue );
   };
 
   /**
    * Gets the localized text of the key in the current language.
    * It is the same as ContextProto.t().
    * @param {string} key - The key of the requested locale.
+   * @param {string} defaultValue - The default value if the locale does not exist.
    * @returns {string} The localized text.
    */
-  this.translate = function( key ) {
+  this.translate = function( key, defaultValue ) {
 
-    return xlate( this.language, key );
+    return filingCabinet.locales.get( this.language, key, defaultValue );
   };
 };
 

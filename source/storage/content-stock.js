@@ -6,7 +6,7 @@ var PATH = require( './../utilities/rd-path.js' );
 var Content = require( './../models/content.js' );
 var Metadata = require( './../models/metadata.js' );
 var SearchResult = require( './../models/search-result.js' );
-var SearchResultList = require( './../models/search-result-list.js' );
+var escapeRegExp = require( './../utilities/escape-reg-exp.js' );
 var showComponent = require( './../utilities/show-component.js' );
 var showMetadata = require( './../utilities/show-metadata.js' );
 
@@ -124,26 +124,19 @@ var ContentStock = function( path404, pathSearch ) {
 
   /**
    * Return the list of the contents matching the search phrase.
-   * @param {string} text2search - The text to search.
-   * @param {function} translate - The text localizer function.
-   * @returns {Array.<SearchResult>} The list of matching contents.
+   * @param {SearchResultList} results - The container for the search results.
+   * @returns {SearchResultList} The list of matching contents.
    */
-  this.search = function( text2search, translate ) {
-    var results = new SearchResultList( translate );
-
-    // Is anything to search there?
-    if (!text2search)
-      return results;
+  this.search = function( results ) {
 
     // Check all searchable contents.
-    results.text2search = text2search;
     definitions
       .filter( function( definition ) {
         return definition.searchable;
       })
       .forEach( function( definition ) {
         var priority = 0;
-        var re = new RegExp( text2search, 'i' );
+        var re = new RegExp( escapeRegExp( results.text2search ), 'i' );
 
         // Try to find the search phrase somewhere...
         if (definition.title && re.test( definition.title ))
@@ -194,11 +187,11 @@ var ContentStock = function( path404, pathSearch ) {
     });
 
     if (targets.length > 0)
-      // The requested definition is found.
+    // The requested definition is found.
       return targets[ 0 ];
 
     else
-      // The requested definition is not found - empty definition.
+    // The requested definition is not found - empty definition.
       return new Metadata( { }, '' );
   };
 
@@ -285,5 +278,7 @@ var ContentStock = function( path404, pathSearch ) {
 
   //endregion
 };
+
+//endregion
 
 module.exports = ContentStock;
