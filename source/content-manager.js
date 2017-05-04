@@ -184,8 +184,8 @@ function ContentManager( config ) {
         context = contextFactory.create( language, url, definition );
       }
       // Add eventual highlight text to context data.
-      if (req.param( 'hl' ))
-        context.data.highlight = req.param( 'hl' );
+      if (req.query.hl)
+        context.data.highlight = req.query.hl;
 
       res.status( 200 ).send( filingCabinet.get( language, url, context ) );
     } );
@@ -197,7 +197,7 @@ function ContentManager( config ) {
     req.ctx.data.text2search = '';
     req.ctx.data.results = [ ];
 
-    if (req.body && req.body.text2search) {
+    if (req.body) {
       // Search the required text in the contents.
       req.ctx.data.text2search = req.body.text2search;
       req.ctx.data.results = filingCabinet.contents.search( req.ctx );
