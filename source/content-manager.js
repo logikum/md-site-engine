@@ -117,6 +117,11 @@ function ContentManager( config ) {
       var url = req.url;
       var definition = filingCabinet.contents.getDefinition( language, url );
       req.ctx = contextFactory.create( language, url, definition );
+
+      // Apply eventual redirection.
+      if (definition.rewrite)
+        req.url = definition.rewrite;
+
       next();
     } );
   };
@@ -178,6 +183,10 @@ function ContentManager( config ) {
         var definition = filingCabinet.contents.getDefinition( language, url );
         context = contextFactory.create( language, url, definition );
       }
+      // Add eventual highlight text to context data.
+      if (req.param( 'hl' ))
+        context.data.highlight = req.param( 'hl' );
+
       res.status( 200 ).send( filingCabinet.get( language, url, context ) );
     } );
   };
