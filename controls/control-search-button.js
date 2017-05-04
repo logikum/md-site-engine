@@ -5,14 +5,14 @@ function controlSearchButton( ctx ) {
     '\n' +
     '<script>\n' +
     '  (function() {\n' +
-    '    $("#text2search").keyup(function() {\n' +
+    '    $("input[name=text2search]").keyup(function() {\n' +
     '      var empty = false;\n' +
     '      if ($(this).val().length < 3)\n' +
     '        empty = true;\n' +
     '      if (empty)\n' +
-    '        $("#btnSearch").attr("disabled", "disabled");\n' +
+    '        $(this).closest("form").find(":submit").attr("disabled", "disabled");\n' +
     '      else\n' +
-    '        $("#btnSearch").removeAttr("disabled");\n' +
+    '        $(this).closest("form").find(":submit").removeAttr("disabled");\n' +
     '    });\n' +
     '  })()\n' +
     '</script>\n' +
