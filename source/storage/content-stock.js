@@ -136,7 +136,7 @@ var ContentStock = function( path404, pathSearch ) {
       })
       .forEach( function( definition ) {
         var priority = 0;
-        var re = new RegExp( escapeRegExp( text2search ), 'i' );
+        var re = new RegExp( escapeRegExp( results.text2search ), 'i' );
 
         // Try to find the search phrase somewhere...
         if (definition.title && re.test( definition.title ))
