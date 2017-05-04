@@ -41,10 +41,12 @@ SearchResultList.prototype.toString = function() {
     html += '</div>\n';
   }
   else if (this.length > 0) {
+    var hlText = this.text2search;
+
     this.forEach( function ( item ) {
 
       html += '<div class="search-result">\n';
-      html += '  <h4><a href="' + item.path + '">' + item.title + '</a></h4>\n';
+      html += '  <h4><a href="' + item.path + '?hl=' + hlText + '">' + item.title + '</a></h4>\n';
       html += '  <div>' + item.description + '</div>\n';
       html += '</div>\n';
     } );

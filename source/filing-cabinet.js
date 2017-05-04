@@ -10,6 +10,7 @@ var SegmentDrawer = require( './storage/segment-drawer.js' );
 var LocaleDrawer = require( './storage/locale-drawer.js' );
 var ContentDrawer = require( './storage/content-drawer.js' );
 var MenuDrawer = require( './storage/menu-drawer.js' );
+var escapeRegExp = require( './utilities/escape-reg-exp.js' );
 
 /**
  * Manages and processes the files of the site.
@@ -85,6 +86,7 @@ var FilingCabinet = function( config ) {
    * Gets the content of the path in the specified language.
    * @param {string} language - The language of the requested content.
    * @param {string} url - The request URL string.
+   * @param {Context} context - The context of the request.
    * @returns {string} The html text of the content.
    */
   this.get = function ( language, url, context ) {
@@ -125,7 +127,11 @@ var FilingCabinet = function( config ) {
           var content = self.contents.getContent( language, url );
           // Get the text of the content.
           textToInsert = insertSegments( content );
-        }
+          // Mark highlighted texts.
+          if (context.data.highlight) {
+            var rehl = new RegExp( escapeRegExp( context.data.highlight ), 'gi' );
+            textToInsert = textToInsert.replace( rehl, '<mark>$&</mark>' );
+          }        }
         else {
           // Determine the path of the segment.
           var segmentKey = context.metadata.segments[ token.name ] || token.name;

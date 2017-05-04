@@ -7,6 +7,7 @@ var Content = require( './../models/content.js' );
 var Metadata = require( './../models/metadata.js' );
 var SearchResult = require( './../models/search-result.js' );
 var SearchResultList = require( './../models/search-result-list.js' );
+var escapeRegExp = require( './../utilities/escape-reg-exp.js' );
 var showComponent = require( './../utilities/show-component.js' );
 var showMetadata = require( './../utilities/show-metadata.js' );
 
@@ -143,7 +144,7 @@ var ContentStock = function( path404, pathSearch ) {
       })
       .forEach( function( definition ) {
         var priority = 0;
-        var re = new RegExp( text2search, 'i' );
+        var re = new RegExp( escapeRegExp( text2search ), 'i' );
 
         // Try to find the search phrase somewhere...
         if (definition.title && re.test( definition.title ))
@@ -285,5 +286,7 @@ var ContentStock = function( path404, pathSearch ) {
 
   //endregion
 };
+
+//endregion
 
 module.exports = ContentStock;
