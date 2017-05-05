@@ -18,8 +18,8 @@ var MenuItem = function( id, text, order, path, hidden, umbel ) {
   MenuProto.call( this, id, text, order, hidden );
 
   /**
-   * Gets the paths of the menu node.
-   * @type {string}
+   * Gets the paths of the menu item.
+   * @type {Array.<string>}
    */
   this.paths = createPathList( path );
 
@@ -46,18 +46,18 @@ function createPathList( path ) {
 
 /**
  * Determines if the menu item is on the branch of the current path.
- * @param {string} baseUrl - The current path.
+ * @param {string} url - The current path.
  * @returns {Boolean} True when the menu item is active; otherwise false.
  */
-MenuItem.prototype.isActive = function( baseUrl ) {
+MenuItem.prototype.isActive = function( url ) {
   var self = this;
-  baseUrl = baseUrl || '';
+  url = url || '';
 
   return this.paths.some( function ( path ) {
     if (self.umbel === true)
-      return path === baseUrl.substring( 0, path.length );
+      return path === url.substring( 0, path.length );
     else
-      return path === baseUrl;
+      return path === url;
   } );
 };
 

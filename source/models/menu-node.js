@@ -34,13 +34,13 @@ util.inherits( MenuNode, MenuProto );
 
 /**
  * Determines if the sub-menu is on the branch of the current path.
- * @param {string} baseUrl - The current path.
+ * @param {string} url - The current path.
  * @returns {Boolean} True when the sub-menu is active; otherwise false.
  */
-MenuNode.prototype.isActive = function ( baseUrl ) {
+MenuNode.prototype.isActive = function ( url ) {
 
   return this.children.some( function ( item ) {
-    return item.isActive( baseUrl );
+    return item.isActive( url );
   } );
 };
 
