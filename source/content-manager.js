@@ -180,8 +180,10 @@ function ContentManager( config ) {
       if (req.originalUrl !== req.baseUrl) {
 
         // Recreate the context for the rewritten path.
+        var data = context.data;
         var definition = filingCabinet.contents.getDefinition( language, url );
         context = contextFactory.create( language, url, definition );
+        Object.assign( context.data, data );
       }
       // Add eventual highlight text to context data.
       if (req.query.hl)
