@@ -127,6 +127,23 @@ function ContentManager( config ) {
   };
 
   /**
+   * Sets up the routes of the user defined actions.
+   * @param {express.Application} app - The express.js application.
+   * @param {object} actions - An object containing the URLs and paths of the actions.
+   */
+  this.setActions = function( app, actions ) {
+
+    for (var url in actions) {
+      app.post( url, function( req, res, next) {
+
+        var action = require( path.join( '../../../', actions[ url ] ) );
+        req.url = action( req, req.ctx ) || '/404';
+        next();
+      } );
+    }
+  };
+
+  /**
    * Sets up the routes of the markdown site engine.
    * @param {express.Application} app - The express.js application.
    * @param {Boolean} isDevelopment - True when the application runs in environment environment.
