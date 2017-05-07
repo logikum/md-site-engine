@@ -127,6 +127,23 @@ function ContentManager( config ) {
   };
 
   /**
+   * Sets up the routes of the user defined actions.
+   * @param {express.Application} app - The express.js application.
+   * @param {object} actions - An object containing the URLs and paths of the actions.
+   */
+  this.setActions = function( app, actions ) {
+
+    for (var url in actions) {
+      app.post( url, function( req, res, next) {
+
+        var action = require( path.join( '../../../', actions[ url ] ) );
+        req.url = action( req, req.ctx ) || '/404';
+        next();
+      } );
+    }
+  };
+
+  /**
    * Sets up the routes of the markdown site engine.
    * @param {express.Application} app - The express.js application.
    * @param {Boolean} isDevelopment - True when the application runs in environment environment.
@@ -180,8 +197,10 @@ function ContentManager( config ) {
       if (req.originalUrl !== req.baseUrl) {
 
         // Recreate the context for the rewritten path.
+        var data = context.data;
         var definition = filingCabinet.contents.getDefinition( language, url );
         context = contextFactory.create( language, url, definition );
+        Object.assign( context.data, data );
       }
       // Add eventual highlight text to context data.
       if (req.query.hl)

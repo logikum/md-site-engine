@@ -24,7 +24,7 @@ function setDefaults( config ) {
 
   // Session default values.
   if (!config.session) config.session = {};
-  if (!config.session.secret) config.session.secret = 'business-objects';
+  if (!config.session.secret) config.session.secret = 'md-site-engine';
   if (!config.session.resave) config.session.resave = false;
   if (!config.session.saveUninitialized) config.session.saveUninitialized = true;
 
