@@ -39,7 +39,7 @@ function Engine() {
 
   /**
    * Sets all routes used by te application.
-   * @param {express.Application} app - The express.js application.
+   * @param {Express.Application} app - The express.js application.
    * @param {object} actions - An object containing the URLs and paths of the actions.
    * @param {string} mode - The current Node.js environment.
    */

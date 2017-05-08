@@ -22,7 +22,7 @@ function show( item ) {
 
 /**
  * Sets the helper routes to support development.
- * @param {express.Application} app - The express.js application object.
+ * @param {Express.Application} app - The express.js application object.
  * @param {FilingCabinet} filingCabinet - The file manager object.
  * @param {object} paths - The configuration paths.
  */
