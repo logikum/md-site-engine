@@ -42,11 +42,16 @@ function setDefaults( config ) {
   if (!config.paths.reboot) config.paths.reboot = '/reboot';
   if (!config.paths.search) config.paths.search = '/search';
   if (!config.paths.RandD) config.paths.RandD = '/r&d';
+
   // Default R&D paths.
   if (!config.paths.cssBootstrap) config.paths.cssBootstrap =
     '//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css';
   if (!config.paths.cssHighlight) config.paths.cssHighlight =
     '//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/ir-black.min.css';
+  if (!config.paths.jsJQuery) config.paths.jsJQuery =
+    '//code.jquery.com/jquery-2.1.4.min.js';
+  if (!config.paths.jsBootstrap) config.paths.jsBootstrap =
+    '//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js';
   if (!config.paths.jsHighlight) config.paths.jsHighlight =
     '//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js';
 }

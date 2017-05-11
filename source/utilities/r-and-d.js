@@ -33,6 +33,8 @@ function setDeveloperRoutes( app, filingCabinet, paths ) {
     '  <link rel="stylesheet" href="' + paths.cssBootstrap + '" />\n' +
     '  <link rel="stylesheet" href="' + paths.cssHighlight + '">\n';
   var foot = '\n' +
+    '  <script src="' + paths.jsJQuery + '"></script>\n' +
+    '  <script src="' + paths.jsBootstrap + '"></script>\n' +
     '  <script src="' + paths.jsHighlight + '"></script>\n' +
     '  <script>hljs.initHighlightingOnLoad();</script>\n';
 

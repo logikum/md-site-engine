@@ -56,18 +56,26 @@ var MenuDrawer = function() {
 
   //region Developer methods
 
-  function listArray( stock, language, itemPath, menuPath ) {
+  function listArray( stock, language, itemPath ) {
     var list = '';
 
     stock.forEach( function( menuItem ) {
-      var itemText = (menuPath ? menuPath + ' ● ' : '') +
-        '[' + menuItem.order + '] ' + menuItem.text;
       var itemUrl = itemPath + '/' + language + '/' + menuItem.id;
-      list += '<li><a href="' + itemUrl + '"' +
+      list += '  <li><a href="' + itemUrl + '"' +
         (menuItem.hidden ? ' style="text-decoration: line-through;"' : '') +
-        '>' + itemText + '</a></li>\n';
-      if (menuItem.children)
-        list += listArray( menuItem.children, language, itemPath, itemText );
+        '>' + '[' + menuItem.order + '] ' + menuItem.text + '</a>';
+      if (menuItem.children) {
+        list += '\n';
+        list += '    <a data-toggle="collapse" href="#collapse' + menuItem.id + '">\n';
+        list += '      <span class="glyphicon glyphicon-list"></span>\n';
+        list += '    </a>\n';
+        list += '    <div class="collapse" id="collapse' + menuItem.id + '">\n';
+        list += '      <ul>\n';
+        list += listArray( menuItem.children, language, itemPath );
+        list += '      </ul>\n';
+        list += '    </div>\n';
+      }
+      list += '  </li>\n';
     });
     return list;
   }
@@ -82,9 +90,8 @@ var MenuDrawer = function() {
 
     for (var key in menus) {
       list += '<h3>' + key + '</h3>\n';
-      //list += menus[ key ].list( key, itemPath );
       list += '<ul>\n';
-      list += listArray( menus[ key ], key, itemPath, '' );
+      list += listArray( menus[ key ], key, itemPath );
       list += '</ul>\n';
     }
     return list;
