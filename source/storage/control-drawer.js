@@ -75,9 +75,11 @@ var ControlDrawer = function() {
   this.list = function( itemPath ) {
     var list = '<ul>\n';
 
-    for (var key in controls) {
-      list += '<li><a href="' + itemPath + '/' + PATH.safe( key ) + '">' + key + '</a></li>\n';
-    }
+    Object.getOwnPropertyNames( controls )
+      .sort()
+      .forEach( function( key ) {
+        list += '<li><a href="' + itemPath + '/' + PATH.safe( key ) + '">' + key + '</a></li>\n';
+      } );
     return list + '</ul>\n';
   };
 

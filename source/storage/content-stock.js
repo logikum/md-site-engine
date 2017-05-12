@@ -207,23 +207,24 @@ var ContentStock = function( path404, pathSearch ) {
   this.finalize = function( language, segments, controls ) {
 
     // Validate tokens.
-    for(var path in contents) {
+    contents.forEach( function( content ) {
       // Try to access segments.
-      var content = contents[ path ];
       content.tokens.forEach( function( token ) {
         if (token.isControl) {
           // Check the control.
           if (!controls.has( token.name ))
-            logger.showWarning( 'Token "' + token.name + '" in content "' + path +
+            logger.showWarning( 'Token "' + token.name +
+              '" in content "' + content.path +
               '" has no matching control - must be specified in metadata.' );
         } else if (!token.isData) {
           // Check the segment.
           if (!segments.has( language, token.name ))
-            logger.showWarning( 'Token "' + token.name + '" in content "' + path +
+            logger.showWarning( 'Token "' + token.name +
+              '" in content "' + content.path +
               '" has no matching segment - must be specified in metadata.' );
         }
       } )
-    }
+    } );
 
     // Insert static segments into language specific contents.
     insertStaticSegments( contents, segments, language );
@@ -257,10 +258,18 @@ var ContentStock = function( path404, pathSearch ) {
   this.list = function( language, itemPath ) {
     var list = '<ul>\n';
 
-    for (var key in map) {
-      var itemUrl = itemPath + '/' + language + '/' + PATH.safe( key );
-      list += '<li><a href="' + itemUrl + '">' + key + '</a></li>\n';
-    }
+    Object.getOwnPropertyNames( map )
+      .sort()
+      .forEach( function( key ) {
+        if (!(
+          key.length > 5 && key.substr( -6 ) === '/index' ||
+          key[ key.length - 1 ] === '/'
+          ))
+        {
+          var itemUrl = itemPath + '/' + language + '/' + PATH.safe( key ? key : '/index' );
+          list += '<li><a href="' + itemUrl + '">' + (key ? key : '(root)') + '</a></li>\n';
+        }
+      } );
     return list + '</ul>\n';
   };
 

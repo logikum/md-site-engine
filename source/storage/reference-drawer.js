@@ -50,9 +50,11 @@ var ReferenceDrawer = function( referenceFile ) {
   this.list = function( itemPath ) {
     var list = '<ul>\n';
 
-    for (var key in references) {
-      list += '<li><a href="' + itemPath + '/' + PATH.safe( key ) + '">' + key + '</a></li>\n';
-    }
+    Object.getOwnPropertyNames( references )
+      .sort()
+      .forEach( function( key ) {
+        list += '<li><a href="' + itemPath + '/' + PATH.safe( key ) + '">' + key + '</a></li>\n';
+      } );
     return list + '</ul>\n';
   };
 

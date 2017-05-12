@@ -165,10 +165,12 @@ var ContentDrawer = function( defaultLanguage, path404, pathSearch ) {
   this.list = function( itemPath ) {
     var list = '';
 
-    for (var language in contents) {
-      list += '<h3>' + language + '</h3>\n';
-      list += contents[ language ].list( language, itemPath );
-    }
+    Object.getOwnPropertyNames( contents )
+      .sort()
+      .forEach( function( language ) {
+        list += '<h3>' + language + '</h3>\n';
+        list += contents[ language ].list( language, itemPath );
+      } );
     return list;
   };
 

@@ -61,7 +61,7 @@ var DocumentDrawer = function() {
   this.finalize = function( segments, controls, languages, layoutSegment ) {
 
     // Validate tokens.
-    for(var path in documents) {
+    for (var path in documents) {
       // Determine language.
       var language = '';
       var pos = path.indexOf( '/' );
@@ -113,9 +113,11 @@ var DocumentDrawer = function() {
   this.list = function( itemPath ) {
     var list = '<ul>\n';
 
-    for (var key in documents) {
-      list += '<li><a href="' + itemPath + '/' + PATH.safe( key ) + '">' + key + '</a></li>\n';
-    }
+    Object.getOwnPropertyNames( documents )
+      .sort()
+      .forEach( function( key ) {
+        list += '<li><a href="' + itemPath + '/' + PATH.safe( key ) + '">' + key + '</a></li>\n';
+      } );
     return list + '</ul>\n';
   };
 

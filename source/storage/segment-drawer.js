@@ -155,9 +155,11 @@ var SegmentDrawer = function() {
   this.list = function( itemPath ) {
     var list = '<ul>\n';
 
-    for (var key in segments) {
-      list += '<li><a href="' + itemPath + '/' + PATH.safe( key ) + '">' + key + '</a></li>\n';
-    }
+    Object.getOwnPropertyNames( segments )
+      .sort()
+      .forEach( function( key ) {
+        list += '<li><a href="' + itemPath + '/' + PATH.safe( key ) + '">' + key + '</a></li>\n';
+      } );
     return list + '</ul>\n';
   };
 
