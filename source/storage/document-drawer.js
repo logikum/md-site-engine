@@ -1,7 +1,7 @@
 'use strict';
 
 var insertStaticSegments = require( './insert-static-segments.js' );
-var logger = require( '../utilities/logger.js' );
+var logger = require( './../utilities/logger.js' );
 var PATH = require( './../utilities/rd-path.js' );
 var showComponent = require( './../utilities/show-component.js' );
 
@@ -99,6 +99,8 @@ var DocumentDrawer = function() {
 
     // Insert static segments into language specific documents.
     insertStaticSegments( documents, segments, languages );
+
+    logger.ready( 'Documents' );
   };
 
   //endregion

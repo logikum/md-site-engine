@@ -1,6 +1,7 @@
 'use strict';
 
 var MenuStock = require( './menu-stock.js' );
+var logger = require( './../utilities/logger.js' );
 
 /**
  * Represents a storage for menus.
@@ -50,6 +51,8 @@ var MenuDrawer = function() {
     for (var language in menus) {
       menus[ language ] = menus[ language ].finalize();
     }
+
+    logger.ready( 'Menus' );
   };
 
   //endregion

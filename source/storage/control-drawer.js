@@ -1,6 +1,6 @@
 'use strict';
 
-var logger = require( '../utilities/logger.js' );
+var logger = require( './../utilities/logger.js' );
 var PATH = require( './../utilities/rd-path.js' );
 var sanitize = require( './../utilities/sanitize-html.js' );
 

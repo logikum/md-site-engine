@@ -1,6 +1,6 @@
 'use strict';
 
-var logger = require( '../utilities/logger.js' );
+var logger = require( './../utilities/logger.js' );
 
 var LocaleDrawer = function( defaultLanguage ) {
 

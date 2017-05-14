@@ -43,8 +43,26 @@ var logger = {
   },
 
   /**
+   * Writes a route added to the router.
+   * @param {string} url - The URL of the route.
+   * @param {string} [method=GET] - The method of the route.
+   */
+  routeAdded: function ( url, method ) {
+    debug( 'Route added: %s %s', method || 'GET', url );
+  },
+
+  /**
+   * Writes when an element group is finalized.
+   * @param {string} groupName - The name of the element group.
+   */
+  ready: function ( groupName ) {
+    debug( '%s are initialized.', groupName );
+  },
+
+  /**
    * Writes an information message.
    * @param {string} message - The text of the information.
+   * @param {*} [arg] - An optional argument.
    */
   showInfo: function ( message, arg ) {
     if (arg)

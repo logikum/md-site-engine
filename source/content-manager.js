@@ -150,6 +150,7 @@ function ContentManager( config ) {
         req.url = action( req, req.ctx ) || '/404';
         next();
       } );
+      logger.routeAdded( url, method.toUpperCase() );
     }
   };
 
@@ -174,6 +175,7 @@ function ContentManager( config ) {
       );
       res.redirect( localizedPath );
     } );
+    logger.routeAdded( config.paths.setLanguage );
 
     // Reread the contents.
     app.use( config.paths.reboot, function( req, res ) {
@@ -181,17 +183,21 @@ function ContentManager( config ) {
       initialize();
       res.status( 200 ).send( self.get( req.session.language, '/' ) );
     } );
+    logger.routeAdded( config.paths.reboot );
 
     // Search the contents.
     var searchPaths = [ ];
 
     filingCabinet.languages.forEach( function( language ) {
+
       var searchPath = filingCabinet.contents.searchPath( language );
       if (searchPath && searchPaths.indexOf( searchPath ) < 0)
         searchPaths.push( searchPath );
     } );
     searchPaths.forEach( function( searchPath ) {
+
       app.post( searchPath, searchTheContents );
+      logger.routeAdded( searchPath, 'POST' );
     } );
 
     // Developer methods.
@@ -218,6 +224,7 @@ function ContentManager( config ) {
 
       res.status( 200 ).send( filingCabinet.get( language, url, context ) );
     } );
+    logger.routeAdded( '/* <all-contents>' );
   };
 
   function searchTheContents( req, res, next ) {
