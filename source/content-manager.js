@@ -202,7 +202,7 @@ function ContentManager( config ) {
 
     // Developer methods.
     if (isDevelopment)
-      setDeveloperRoutes( app, filingCabinet, config.paths );
+      setDeveloperRoutes( app, filingCabinet, config.paths, config.develop );
 
     // Serve contents.
     app.use( '*', function( req, res ) {

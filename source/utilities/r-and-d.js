@@ -27,16 +27,16 @@ function show( item ) {
  * @param {FilingCabinet} filingCabinet - The file manager object.
  * @param {object} paths - The configuration paths.
  */
-function setDeveloperRoutes( app, filingCabinet, paths ) {
+function setDeveloperRoutes( app, filingCabinet, paths, develop ) {
 
   // Create document template for resources.
   var head = '\n' +
-    '  <link rel="stylesheet" href="' + paths.cssBootstrap + '" />\n' +
-    '  <link rel="stylesheet" href="' + paths.cssHighlight + '">\n';
+    '  <link rel="stylesheet" href="' + develop.cssBootstrap + '" />\n' +
+    '  <link rel="stylesheet" href="' + develop.cssHighlight + '">\n';
   var foot = '\n' +
-    '  <script src="' + paths.jsJQuery + '"></script>\n' +
-    '  <script src="' + paths.jsBootstrap + '"></script>\n' +
-    '  <script src="' + paths.jsHighlight + '"></script>\n' +
+    '  <script src="' + develop.jsJQuery + '"></script>\n' +
+    '  <script src="' + develop.jsBootstrap + '"></script>\n' +
+    '  <script src="' + develop.jsHighlight + '"></script>\n' +
     '  <script>hljs.initHighlightingOnLoad();</script>\n';
 
   function wrap( title, body ) {
@@ -47,7 +47,7 @@ function setDeveloperRoutes( app, filingCabinet, paths ) {
   }
 
   // Set up developer paths.
-  PATH.init( paths.RandD );
+  PATH.init( paths.develop );
 
   // Developer home page.
   app.get( PATH.root, function ( req, res ) {
