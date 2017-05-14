@@ -1,28 +1,18 @@
 'use strict';
 
-var colors = require( 'colors/safe' );
-
-colors.setTheme({
-  locale: 'blue',
-  processed: 'green',
-  skipped: 'magenta',
-  menu: 'cyan',
-  info: 'blue',
-  warning: 'magenta',
-  error: 'red'
-});
+var debug = require( 'debug' )( 'md-site-engine' );
 
 /**
- * Color logger.
+ * Smart logger.
  */
-var log = {
+var logger = {
   /**
    * Writes when a locale found.
    * @param {string} typeName - The type of the locale: content|component
    * @param {string} locale - The name of the locale.
    */
   localeFound: function ( typeName, locale ) {
-    console.log( colors.locale( '%s locale: %s' ), typeName, locale );
+    debug( '%s locale: %s', typeName, locale );
   },
 
   /**
@@ -32,7 +22,7 @@ var log = {
    * @param {string} fileName - The name of the file.
    */
   fileProcessed: function ( typeName, fileName ) {
-    console.log( colors.processed( '%s processed: %s' ), typeName, fileName );
+    debug( '%s processed: %s', typeName, fileName );
   },
 
   /**
@@ -41,7 +31,7 @@ var log = {
    * @param {string} fileName - The name of the file.
    */
   fileSkipped: function ( typeName, fileName ) {
-    console.log( colors.skipped( '%s skipped: %s' ), typeName, fileName );
+    debug( '%s skipped: %s', typeName, fileName );
   },
 
   /**
@@ -49,15 +39,18 @@ var log = {
    * @param {string} menuPath - The base URL of the content.
    */
   menuAdded: function ( menuPath ) {
-    console.log( colors.menu( 'Menu item added: %s' ), menuPath );
+    debug( 'Menu item added: %s', menuPath );
   },
 
   /**
    * Writes an information message.
    * @param {string} message - The text of the information.
    */
-  showInfo: function ( message ) {
-    console.log( colors.info( message ) );
+  showInfo: function ( message, arg ) {
+    if (arg)
+      debug( message, arg );
+    else
+      debug( message );
   },
 
   /**
@@ -65,7 +58,7 @@ var log = {
    * @param {string} message - The text of the warning.
    */
   showWarning: function ( message ) {
-    console.log( colors.warning( message ) );
+    console.log( 'md-site-engine * WARNING - %s', message );
   },
 
   /**
@@ -73,10 +66,8 @@ var log = {
    * @param {string} message - The text of the error.
    */
   showError: function ( message ) {
-    console.log( colors.error( message ) );
+    console.log( 'md-site-engine * ERROR - %s', message);
   }
 };
 
-module.exports = log;
-
-
+module.exports = logger;

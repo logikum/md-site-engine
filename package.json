@@ -11,7 +11,7 @@
   "author": "Mármarosi József <marmarosi@logikum.hu>",
   "main": "source/index.js",
   "dependencies": {
-    "colors": "^1.1.2",
+    "debug": "^2.6.6",
     "marked": "^0.3.6"
   },
   "repository": {
