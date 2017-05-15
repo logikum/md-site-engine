@@ -1,7 +1,7 @@
 'use strict';
 
 var Component = require( './../models/component.js' );
-var logger = require( '../utilities/logger.js' );
+var logger = require( './../utilities/logger.js' );
 var PATH = require( './../utilities/rd-path.js' );
 var insertStaticSegments = require( './insert-static-segments.js' );
 var showComponent = require( './../utilities/show-component.js' );
@@ -117,6 +117,8 @@ var SegmentDrawer = function() {
 
     // Insert static segments into segments.
     insertStaticSegments( segments, self, languages );
+
+    logger.ready( 'Segments' );
   };
 
   function checkReferenceCircle( language, key, segment, chain ) {
@@ -155,9 +157,11 @@ var SegmentDrawer = function() {
   this.list = function( itemPath ) {
     var list = '<ul>\n';
 
-    for (var key in segments) {
-      list += '<li><a href="' + itemPath + '/' + PATH.safe( key ) + '">' + key + '</a></li>\n';
-    }
+    Object.getOwnPropertyNames( segments )
+      .sort()
+      .forEach( function( key ) {
+        list += '<li><a href="' + itemPath + '/' + PATH.safe( key ) + '">' + key + '</a></li>\n';
+      } );
     return list + '</ul>\n';
   };
 

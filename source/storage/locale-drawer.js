@@ -1,6 +1,6 @@
 'use strict';
 
-var logger = require( '../utilities/logger.js' );
+var logger = require( './../utilities/logger.js' );
 
 var LocaleDrawer = function( defaultLanguage ) {
 
@@ -75,10 +75,12 @@ var LocaleDrawer = function( defaultLanguage ) {
 
       list += '<h3>' + language + '</h3>\n';
       list += '<ul>\n';
-      for (var key in locales) {
-        if (key.substring( 0, len ) === language + ':')
-          list += '<li><b>' + key.substring( len ) + '</b>: ' + locales[ key ] + '</li>\n';
-      }
+      Object.getOwnPropertyNames( locales )
+        .sort()
+        .forEach( function( key ) {
+          if (key.substring( 0, len ) === language + ':')
+            list += '<li><b>' + key.substring( len ) + '</b>: ' + locales[ key ] + '</li>\n';
+        } );
       list += '</ul>\n';
     } );
     return list;

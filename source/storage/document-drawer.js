@@ -1,7 +1,7 @@
 'use strict';
 
 var insertStaticSegments = require( './insert-static-segments.js' );
-var logger = require( '../utilities/logger.js' );
+var logger = require( './../utilities/logger.js' );
 var PATH = require( './../utilities/rd-path.js' );
 var showComponent = require( './../utilities/show-component.js' );
 
@@ -61,7 +61,7 @@ var DocumentDrawer = function() {
   this.finalize = function( segments, controls, languages, layoutSegment ) {
 
     // Validate tokens.
-    for(var path in documents) {
+    for (var path in documents) {
       // Determine language.
       var language = '';
       var pos = path.indexOf( '/' );
@@ -99,6 +99,8 @@ var DocumentDrawer = function() {
 
     // Insert static segments into language specific documents.
     insertStaticSegments( documents, segments, languages );
+
+    logger.ready( 'Documents' );
   };
 
   //endregion
@@ -113,9 +115,11 @@ var DocumentDrawer = function() {
   this.list = function( itemPath ) {
     var list = '<ul>\n';
 
-    for (var key in documents) {
-      list += '<li><a href="' + itemPath + '/' + PATH.safe( key ) + '">' + key + '</a></li>\n';
-    }
+    Object.getOwnPropertyNames( documents )
+      .sort()
+      .forEach( function( key ) {
+        list += '<li><a href="' + itemPath + '/' + PATH.safe( key ) + '">' + key + '</a></li>\n';
+      } );
     return list + '</ul>\n';
   };
 

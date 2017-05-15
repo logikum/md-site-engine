@@ -23,31 +23,37 @@ function setDefaults( config ) {
   if (!config.getRenderer) config.getRenderer = '';
 
   // Session default values.
-  if (!config.session) config.session = {};
+  if (!config.session) config.session = { };
   if (!config.session.secret) config.session.secret = 'md-site-engine';
   if (!config.session.resave) config.session.resave = false;
   if (!config.session.saveUninitialized) config.session.saveUninitialized = true;
 
   // Redis default values.
-  if (!config.redis) config.redis = {};
+  if (!config.redis) config.redis = { };
   if (!config.redis.host) config.redis.host = 'localhost';
   if (!config.redis.port) config.redis.port = 6379;
   if (!config.redis.db) config.redis.db = 0;
   if (!config.redis.pass) config.redis.pass = undefined;
 
   // Default route paths.
-  if (!config.paths) config.paths = {};
+  if (!config.paths) config.paths = { };
   if (!config.paths.notFound) config.paths.notFound = '/404';
   if (!config.paths.setLanguage) config.paths.setLanguage = '/set-language';
   if (!config.paths.reboot) config.paths.reboot = '/reboot';
   if (!config.paths.search) config.paths.search = '/search';
-  if (!config.paths.RandD) config.paths.RandD = '/r&d';
+  if (!config.paths.develop) config.paths.develop = '/r&d';
+
   // Default R&D paths.
-  if (!config.paths.cssBootstrap) config.paths.cssBootstrap =
+  if (!config.develop) config.develop = { };
+  if (!config.develop.cssBootstrap) config.develop.cssBootstrap =
     '//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css';
-  if (!config.paths.cssHighlight) config.paths.cssHighlight =
+  if (!config.develop.cssHighlight) config.develop.cssHighlight =
     '//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/ir-black.min.css';
-  if (!config.paths.jsHighlight) config.paths.jsHighlight =
+  if (!config.develop.jsJQuery) config.develop.jsJQuery =
+    '//code.jquery.com/jquery-2.1.4.min.js';
+  if (!config.develop.jsBootstrap) config.develop.jsBootstrap =
+    '//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js';
+  if (!config.develop.jsHighlight) config.develop.jsHighlight =
     '//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js';
 }
 

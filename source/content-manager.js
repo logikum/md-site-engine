@@ -92,7 +92,7 @@ function ContentManager( config ) {
 
   /**
    * Sets up the middlewares of the markdown site engine.
-   * @param {express.Application} app - The express.js application.
+   * @param {Express.Application} app - The express.js application.
    */
   this.setMiddlewares = function( app ) {
 
@@ -128,24 +128,35 @@ function ContentManager( config ) {
 
   /**
    * Sets up the routes of the user defined actions.
-   * @param {express.Application} app - The express.js application.
+   * @param {Express.Application} app - The express.js application.
    * @param {object} actions - An object containing the URLs and paths of the actions.
    */
   this.setActions = function( app, actions ) {
 
-    for (var url in actions) {
-      app.post( url, function( req, res, next) {
+    for (var property in actions) {
+      var method = 'post';
+      var url = property.toLowerCase();
 
-        var action = require( path.join( '../../../', actions[ url ] ) );
+      // Does property have method?
+      var pos = url.indexOf( ':' );
+      if (pos > 0) {
+        method = url.substring( 0, pos );
+        url = url.substring( pos + 1 );
+      }
+      // Add action handler.
+      app[ method ]( url, function( req, res, next) {
+
+        var action = require( path.join( '../../../', actions[ property ] ) );
         req.url = action( req, req.ctx ) || '/404';
         next();
       } );
+      logger.routeAdded( url, method.toUpperCase() );
     }
   };
 
   /**
    * Sets up the routes of the markdown site engine.
-   * @param {express.Application} app - The express.js application.
+   * @param {Express.Application} app - The express.js application.
    * @param {Boolean} isDevelopment - True when the application runs in environment environment.
    */
   this.setRoutes = function( app, isDevelopment ) {
@@ -164,6 +175,7 @@ function ContentManager( config ) {
       );
       res.redirect( localizedPath );
     } );
+    logger.routeAdded( config.paths.setLanguage );
 
     // Reread the contents.
     app.use( config.paths.reboot, function( req, res ) {
@@ -171,22 +183,26 @@ function ContentManager( config ) {
       initialize();
       res.status( 200 ).send( self.get( req.session.language, '/' ) );
     } );
+    logger.routeAdded( config.paths.reboot );
 
     // Search the contents.
     var searchPaths = [ ];
 
     filingCabinet.languages.forEach( function( language ) {
+
       var searchPath = filingCabinet.contents.searchPath( language );
       if (searchPath && searchPaths.indexOf( searchPath ) < 0)
         searchPaths.push( searchPath );
     } );
     searchPaths.forEach( function( searchPath ) {
+
       app.post( searchPath, searchTheContents );
+      logger.routeAdded( searchPath, 'POST' );
     } );
 
     // Developer methods.
     if (isDevelopment)
-      setDeveloperRoutes( app, filingCabinet, config.paths );
+      setDeveloperRoutes( app, filingCabinet, config.paths, config.develop );
 
     // Serve contents.
     app.use( '*', function( req, res ) {
@@ -208,6 +224,7 @@ function ContentManager( config ) {
 
       res.status( 200 ).send( filingCabinet.get( language, url, context ) );
     } );
+    logger.routeAdded( '/* <all-contents>' );
   };
 
   function searchTheContents( req, res, next ) {

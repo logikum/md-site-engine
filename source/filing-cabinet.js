@@ -217,9 +217,11 @@ var FilingCabinet = function( config ) {
    */
   this.listLanguages = function() {
     var list = '<ul>\n';
-    self.languages.forEach( function( language ) {
-      list += '<li>' + language + '</li>\n';
-    });
+    self.languages
+      .sort()
+      .forEach( function( language ) {
+        list += '<li>' + language + '</li>\n';
+      });
     return list + '</ul>\n';
   };
 

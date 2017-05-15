@@ -1,7 +1,7 @@
 'use strict';
 
 var insertStaticSegments = require( './insert-static-segments.js' );
-var logger = require( '../utilities/logger.js' );
+var logger = require( './../utilities/logger.js' );
 var PATH = require( './../utilities/rd-path.js' );
 var showComponent = require( './../utilities/show-component.js' );
 
@@ -61,7 +61,7 @@ var LayoutDrawer = function() {
   this.finalize = function( segments, controls, languages, contentSegment ) {
 
     // Validate tokens.
-    for(var path in layouts) {
+    for (var path in layouts) {
       // Determine language.
       var language = '';
       var pos = path.indexOf( '/' );
@@ -99,6 +99,8 @@ var LayoutDrawer = function() {
 
     // Insert static segments into language specific layouts.
     insertStaticSegments( layouts, segments, languages );
+
+    logger.ready( 'Layouts' );
   };
 
   //endregion
@@ -113,9 +115,11 @@ var LayoutDrawer = function() {
   this.list = function( itemPath ) {
     var list = '<ul>\n';
 
-    for (var key in layouts) {
-      list += '<li><a href="' + itemPath + '/' + PATH.safe( key ) + '">' + key + '</a></li>\n';
-    }
+    Object.getOwnPropertyNames( layouts )
+      .sort()
+      .forEach( function( key ) {
+        list += '<li><a href="' + itemPath + '/' + PATH.safe( key ) + '">' + key + '</a></li>\n';
+      } );
     return list + '</ul>\n';
   };
 

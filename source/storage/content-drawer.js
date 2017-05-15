@@ -2,6 +2,7 @@
 
 var ContentStock = require( './content-stock.js' );
 var SearchResultList = require( './../models/search-result-list.js' );
+var logger = require( './../utilities/logger.js' );
 
 /**
  * Represents a storage for contents.
@@ -151,6 +152,8 @@ var ContentDrawer = function( defaultLanguage, path404, pathSearch ) {
     for (var language in contents) {
       contents[ language ].finalize( language, segments, controls );
     }
+
+    logger.ready( 'Contents' );
   };
 
   //endregion
@@ -165,10 +168,12 @@ var ContentDrawer = function( defaultLanguage, path404, pathSearch ) {
   this.list = function( itemPath ) {
     var list = '';
 
-    for (var language in contents) {
-      list += '<h3>' + language + '</h3>\n';
-      list += contents[ language ].list( language, itemPath );
-    }
+    Object.getOwnPropertyNames( contents )
+      .sort()
+      .forEach( function( language ) {
+        list += '<h3>' + language + '</h3>\n';
+        list += contents[ language ].list( language, itemPath );
+      } );
     return list;
   };
 
