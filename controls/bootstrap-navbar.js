@@ -8,7 +8,8 @@ function getNavbar( ctx ) {
   navbar += '<ul class="nav navbar-nav navbar-right">\n';
   navbar += getLanguageItems( ctx );
   navbar += '</ul>\n';
-  navbar += getSearchField( ctx );
+  if (ctx.config.searchInNavbar)
+    navbar += getSearchField( ctx );
   return navbar;
 }
 
