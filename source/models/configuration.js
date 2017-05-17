@@ -20,8 +20,8 @@ function setDefaults( config ) {
   if (!config.submenuFile) config.submenuFile = '__submenu.txt';
   if (!config.layoutSegment) config.layoutSegment = 'layout';
   if (!config.contentSegment) config.contentSegment = 'content';
-  if (!config.getRenderer) config.getRenderer = '';
   if (config.searchInNavbar === undefined) config.searchInNavbar = true;
+  if (!config.getRenderer) config.getRenderer = '';
 
   // Session default values.
   if (!config.session) config.session = { };
