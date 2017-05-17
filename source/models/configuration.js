@@ -20,13 +20,14 @@ function setDefaults( config ) {
   if (!config.submenuFile) config.submenuFile = '__submenu.txt';
   if (!config.layoutSegment) config.layoutSegment = 'layout';
   if (!config.contentSegment) config.contentSegment = 'content';
+  if (config.searchInNavbar === undefined) config.searchInNavbar = true;
   if (!config.getRenderer) config.getRenderer = '';
 
   // Session default values.
   if (!config.session) config.session = { };
   if (!config.session.secret) config.session.secret = 'md-site-engine';
-  if (!config.session.resave) config.session.resave = false;
-  if (!config.session.saveUninitialized) config.session.saveUninitialized = true;
+  if (config.session.resave === undefined) config.session.resave = false;
+  if (config.session.saveUninitialized === undefined) config.session.saveUninitialized = true;
 
   // Redis default values.
   if (!config.redis) config.redis = { };
