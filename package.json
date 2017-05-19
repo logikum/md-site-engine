@@ -1,6 +1,6 @@
 {
   "name": "md-site-engine",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Drives a web site built from markdown texts.",
   "keywords": [
     "markdown",
@@ -11,8 +11,8 @@
   "author": "Mármarosi József <marmarosi@logikum.hu>",
   "main": "source/index.js",
   "dependencies": {
-    "debug": "^2.6.6",
-    "marked": "^0.3.6"
+    "debug": "^2.6",
+    "marked": "^0.3"
   },
   "repository": {
     "type": "git",
