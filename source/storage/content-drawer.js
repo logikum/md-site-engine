@@ -88,6 +88,16 @@ var ContentDrawer = function( defaultLanguage, path404, pathSearch ) {
     return localizedPath;
   };
 
+  /**
+   * Gets the localized path of the context having the passed identifier.
+   * @param {string} language - The current language.
+   * @param {string} id - The identifier of the content.
+   */
+  this.getPathById = function( language, id ) {
+
+    return contents[ language ].getPathById( id );
+  };
+
   //endregion
 
   //region Search

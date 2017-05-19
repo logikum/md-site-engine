@@ -108,6 +108,20 @@ var ContentStock = function( path404, pathSearch ) {
       return new Metadata( { }, '' );
   };
 
+  /**
+   * Gets the path of the context having the passed identifier.
+   * @param {string} id - The identifier of the content.
+   */
+  this.getPathById = function( id ) {
+
+    for (var i = 0; i < definitions.length; i++ ) {
+      var definition = definitions[ i ];
+      if (definition.id === id)
+        return definition.path;
+    }
+    return '/';
+  };
+
   //endregion
 
   //region Search

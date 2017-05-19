@@ -45,6 +45,15 @@ var ContextProto = function( config, filingCabinet ) {
 
     return filingCabinet.locales.get( this.language, key, defaultValue );
   };
+
+  /**
+   * Gets the localized path of the context having the passed identifier.
+   * @param {string} id - The identifier of the content.
+   */
+  this.getPathById = function( id ) {
+
+    return filingCabinet.contents.getPathById( this.language, id );
+  };
 };
 
 module.exports = ContextProto;
