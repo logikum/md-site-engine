@@ -146,9 +146,14 @@ function ContentManager( config ) {
       // Add action handler.
       app[ method ]( url, function( req, res, next) {
 
+        // Get action function.
         var action = require( path.join( '../../../', actions[ property ] ) );
-        req.url = action( req, req.ctx ) || '/404';
-        next();
+
+        // Execute the action.
+        action( req, req.ctx, function( resultUrl ) {
+          req.url = resultUrl || '/404';
+          next();
+        });
       } );
       logger.routeAdded( url, method.toUpperCase() );
     }
