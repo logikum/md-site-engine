@@ -22,11 +22,11 @@ from [here](https://nodejs.org/).
 
 ### Getting Started
 
-The documentation is available at the [md-doc.logikum.hu](http://md-doc.logikum.hu) site.  
+The documentation is available at the [md-doc.logikum.hu](https://md-doc.logikum.hu) site.  
 Its source is also a good demo: [github.com/logikum/md-doc-site](https://github.com/logikum/md-doc-site)
 
 
-Live demo site: [md-web.logikum.hu](http://md-web.logikum.hu)  
+Live demo site: [md-web.logikum.hu](https://md-web.logikum.hu)  
 The source of the demo: [github.com/logikum/md-web-site](https://github.com/logikum/md-web-site)
 
 Seed application: [github.com/logikum/md-site-seed](https://github.com/logikum/md-site-seed)
