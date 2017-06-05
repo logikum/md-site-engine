@@ -186,7 +186,7 @@ function ContentManager( config ) {
     app.use( config.paths.reboot, function( req, res ) {
 
       initialize();
-      res.status( 200 ).send( self.get( req.session.language, '/' ) );
+      res.redirect( '/' );
     } );
     logger.routeAdded( config.paths.reboot );
 
