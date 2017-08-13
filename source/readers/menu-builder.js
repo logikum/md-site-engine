@@ -66,21 +66,10 @@ MenuBuilder.createMenuItem = function( menuStock, definition, contentPath, isDir
     // Add sub-menu item.
     return menuStock.branch( text, order, contentPath, hidden );
   }
-  // Omit hidden item.
   else {
 
     // Add menu item.
-    var path = contentPath;
-    var length = path.length;
-
-    if (length >= 6 && path.substr( -6 ) === '/index') {
-      // Cut down closing index.
-      var end = length > 6 ? 6 : 5;
-      path = path.substr( 0, length - end );
-    }
-
-    // Store menu item.
-    menuStock.add( text, order, path, hidden, umbel );
+    menuStock.add( text, order, contentPath, hidden, umbel );
     logger.menuAdded( path );
   }
 };
