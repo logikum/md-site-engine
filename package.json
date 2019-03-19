@@ -1,6 +1,6 @@
 {
   "name": "md-site-engine",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Build and drives a web site based on markdown texts.",
   "keywords": [
     "markdown",
