@@ -217,7 +217,8 @@ var FilingCabinet = function( config ) {
    */
   this.listLanguages = function() {
     var list = '<ul>\n';
-    self.languages
+    var languages = [ ...self.languages ];
+    languages
       .sort()
       .forEach( function( language ) {
         list += '<li>' + language + '</li>\n';
