@@ -1,6 +1,6 @@
 {
   "name": "md-site-engine",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Build and drives a web site based on markdown texts.",
   "keywords": [
     "markdown",
@@ -21,5 +21,6 @@
   "bugs": "https://github.com/logikum/md-site-engine/issues",
   "engines": {
     "node": ">=0.10.0"
-  }
+  },
+  "homepage": "https://md-doc.logikum.hu"
 }
