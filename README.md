@@ -1,7 +1,7 @@
 # Markdown based web site engine
 
 A web site engine for Node.js that generates static HTML pages from markdown
-files. It requires Node.js version 0.10 or newer. Features:
+files. It requires Node.js version 6.0.0 or newer. Features:
 
 * supports multiple languages
 * supports multiple layouts

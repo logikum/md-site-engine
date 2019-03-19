@@ -20,7 +20,7 @@
   },
   "bugs": "https://github.com/logikum/md-site-engine/issues",
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=6.0.0"
   },
   "homepage": "https://md-doc.logikum.hu"
 }
