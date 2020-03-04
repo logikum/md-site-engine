@@ -32,6 +32,10 @@ function getSideMenu( ctx ) {
           if (topItem.text === '---')
             menu += '  <li class="divider"></li>';
 
+          // Group header?
+          else if (topItem.text.startsWith( '@' ))
+            menu += '  <li class="divider">' + topItem.text.substr( 1 ) + '</li>';
+
           // Active menu line?
           else if (topItem.paths[ 0 ] === ctx.url) {
             menu += '  <li class="active">' + chevron + top + '</li>\n';
@@ -62,6 +66,10 @@ function getMenuItems( ctx, items, depth, level, activeFound ) {
       // Separator?
       if (item.text === '---')
         menu += indent + '<li class="divider"></li>';
+
+      // Group header?
+      else if (item.text.startsWith( '@' ))
+        menu += indent + '<li class="divider">' + item.text.substr( 1 ) + '</li>';
 
       // Active menu line?
       else if (item.isActive( ctx.url ) && !activeFound) {
