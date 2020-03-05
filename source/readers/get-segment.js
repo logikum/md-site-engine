@@ -31,7 +31,7 @@ function getSegment(
   var html = marked( text + '\n' + references.get( language ), { renderer: renderer } );
 
   // Find tokens.
-  var re = /(\{\{\s*[=#.]?[\w-\/]+\s*}})/g;
+  var re = /(\{\{\s*[=#.]?[\w-\/!]+\s*}})/g;
   var tokens = [ ];
   var j = 0;
   for (var matches = re.exec( html ); matches !== null; matches = re.exec( html )) {

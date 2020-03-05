@@ -90,7 +90,7 @@ function processContents(
             );
 
           // Omit menu separator.
-          if (definition.text !== '---')
+          if (definition.text !== '---' && !definition.text.startsWith( '@') )
             // Store content.
             contentStock.add( content, definition );
 
