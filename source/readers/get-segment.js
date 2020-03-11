@@ -45,7 +45,7 @@ function getSegment(
   }
 
   // Create and return the segment.
-  return new Component( html, tokens, false, false, 'markdown' );
+  return new Component( html, tokens, false, false, 'markdown', segmentFile.includes( '!' ) );
 }
 
 module.exports = getSegment;

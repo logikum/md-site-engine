@@ -39,7 +39,7 @@ function getComponent( componentFile, layoutSegment, contentSegment ) {
     logger.showError( '"' + componentFile + '" cannot be both a document and a layout.' );
 
   // Create and return the component.
-  return new Component( html, tokens, isDocument, isLayout, 'html' );
+  return new Component( html, tokens, isDocument, isLayout, 'html', componentFile.includes( '!' ) );
 }
 
 module.exports = getComponent;

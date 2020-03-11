@@ -91,7 +91,7 @@ var FilingCabinet = function( config ) {
    */
   this.get = function ( language, url, context ) {
 
-    function insertSegments( component, skipTokens ) {
+    function insertSegments( component ) {
       var response = component.html;
 
       // Replace the tokens with their texts.
@@ -144,13 +144,13 @@ var FilingCabinet = function( config ) {
             // Call the control to get its text.
             textToInsert = proxyControl( context );
           } else {
-            if (skipTokens === true) {
+            if (component.isFrozen) {
               textToInsert = token.expression;
             } else {
               // Get the segment object.
               var segment = self.segments.get( language, segmentKey );
               // Get the text of the segment.
-              textToInsert = insertSegments( segment, segmentKey.includes( '!' ) );
+              textToInsert = insertSegments( segment );
             }
           }
         }
