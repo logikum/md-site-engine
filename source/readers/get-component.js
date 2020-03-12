@@ -22,7 +22,7 @@ function getComponent( componentFile, layoutSegment, contentSegment ) {
   var html = fs.readFileSync( segmentPath, { encoding: 'utf-8' } );
 
   // Find tokens.
-  var re = /(\{\{\s*[=#.]?[\w-\/]+\s*}})/g;
+  var re = /(\{\{\s*[=#.]?[\w-\/!]+\s*}})/g;
   var tokens = [ ];
   var j = 0;
   var isDocument = false;
@@ -39,7 +39,7 @@ function getComponent( componentFile, layoutSegment, contentSegment ) {
     logger.showError( '"' + componentFile + '" cannot be both a document and a layout.' );
 
   // Create and return the component.
-  return new Component( html, tokens, isDocument, isLayout, 'html' );
+  return new Component( html, tokens, isDocument, isLayout, 'html', componentFile.includes( '!' ) );
 }
 
 module.exports = getComponent;

@@ -144,10 +144,14 @@ var FilingCabinet = function( config ) {
             // Call the control to get its text.
             textToInsert = proxyControl( context );
           } else {
-            // Get the segment object.
-            var segment = self.segments.get( language, segmentKey );
-            // Get the text of the segment.
-            textToInsert = insertSegments( segment );
+            if (component.isFrozen) {
+              textToInsert = token.expression;
+            } else {
+              // Get the segment object.
+              var segment = self.segments.get( language, segmentKey );
+              // Get the text of the segment.
+              textToInsert = insertSegments( segment );
+            }
           }
         }
 

@@ -123,6 +123,9 @@ var SegmentDrawer = function() {
 
   function checkReferenceCircle( language, key, segment, chain ) {
 
+    if (segment.isFrozen)
+      return;
+
     segment.tokens.forEach( function( token ) {
       if (token.isControl)
         return;

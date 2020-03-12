@@ -10,9 +10,10 @@ var Element = require( './element.js' );
  * @param {Boolean} isDocument - Indicates if the component is a document.
  * @param {Boolean} isLayout - Indicates if the component is a layout.
  * @param {string} source - The type of the source file of the element: "html" or "markdown".
+ * @param {Boolean} isFrozen - Indicates that the tokens are parts of the text, e.g. code excerpts.
  * @constructor
  */
-var Component = function( html, tokens, isDocument, isLayout, source ) {
+var Component = function( html, tokens, isDocument, isLayout, source, isFrozen ) {
 
   Element.call( this, html, tokens, source );
 
@@ -50,6 +51,19 @@ var Component = function( html, tokens, isDocument, isLayout, source ) {
   Object.defineProperty( this, 'isSegment', {
     get: function () {
       return !isDocument && !isLayout;
+    },
+    enumerable: true,
+    configurable: false
+  } );
+
+  /**
+   * Returns true when the tokens in the component are parts of the text.
+   * @type {Boolean}
+   * @readonly
+   */
+  Object.defineProperty( this, 'isFrozen', {
+    get: function () {
+      return isFrozen;
     },
     enumerable: true,
     configurable: false

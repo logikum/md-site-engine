@@ -31,7 +31,7 @@ function getSegment(
   var html = marked( text + '\n' + references.get( language ), { renderer: renderer } );
 
   // Find tokens.
-  var re = /(\{\{\s*[=#.]?[\w-\/]+\s*}})/g;
+  var re = /(\{\{\s*[=#.]?[\w-\/!]+\s*}})/g;
   var tokens = [ ];
   var j = 0;
   for (var matches = re.exec( html ); matches !== null; matches = re.exec( html )) {
@@ -45,7 +45,7 @@ function getSegment(
   }
 
   // Create and return the segment.
-  return new Component( html, tokens, false, false, 'markdown' );
+  return new Component( html, tokens, false, false, 'markdown', segmentFile.includes( '!' ) );
 }
 
 module.exports = getSegment;
