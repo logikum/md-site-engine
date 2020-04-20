@@ -26,7 +26,15 @@ var logger = {
   },
 
   /**
-   * Writes when an not processable file found.
+   * Writes when a content directory to omit found.
+   * @param {string} contentName - The name of the content directory.
+   */
+  contentSkipped: function ( contentName ) {
+    debug( 'Content of \'%s\' skipped.', contentName );
+  },
+
+  /**
+   * Writes when a not processable file found.
    * @param {string} typeName - The type of the file: content|component|control
    * @param {string} fileName - The name of the file.
    */
@@ -76,7 +84,7 @@ var logger = {
    * @param {string} message - The text of the warning.
    */
   showWarning: function ( message ) {
-    console.log( 'md-site-engine * WARNING - %s', message );
+    console.warn( 'md-site-engine * WARNING - %s', message );
   },
 
   /**
@@ -84,7 +92,7 @@ var logger = {
    * @param {string} message - The text of the error.
    */
   showError: function ( message ) {
-    console.log( 'md-site-engine * ERROR - %s', message);
+    console.error( 'md-site-engine * ERROR - %s', message);
   }
 };
 

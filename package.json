@@ -1,6 +1,6 @@
 {
   "name": "md-site-engine",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Build and drives a web site based on markdown texts.",
   "keywords": [
     "markdown",
@@ -12,7 +12,7 @@
   "main": "source/index.js",
   "dependencies": {
     "debug": "^4.1.1",
-    "marked": "^0.8.0"
+    "marked": "^0.8.2"
   },
   "repository": {
     "type": "git",
