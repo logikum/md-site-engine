@@ -29,7 +29,7 @@ function ContentManager( config ) {
 
   function initialize() {
     var getRenderer = require( config.getRenderer ?
-      path.join( './../../../', config.getRenderer ) :
+      path.join( './../../../../', config.getRenderer ) :
       markedRenderer
     );
     var renderer = getRenderer( marked );
