@@ -16,7 +16,7 @@ function readControls( controlPath, filingCabinet ) {
   // Initialize the store - engine controls.
   logger.showInfo( 'Engine controls:' );
   getControls(
-    '/node_modules/md-site-engine/controls',
+    '/node_modules/@logikum/md-site-engine/controls',
     '',
     filingCabinet.controls
   );

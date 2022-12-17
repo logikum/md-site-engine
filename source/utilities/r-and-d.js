@@ -6,7 +6,7 @@ var PATH = require( './rd-path.js' );
 var logger = require( './logger.js' );
 var pkgInfo = require( './../../package.json' );
 
-var cssPath = path.join( process.cwd(), 'node_modules/md-site-engine/source/utilities/r-and-d.css' );
+var cssPath = path.join( process.cwd(), 'node_modules/@logikum/md-site-engine/source/utilities/r-and-d.css' );
 var css = fs.readFileSync( cssPath, { encoding: 'utf-8' } );
 
 function backToRoot() {
